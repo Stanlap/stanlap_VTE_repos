@@ -6,16 +6,16 @@ let vBirthDateOfPatient = '',
     vGeneralListOfOper = '';
     $('#chkMale').on('click', function () {
     ($(this).is(':checked')) ? $('#slctMedicalProfileOfPatient [value="10"]').hide() : $('#slctMedicalProfileOfPatient [value="10"]').show();
-});
+});;
 $.extend({
     distinct: function (anArray) {
         let result = [];
         $.each(anArray, function (i, v) {
             if ($.inArray(v, result) === -1) result.push(v);
-        });
+        });;
         return result;
     }
-});
+});;
 let vAllSurgProfiles = [];
 let valuesMedPfofile = [];
 $('#slctMedicalProfileOfPatient').on('change', function () {
@@ -32,7 +32,7 @@ $('#slctMedicalProfileOfPatient').on('change', function () {
     }
     (valuesMedPfofile.is('[value = 10]')) ?
     $('#divObstOrGynProfile').show() : '';
-});
+});;
 $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
     if ($(this).val() === 0) {
         $('#divPregnancyOrChildbirth').show();
@@ -41,7 +41,7 @@ $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
         $('input[name="rdoPregnancyOrChildbirth"]:checked').prop('checked', false);
     }
     $('.lblIsOrNoSurg').show();
-});
+});;
 $('#chkIsOrNoSurg').on('click', function () {
     if ($(this).is(':checked')) {
         $('#divChooseKindOfOper, #divCreateKindOfOper').show();
@@ -61,7 +61,7 @@ $('#chkIsOrNoSurg').on('click', function () {
         $('#chkCreateKindOfOper').prop('checked', false);
         $('#divSmallOrLargeOper input:checked').prop('checked', false);
     }
-});
+});;
 $('.btnAccordChooseOper').on('click', function (el) {
     el = $(this);
     if (el.val() === 0) {
@@ -71,26 +71,24 @@ $('.btnAccordChooseOper').on('click', function (el) {
         el.val(0);
         el.next().show();
     }
-})
+});
 $('#chkCreateKindOfOper').on('click', function () {
     ($(this).is(':checked')) ? ($('#divSmallOrLargeOper').show(), $('#divChooseKindOfOper').hide(), $('#divChooseKindOfOper option:selected').prop('selected', false),
         $('.btnObsGynOper').show()) : ($('#divSmallOrLargeOper, .lblTimeOfSurg').hide(),
         $('.btnObsGynOper').show(),
         $('#divSmallOrLargeOper input:checked').prop('checked', false), $('#divChooseKindOfOper').show());
-})
+});
 $('input[name=rdoSmallOrLargeOper]:radio').on('click', function () {
     ($(this).val() == 1) ? ($('.lblTimeOfSurg').hide(), $('#chkTimeOfSurg').prop('checked', false)) : $('.lblTimeOfSurg').show();
-})
-function getCurrentAge(date) {
-  return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
-}
-
+});
 
 
 $('#dateOfBirth').on('input', function () {
 vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
- })
-
+ });
+function getCurrentAge(date) {
+  return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
+}
 function showBtnGoToRF() {
     if(getCurrentAge(vBirthDateOfPatient) != 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)){
     $('#btnOne').show(); 
@@ -100,6 +98,7 @@ function showBtnGoToRF() {
         $('#btnOne').hide();
 }
 }
+
 $('#btnOne').bind('click', goToRF);
 
 $('#slctMedicalProfileOfPatient option').bind('click', showBtnGoToRF);
@@ -107,38 +106,37 @@ $('#age, #weight, #height, #dateOfBirth').bind('input', showBtnGoToRF);
 
 $('#slctMedicalProfileOfPatient option').click(function () {
     ($('#slctMedicalProfileOfPatient option:selected').is('[value = 10]') && $('input[name=rdoObstOrGynProfile]:checked').val() == undefined) ? $('#btnOne').prop('disabled', true): $('#btnOne').prop('disabled', false);
-})
+});
 
 $('input[name=rdoObstOrGynProfile], input[name=rdoPregnancyOrChildbirth]').click(function () {
     ($('input[name=rdoObstOrGynProfile]:checked').val() == 1) ? $('#btnOne').prop('disabled', false): ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
-})
+});
 
 $('.divSingleLvlRF').on('click', function (el) {
     el = $(this).closest('.divMiddleLvlRF').prev().find('input:checkbox');
     ($(this).closest('.divMiddleLvlRF').find('input:checkbox').is(':checked')) ? el.prop('checked', true): el.prop('checked', false);
     //    console.log(event.type, event.target.id, event.relatedTarget + ' 1 event');
     //    console.log(el.is(':checked'))
-})
+});
 $('.divMiddleLvlRF').on('click', function (event, el) {
     el = $(this).prev();
     (el.find('input:checkbox').is(':checked')) ? $(this).prev().hide(): ($(this).prev().show(), $(this).hide(), el.find('button').html('&gt;'));
     console.log(event.type, event.target.id, event.relatedTarget + ' 2 event');
-})
+});
 $('.divSingleLvlRF label').next().on('click', function (ev) {
     $(this).next().show()
     $(this).hide()
     ev.stopPropagation();
-})
+});
 $('.divSingleLvlRF label').next().next().on('click', function (ev) {
     $(this).prev().show()
     $(this).hide()
     ev.stopPropagation();
-})
+});
 $('.btnTogglerRF').on('click', function () {
     //    console.log($(this).html());
     ($(this).html() == ('&gt;')) ? ($(this).closest('.divTogglerRF').next().show(), $(this).html('&lt;')) : ($(this).parents('.divTogglerRF').next().hide(), $(this).html('&gt;'));
-    //    console.log($(this).html());
-});
+});;
 $('.chkLungDiseases_1').on('click', function () {
     $('.chkLungDiseases_1').not(this).prop('checked', false);
     if ($(this).is(':checked')) {
@@ -152,48 +150,16 @@ $('.chkLungDiseases_1').on('click', function () {
             }
         }
     }
-});
+});;
 $('.chkBedRestMore3Days_1').on('click', function (el) {
     ($(this).is(':checked')) ? $('#chkIsBedRestMore3Days, #chkBedRestMore3Days').prop('checked', true): ($('.chkBedRestMore3Days_1').is(':checked')) ? $('#chkIsBedRestMore3Days, #chkBedRestMore3Days').prop('checked', true) : ($('#chkBedRestMore3Days').attr('data-hasMarked') == '0') ? $('#chkIsBedRestMore3Days, #chkBedRestMore3Days').prop('checked', false) : '';
-
-    console.log($('#chkBedRestMore3Days').attr('data-hasMarked'));
-})
+});
 $('#chkBedRestMore3Days').on('click', function () {
     let a = $(this).attr('data-hasMarked');
     console.log(a);
     ($(this).is(':checked')) ? $(this).attr('data-hasMarked', '1'): $(this).attr('data-hasMarked', '0');
     ($('#chkIsBedRestMore3Days').is(':checked')) ? (alert('Отмечены ранее патологические состояния и риск-факторы, которые требуют соблюдения больным строгого постального режима'), $(this).prop('checked', true)) : '';
-    console.log($(this).attr('data-hasMarked'));
-
-})
-
-
-//$('.divSingleLvlRF span').on('click', function () {
-//    $(this).next().show()
-//    $(this).hide()
-//})
-//$('span.comments').on('click', function () {
-//    $(this).prev().show()
-//    $(this).hide()
-//})
-//$('.divSingleLvlRF input').click(function (el) {
-//    el = $(this).parents('.divMiddleLvlRF');
-//    (el.find('input').is(':checked')) ? el.prev('label').hide(): (el.prev('label').show(), el.prev('label').find('input').prop('checked', false), el.hide());    
-//})
-//$('.btnTogglerRF').on('click',function () {
-//    console.log($(this).html());
-//    ($(this).html()==('&gt;')) ? ($(this).closest('.divTogglerRF').next().show(), $(this).html('&lt;')):($(this).parents('.divTogglerRF').next().hide(), $(this).html('&gt;'));
-//console.log($(this).html());
-//});
-//$('.divMiddleLvlRF').on('click', function (el) {
-//    el = $(this).prev();
-//    ($(this).find('input').is(':checked')) ? (el.hide(), el.find('input:checkbox').prop('checked',true)) : (el.show(), el.find('input:checkbox').prop('checked',false), $(this).hide(), el.find('button').html('&gt;'));
-//})
-//$('.divMiddleLvlRF').on('click', function (el) {
-//    el = $(this).prev();
-//    ($('.divMiddleLvlRF input').is(':checked')) ? (el.hide(), el.find('input:checkbox').prop('checked',true)): (el.show(), el.find('span:last-child').css('display', 'none'), el.find('span:first-child').css('display', 'block'), el.find('input:checkbox').prop('checked',false));
-//})
-
+});
 function goToRF() {
 
     let selectedRF = [];
@@ -240,89 +206,52 @@ function goToRF() {
 
     $('#btnOne').unbind('click', goToRF);
     $('#btnOne').bind('click', countRF).html('Перейти к подсчету риск-факторов ВТЭО');
-
 }
 
-$('.chkGlomerularFiltrationRate_1').on('click', function () {
-    $('.chkGlomerularFiltrationRate_1').not(this).prop('checked', false);
-})
+$('.chkGlomerularFiltrationRate_1').on('click', function () {    $('.chkGlomerularFiltrationRate_1').not(this).prop('checked', false);
+});
 
 $('.chkDiabetes_1').on('click', function () {
     $('.chkDiabetes_1').not(this).prop('checked', false);
-})
+});
 
 $('.chkBurnsSuperficial_1').on('click', function () {
     $('.chkBurnsSuperficial_1').not(this).prop('checked', false);
-})
+});
 
 $('.chkBurnsDeep_1').on('click', function () {
     $('.chkBurnsDeep_1').not(this).prop('checked', false);
-})
+});
 
-$('.chkThermalInhalationInjury_1').on('click', function () {
-    $('.chkThermalInhalationInjury_1').not(this).prop('checked', false);
-})
+$('.chkThermalInhalationInjury_1').on('click', function () {  $('.chkThermalInhalationInjury_1').not(this).prop('checked', false);
+});
 
 $('.chkSpinalCordInjure_1').on('click', function () {
     $('.chkSpinalCordInjure_1').not(this).prop('checked', false);
-})
+});
 
 $('#chkSepsis').on('click', function () {
     ($(this).is(':checked')) ? $('#chkAcuteInflammatoryDisease').prop('checked', true): '';
-})
+});
 $('#chkHeartInsuff3_4').on('click', function () {
     ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
-})
+});
 $('#chkHeartInsuffLess1Month').on('click', () => ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true) : '')
 
 $('#chkCongestHeartFailOrSystLVDysfunctEFLess40Percent').on('click', function () {
     ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
-})
-//$('#chkPlateletsLess50, #chkHeparinInducedThrombocytopenia').on('click', function () {
-//    ($(this).is(':checked') && $('#lblPlateletsLess150').is(':visible')) ? $('#chkPlateletsLess150').prop('checked', true): '';
-//})
-
-//let vIsBedRest = 0, vIsBedRest_1 = 0, vIsBedRest_2 = 0;
-//$('#chkBedRestMore3Days').on('change', function () {
-//    ($(this).is(':checked')) ? vIsBedRest = 1: (vIsBedRest_2 == 0) ? (vIsBedRest = 0, vIsBedRest_2 = 0, $(this).closest('.divMiddleLvlRF').prev().show()) : ($(this).prop('checked', true).closest('.divMiddleLvlRF').prev().show(), alert('Имеются ранее отмеченные риск-факторы, требующие априори строгого постельного режима'));
-//})    
-//$('.chkLungDiseases_1').bind('click', function (event, el) {
-//        ($(this).prop('checked') == false && $('.chkLungDiseases_1').not(':checked')) ? $(this).closest('.divMiddleLvlRF').prev().show(): '';
-//
-//        $('.chkLungDiseases_1').not(this).prop('checked', false);
-//        ($(this).attr('id') == 'chkSevereLungDiseases' && $(this).is(':checked')) ?
-//        vIsBedRest_1++ : vIsBedRest_1 = 0;
-//        el = 1;
-//        if (vIsBedRest_1 == 1) {
-//            (vIsBedRest_2 == 0 || vIsBedRest_2 == el && vIsBedRest == 0) ? ($('#chkBedRestMore3Days').prop('checked', true), vIsBedRest_2 = el) : '';
-//        } else {
-//            console.log('BedRest ' + vIsBedRest, 'SevereLungDis ' + vIsBedRest_1, 'LangOrInfarct ' + vIsBedRest_2);
-//            (vIsBedRest_2 == el && vIsBedRest == 0) ? ($('#chkBedRestMore3Days').prop('checked', false), vIsBedRest_2 = 0) : '';
-//        }
-//        event.stopPropagation();
-//        console.log('BedRest ' + vIsBedRest, 'SevereLungDis ' + vIsBedRest_1, 'LangOrInfarct ' + vIsBedRest_2);
-//    });
-//$('#chkAcuteMiocardInfarction').on('click', function (event, el) {
-//    el = 2
-//    if ($(this).is(':checked')) {
-//        (vIsBedRest_2 == 0 || vIsBedRest_2 == el && vIsBedRest == 0) ? ($('#chkBedRestMore3Days').prop('checked', true), vIsBedRest_2 = el) : '';
-//    } else {
-//        (vIsBedRest_2 == el && vIsBedRest == 0) ? ($('#chkBedRestMore3Days').prop('checked', false), vIsBedRest_2 = 0) : '';
-//    }
-//    console.log('INFARCTION:   ' + 'BedRest ' + vIsBedRest, 'SevereLungDis ' + vIsBedRest_1, 'LangOrInfarct ' + vIsBedRest_2);
-//    event.stopPropagation();
-//})
+});
 $('#chkSomeTherapyOfNeoplasm').on('click', function () {
     ($(this).is(':checked')) ? $('#chkActiveNeoplasm').prop('checked', true).closest('.divSingleLvlRF').hide():
         ($('#chkActiveNeoplasm').attr('data-hasMarked') == '0') ? $('#chkActiveNeoplasm').prop('checked', false).closest('.divSingleLvlRF').show() : '';
-})
+});
 $('#chkActiveNeoplasm').on('change', function () {
     ($(this).is(':checked')) ? $(this).attr('data-hasMarked', '1'): $(this).attr('data-hasMarked', '0');
-})
+});
 $('#chkAcuteRheumaticDiseases').on('click', function () {
     ($(this).is(':checked')) ? $('#chkRheumaticDiseases').prop('checked', true).closest('.divSingleLvlRF').hide():
         ($('#chkRheumaticDiseases').attr('data-hasMarked') == '0') ? $('#chkRheumaticDiseases').prop('checked', false).closest('.divSingleLvlRF').show() : '';
-})
+});
 
 $('#chkPlateletsLess150').on('click', function () {
     if ($(this).is(':checked')) {
@@ -331,7 +260,7 @@ $('#chkPlateletsLess150').on('click', function () {
         $(this).attr('data-hasMarked', '0');
         $('#chkPlateletsLess50, #chkPlateletsLess75').prop('checked', false);
     }
-})
+});
 $('#chkPlateletsLess75').on('click', function () {
     if ($(this).is(':checked')) {
         $('#chkPlateletsLess150').prop('checked', true).closest('.divSingleLvlRF').hide();
@@ -342,13 +271,13 @@ $('#chkPlateletsLess75').on('click', function () {
         $('#chkPlateletsLess150').attr('data-hasMarked') == '0' ? $('#chkPlateletsLess150').prop('checked', false).closest('.divSingleLvlRF').show() : $('#chkPlateletsLess150').closest('.divSingleLvlRF').show();
         $(this).attr('data-hasMarked', '0');
     }
-})
+});
 $('#chkPlateletsLess50').on('click', function () {
     ($(this).is(':checked')) ? $('#chkPlateletsLess150, #chkPlateletsLess75').prop('checked', true).closest('.divSingleLvlRF').hide():
         ($('#chkPlateletsLess150').attr('data-hasMarked') == '1' && $('#chkPlateletsLess75').attr('data-hasMarked') == '0') ? ($('#chkPlateletsLess150').prop('checked', true).closest('.divSingleLvlRF').show(), $('#chkPlateletsLess75').prop('checked', false).closest('.divSingleLvlRF').show()) : ($('#chkPlateletsLess75').attr('data-hasMarked') == '1') ?
         $('#chkPlateletsLess75, #chkPlateletsLess150').prop('checked', true).closest('.divSingleLvlRF').show() :
         ($('#chkPlateletsLess75, #chkPlateletsLess150').attr('data-hasMarked') == '0') ? $('#chkPlateletsLess75, #chkPlateletsLess150').prop('checked', false).closest('.divSingleLvlRF').show() : '';
-})
+});
 
 $('#chkSystemicHypertension').on('click', function () {
     if ($(this).is(':checked')) {
@@ -357,31 +286,23 @@ $('#chkSystemicHypertension').on('click', function () {
         $(this).attr('data-hasMarked', '0');
         $('#chkSystemicHypertension2Stage, #chkUncontrolledSystemicHypertension').prop('checked', false);
     }
-})
+});
 $('#chkSystemicHypertension2Stage').on('click', function () {
     if ($(this).is(':checked')) {
         $('#chkSystemicHypertension').prop('checked', true).closest('.divSingleLvlRF').hide();
         $(this).attr('data-hasMarked', '1');
 
-    } else {
-        $('#chkUncontrolledSystemicHypertension').prop('checked', false).closest('.divSingleLvlRF').show();
+    } else {        $('#chkUncontrolledSystemicHypertension').prop('checked', false).closest('.divSingleLvlRF').show();
         $('#chkSystemicHypertension').attr('data-hasMarked') == '0' ? $('#chkSystemicHypertension').prop('checked', false).closest('.divSingleLvlRF').show() : $('#chkSystemicHypertension').closest('.divSingleLvlRF').show();
         $(this).attr('data-hasMarked', '0');
     }
-})
+});
 $('#chkUncontrolledSystemicHypertension').on('click', function () {
     ($(this).is(':checked')) ? $('#chkSystemicHypertension, #chkSystemicHypertension2Stage').prop('checked', true).closest('.divSingleLvlRF').hide():
         ($('#chkSystemicHypertension').attr('data-hasMarked') == '1' && $('#chkSystemicHypertension2Stage').attr('data-hasMarked') == '0') ? ($('#chkSystemicHypertension').prop('checked', true).closest('.divSingleLvlRF').show(), $('#chkSystemicHypertension2Stage').prop('checked', false).closest('.divSingleLvlRF').show()) : ($('#chkSystemicHypertension2Stage').attr('data-hasMarked') == '1') ?
         $('#chkSystemicHypertension2Stage, #chkSystemicHypertension').prop('checked', true).closest('.divSingleLvlRF').show() :
         ($('#chkSystemicHypertension2Stage, #chkSystemicHypertension').attr('data-hasMarked') == '0') ? $('#chkSystemicHypertension2Stage, #chkSystemicHypertension').prop('checked', false).closest('.divSingleLvlRF').show() : '';
-})
-
-//$('.chkSumAcuteInfectionOrInflammatoryDisease').on('click', function (){
-//    ($('.chkSumAcuteInfectionOrInflammatoryDisease').is(':checked'))? $('#chkAcuteInfectionOrInflammatoryDisease').prop('checked', true): $('#chkAcuteInfectionOrInflammatoryDisease').prop('checked', false);
-//})
-//    $('#chkAcuteRheumaticDiseases').on('click', function (){
-//        ($(this).is(':checked') && $('#lblRheumaticDiseases').prop('visible', true))? $('#chkRheumaticDiseases').prop('checked', true): ($('#chkRheumaticDiseases, #chkIsRheumaticDiseases').prop('checked', false), $('#lblIsRheumaticDiseases').show(), $('#divIsRheumaticDiseases').hide());
-//    })
+});
 
 let vCounterPaduaScore = 0,
     vCounterCHA2DS2_VASс = 0,
@@ -448,23 +369,17 @@ function countRF() {
     ($('#chkIsPulmonInsuff').is(':checked') || $('#chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
     ($('.chkSevereRenalInsuff_1').is(':checked')) ? $('#chkSevereRenalInsuff').prop('checked', true): '';
     ($('#chkSevereRenalInsuff, #chkIsLiverFailure').is(':checked'))? $('#chkSevereRenalOrLiverFailure').prop('checked', true): $('#chkSevereRenalOrLiverFailure').prop('checked', false);
-
-
     ($('.chkBurns_1').is(':checked')) ? $('#chkBurnsLess20Percent').prop('checked', true): '';
     ($('.chkBurns_2').is(':checked')) ? $('#chkBurnsMore20Percent').prop('checked', true): '';
     ($('.chkObstComorbidities').is(':checked')) ? $('#chkIsObstComorbidityRF').prop('checked', true): '';
     ($('.chkLabourRuRF_1').is(':checked')) ? $('#chkSeverePreeclampsiaOrStillbirth').prop('checked', true): '';
     ($('.chkSumAtrFibrRF_1').is(':checked')) ? $('#chkVascularAnamnesis').prop('checked', true): '';
     ($('.chkThrombocytopenia_1').is(':checked')) ? $('#chkThrombocytopenia').prop('checked', true): '';
-
     ($('#chkIsHemorragicSyndrome, #chkPriorMajorBleeding').is(':checked')) ? $('#chkBleedingOrHemorragicSyndrome').prop('checked', true): '';
 
     ($('#chkIsAcuteInflammatoryDiseaseOrInfection').is(':checked') && $('#chkIsRestrictedMobility').is(':checked')) ? $('#chkAcuteInflammatoryDiseaseOrInfectionWithBedRest').prop('checked', true): '';
-
     ($('.chkSpinalCordInjure_1, #chkPlegia').is(':checked')) ? $('#chkSpinalCordDamageWithPlegia').prop('checked', true): '';
-
     ($('.chkStroke_1').is(':checked') && $('#chkPlegia').is(':checked')) ? $('#chkStrokeWithPlegia').prop('checked', true): '';
-
     ($('#chkArthritis').is(':checked') && $('#chkIsRestrictedMobility').is(':checked')) ? $('#chkArthritisWithRestrictedMobility').prop('checked', true): '';
     ($('#chkIsRestrictedMobility, #chkDehydration').is(':checked')) ? $('#chkIsRestrictedMobilityOrDehydration').prop('checked', true): '';
     ($('.chkСoagulopathy_1').is(':checked')) ? $('#chkСoagulopathyWithoutThrombocytopenia').prop('checked', true): '';
@@ -491,13 +406,7 @@ function countRF() {
 
     console.log($('#chkLiverResection').is(':checked'));
     console.log($('.divGenSurgOper select').prop('selectedIndex'));
-    console.log($('#chkPancreatoDuodResection').is(':checked'));
-
-    console.log($('#chkPulmonectomy').is(':checked'));
-
-    console.log($('#chkHeartSurger').is(':checked'));
-
-    console.log($('#chkBrainOrSpinalCordSurg').is(':checked'));
+//    console.log($('#chkBrainOrSpinalCordSurg').is(':checked'));
 let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient); 
     (vAgeOfPatient > 35) ?
     $('#chkAgeMore35').prop('checked', true): '';
@@ -505,12 +414,12 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     $('#chkAgeMore40').prop('checked', true): '';
     (vAgeOfPatient > 40 && vAgeOfPatient < 61) ?
     $('#chkAge_41_60').prop('checked', true): '';
+    (vAgeOfPatient >= 40 && vAgeOfPatient < 85) ?
+    $('#chkAge_40_84').prop('checked', true): '';
     (vAgeOfPatient > 60 && vAgeOfPatient < 76) ?
     $('#chkAge_61_75').prop('checked', true): '';
     (vAgeOfPatient > 64 && vAgeOfPatient < 75) ?
     $('#chkAge_65_74').prop('checked', true): '';
-    (vAgeOfPatient >= 40 && vAgeOfPatient < 85) ?
-    $('#chkAge_40_84').prop('checked', true): '';
     (vAgeOfPatient > 65) ? $('#chkAgeMore65').prop('checked', true): '';
     (vAgeOfPatient > 70) ? $('#chkAgeMore70').prop('checked', true): '';
     (vAgeOfPatient >= 75) ? $('#chkAgeMore75').prop('checked', true): '';
@@ -519,6 +428,7 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     function searchBMI(w, h) {
         return (Math.ceil(w / (Math.pow((h / 100), 2))));
     }
+
     let vBMI = searchBMI($('#weight').val(), $('#height').val());
     (vBMI > 25) ? $('#chkBMIMore25').prop('checked', true): '';
     (vBMI > 30) ? $('#chkBMIMore30').prop('checked', true): '';
@@ -532,7 +442,7 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     $.each($('#divChooseKindOfOper option:selected'), function (el) {
         vGrades.push($('#divChooseKindOfOper option:selected')[el].value);
         vAllChoosedOperations.push($('#divChooseKindOfOper option:selected')[el].innerText);
-    })
+    });
 
     console.log(vGrades);
     console.log(vAllChoosedOperations);
@@ -544,6 +454,7 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     function getMaxOfArray(numArray) {
         return Math.max.apply(null, numArray);
     }
+
     let vMaxGradeOfChoosedOper = getMaxOfArray(vGradesOfOper);
     ($('input[name=rdoSmallOrLargeOper]:checked').val() !== undefined) ? vGradeOfOper = Number($('input[name=rdoSmallOrLargeOper]:checked').val()): vGradeOfOper = vMaxGradeOfChoosedOper;
 
@@ -553,8 +464,6 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
 
     console.log(vGradeOfOper);
     console.log(vGradesOfOper.length);
-    console.log($('#chkIsOrNoSurg').is(':checked'));
-    //        console.log($('#chkSmallSurgery').is(':checked'));
 
     let i = [],
         vMyArr = [],
@@ -579,7 +488,7 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
         vCounterGreenTop37a += Number(vMyArr[12]);
         vCounterObstBleedingRF += Number(vMyArr[13]);
         vCounterObstRuRF += Number(vMyArr[14]);
-    })
+    });
 
     vSetRusSurgRF = $.distinct(vSetRusSurgRF);
     vSetRusTraumRF = $.merge(vSetRusTraumRF, vSetRusSurgRF);
@@ -596,32 +505,37 @@ let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
         return i;
     }
 
-    let vCounterSurgRF = 0;
-    //        if (vSetRusSurgRF.indexOf('3') != -1){
-    //            vCounterSurgRF = 3;
-    //        } else {
-    //            if (($('#chkIsOrNoSurg').is(':checked'))){
-    //                vCounterSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
-    //
-    //            }
-    //        }
-    //        if (vSetRusSurgRF.indexOf('2') != -1 && vCounterSurgRF < 3){
-    //            vCounterSurgRF = 2;
-    //        }
 console.log(vSetRusSurgRF);
+
     if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+        if (vGradeOfOper == 3) {
+            vCounterRusSurgRF = 3;
+            vCounterCapriniRF += 5;
+            vCounterRusTraumRF = 3;
+
+        } else {
+            vCounterRusSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+
+            (vGradeOfOper == 1 || vGradeOfOper == 2) ? vCounterCapriniRF += 2: vCounterCapriniRF += 1;
+            vCounterRusTraumRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
+
+        }
     }
+
+//    if ($('#chkIsOrNoSurg').is(':checked')) {
+//        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+//    }
+//    if ($('#chkIsOrNoSurg').is(':checked')) {
+//        (vGradeOfOper == 3) ? vCounterCapriniRF += 5: (vGradeOfOper == 1 || vGradeOfOper == 2) ? vCounterCapriniRF += 2 : vCounterCapriniRF += 1;
+//    }
+//
+//    if ($('#chkIsOrNoSurg').is(':checked')) {
+//        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
+//    }
+
         (vSetRusSurgRF.indexOf('2') != -1 && vCounterRusSurgRF < 3) ? vCounterRusSurgRF = 2: '';
         (vSetRusSurgRF.indexOf('3') != -1) ? vCounterRusSurgRF = 3: '';
 
-    if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterCapriniRF += 5: (vGradeOfOper == 1 || vGradeOfOper == 2) ? vCounterCapriniRF += 2 : vCounterCapriniRF += 1;
-    }
-
-    if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
-    }
         (vSetRusTraumRF.indexOf('2') != -1 && vCounterRusTraumRF < 3) ? vCounterRusTraumRF = 2: '';
         (vSetRusTraumRF.indexOf('3') != -1) ? vCounterRusTraumRF = 3: '';
 
@@ -645,64 +559,24 @@ console.log(vSetRusSurgRF);
     $('.chk2_LvlRF, .chk3_LvlRF input:checked').prop('checked', false);
     console.log($('#divAllRF input:checked'));
 
-//    $('#divAllRF input[id*="chkBMI"]:checked, #divAllRF input[id*="chkAge"]:checked ').prop('checked', false);
     vIsBedRestBMI.prop('checked', true);
     vIsBedRestAge.prop('checked', true);
 
-//    let b = $('#divAllRF input:checked').parent();
     function getStringOfRF(el){
         let a = 0, b = '';        
     $(el).each(function () {
         (a > 0) ? b += ',' + $(this).text(): b += $(this).text();
          a += 1;        
-    }); 
+    });;
  return  b;     
     }
-vGeneralListOfRF = getStringOfRF($('#divAllRF input:checked').parent());
-console.log(vGeneralListOfRF);
 
+vGeneralListOfRF = getStringOfRF($('#divAllRF input:checked').parent());
 vGeneralListOfOper = getStringOfRF($('#divChooseKindOfOper option:selected'));
-console.log(vGeneralListOfOper);
 
     
 
-    console.log('Padua: ' + vCounterPaduaScore, ' IMPROVE: ' + vCounterIMPROVE, ' CHA2DS2-VASс: ' + vCounterCHA2DS2_VASс, ' HAS-BLED: ' + vCounterHAS_BLED, ' Российская шкала риска ВТЭО: ' + vCounterRusSurgRF, ' Caprini: ' + vCounterCapriniRF, ' Major Bleeding Score: ' + vCounterMajorBleedingScoreRF, ' Шкала риска кровотечений при больших травматологических вмешательствах: ' + vCounterTraumBleedingRF, ' Шкала риска ВТЭО в травматологии: ' + vCounterRusTraumRF, ' vCounterGreenTopGuideline37a: ' + vCounterGreenTop37a, ' Contraindications to LMWH use: ' + vCounterObstBleedingRF, ' vCounterGreenTopGuideline37aRus: ' + vCounterObstRuRF);
-
-
-    console.log(countStratRF(vCounterPaduaScore, 'Padua'));
-    console.log(countStratRF(vCounterIMPROVE, 'IMPROVE'));
-    console.log(countStratRF(vCounterCHA2DS2_VASс, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
-    console.log(countStratRF(vCounterHAS_BLED, 'HAS_BLED'));
-    console.log('Российская шкала ВТЭО ' + countStratRF(vCounterRusSurgRF, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
-    console.log(countStratRF(vCounterCapriniRF, 'Caprini'));
-    console.log(countStratRF(vCounterMajorBleedingScoreRF, 'SurgOrTraumBleedingRF'));
-    console.log(countStratRF(vCounterRusTraumRF, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
-    console.log(countStratRF(vCounterTraumBleedingRF, 'SurgOrTraumBleedingRF'));
-    console.log(countStratRF(vCounterGreenTop37a, 'GreenTop37aRus'));
-    console.log(countStratRF(vCounterObstRuRF, 'GreenTop37aRus'));
-
-    //        let vStratPadua = '',
-    //            vStratIMPROVE = '',
-    //            vStratHAS_BLED = '',
-    //            vStratCHA2DS2_VASс = '',
-    //            vStratRusSurgRF = '',
-    //            vStratCaprini = '',
-    //            vStratSurgBleedingRF = '';
-    //
-    //        (vCounterPaduaScore > 3)? vStratPadua = 'высокий': vStratPadua = 'низкий';
-    //        (vCounterIMPROVE > 7)? vStratIMPROVE = 'высокий': vStratIMPROVE = 'низкий';
-    //        (vCounterHAS_BLED > 2)? vStratHAS_BLED = 'высокий': vStratHAS_BLED = 'низкий';
-    //        (vCounterCHA2DS2_VASс == 0)? vStratCHA2DS2_VASс = 'низкий': (2 >= vCounterCHA2DS2_VASс >= 1)? vStratCHA2DS2_VASс = 'умеренный' : vStratCHA2DS2_VASс = 'высокий';
-    //        (vCounterRusSurgRF == 0)? vStratRusSurgRF = 'низкий':
-    //            (2 >= vCounterRusSurgRF >= 1)? vStratRusSurgRF = 'умеренный' : vStratRusSurgRF = 'высокий';
-    //        (vCounterCapriniRF == 0)? vStratCaprini = 'низкий': (2 >= vCounterCapriniRF >= 1)? vStratCaprini = 'умеренный' : (4 >= vCounterCapriniRF >= 3)? vStratCaprini = 'высокий' : vStratCaprini = 'очень высокий';
-    //        (vCounterMajorBleedingScoreRF > 1)? vStratSurgBleedingRF = 'высокий': vStratSurgBleedingRF = 'низкий';
-}
-
-
-//    $('#btnThree').on('click', function (){
-//        $('#demoContainer').show();
-//
+//}
         function bindBalls(counter){
             let vBalls;
             if (counter == 1){
@@ -716,59 +590,7 @@ console.log(vGeneralListOfOper);
             }
             return counter + vBalls;
         }
-//        let vContTextTher = '';
-//        let vContTextTherBleeding = '';
-//        let vContTextSurg = '';
-//        let vContTextCapriniSurg = '';
-//        let vContTextSurgNotOper = '';
-//        let vContTextSurgBleeding = '';
-//        let vContTextObst = '';
-//        let vContTextAtrFibr = '';
-//        let vContTextErythremia = '';
-//        let vContTextAtrFibrBleeding = '';
-//
-//        if (vCounterPaduaScore != 0){
-//            vContTextTher = '\nнехирургические риск-факторы (Padua Prediction Score): ' + vListTherRFArr + '. Риск ВТЭО: ' + vCounterPaduaScore + ' ' + bindBalls(vCounterPaduaScore) + ' - ' + vStratTherRF + '.';
-//        }
-//        let vSmallOrLargeSurg;
-//        if (vGradeOfOper != 0 && $("input[name='rdoIsOrNoSurg']:checked").val() == 1){
-//            vSmallOrLargeSurg = '. Операция: большая. ';
-//            $('#chkLargeSurgery').prop('checked', true);
-//        }
-//        if ($("input[name='rdoIsOrNoSurg']:checked").val() == 1){
-//            vContTextSurg = '\nхирургические риск-факторы: ' + vListSurgRFArr + vSmallOrLargeSurg + 'Риск ВТЭО: ' + vCounterSurgRF + ' ' + bindBalls(vCounterSurgRF) + ' - ' + vStratSurgRF + '.';
-//        }
-//        if (vCounterSurgRFNotOperRF != 0){
-//            vContTextSurgNotOper = '\nхирургические неоперационные риск-факторы: ' + vListSurgNotOperRFArr + '. Риск ВТЭО: ' + vCounterSurgRFNotOperRF + ' ' + bindBalls(vCounterSurgRFNotOperRF) + ' - ' + vStratSurgNotOperRF + '.';
-//        }
-//        if (vCounterCapriniRF != 0){
-//            vContTextCapriniSurg = '\nхирургические риск-факторы (шкала Caprini): ' + vListCapriniRFArr + '. Риск ВТЭО: ' + vCounterCapriniRF + ' ' + bindBalls(vCounterCapriniRF) + ' - ' + vStratCapriniRF + '.';
-//        }
-//        if (vCounterIMPROVE != 0){
-//            vContTextTherBleeding = '\nриск-факторы развития кровотечения при профилактике ВТЭО у нехирургических пациентов: ' + vListNonsurgBleedingRFArr + '. Риск кровотечения: ' + vCounterIMPROVE + ' ' + bindBalls(vCounterIMPROVE) + ' - ' + vStratNonsurgBleedingRF + '.';
-//        }
-//        if (vCounterMajorBleedingScoreRF != 0){
-//            vContTextSurgBleeding = '\nриск-факторы развития кровотечения при профилактике ВТЭО у хирургических пациентов: ' + vListSurgBleedingRFArr + '. Риск кровотечения: ' + vCounterMajorBleedingScoreRF + ' ' + bindBalls(vCounterMajorBleedingScoreRF) + ' - ' + vStratSurgBleedingRF + '.';
-//        }
-//        if (vCounterGreenTop37a != 0 && $("input[name='rdoObstOrGynProfile']:checked").val() == 0){
-//            vContTextObst = '\nакушерские риск-факторы: ' + vListObstRFArr + '. Риск ВТЭО: ' + vCounterGreenTop37a + ' ' + bindBalls(vCounterGreenTop37a) + '.';
-//        }
-//        if (vCounterCHA2DS2_VASс != 0){
-//            vContTextAtrFibr = '\nриск-факторы развития тромботического ишемического инсульта (шкала CHA2DS2-VASс ): ' + vListAtrFibrRFArr + '. Риск инсульта: ' + vCounterCHA2DS2_VASс + ' ' + bindBalls(vCounterCHA2DS2_VASс) + '.';
-//        }
-//        if (vCounterHAS_BLED != 0){
-//            vContTextAtrFibrBleeding = '\nриск-факторы развития кровотечения при профилактике инфаркта мозга (шкала HAS-BLED): ' + vListAtrFibrBleedingRFArr + '. Риск кровотечения: ' + vCounterHAS_BLED + ' ' + bindBalls(vCounterHAS_BLED) + '. - ' + vStratAtrFibrBleedingRF + '.';
-//        }
-//        if ($('#chkErythremiaRF').is(':checked')){
-//            vContTextErythremia = '\nэритремия.';
-//        }
-//        $('#demoContainer').text('У пациента имеются:' + vContTextTher + vContTextTherBleeding + vContTextSurg + vContTextCapriniSurg + vContTextSurgNotOper + vContTextSurgBleeding + vContTextObst + vContTextAtrFibr + vContTextAtrFibrBleeding + vContTextErythremia);
-//        if (vCounterPaduaScore == 0 && vCounterSurgRF == 0 && vCounterSurgRFNotOperRF == 0 && vCounterGreenTop37a == 0 && vCounterCHA2DS2_VASс == 0){
-//            $('#demoContainer').text('Риск ВТЭО низкий.');
-//        }
-//        $('label, p, select').hide();
-//    })
-    $('#btnTwo').on('click', function () {
+//    $('#btnTwo').on('click', function () {
         $('#pTitleOfConclusion').show();
 
         (vGeneralListOfRF != '') ? $('<p>', {
@@ -845,11 +667,33 @@ console.log(vGeneralListOfOper);
         }).appendTo($('#pTextCollector_3')): '';
 
         ($('#pTextCollector_3').children().length > 0 && $('#chkCalculateRiskOfBleeding').is(':checked')) ? $('#pTextCollector_3').show(): '';
+
+ ($('#pTextCollector_2').children().length == 0 && $('#pTextCollector_2').children().length == 0) ? $('#pBestConclusion').show() : '' ;
  $('.pTextContainer:contains("высокий")').css({ 'color': 'red'});       
- $('.pTextContainer:contains("умеренный")').css({ 'color': 'orange'});       
-    })
-//$('#btnThree').on('click', function (
+ $('.pTextContainer:contains("умеренный")').css({ 'color': 'orange'});
+
+    console.log(vGeneralListOfRF);
+    console.log(vGeneralListOfOper);
+
+    console.log('Padua: ' + vCounterPaduaScore, ' IMPROVE: ' + vCounterIMPROVE, ' CHA2DS2-VASс: ' + vCounterCHA2DS2_VASс, ' HAS-BLED: ' + vCounterHAS_BLED, ' Российская шкала риска ВТЭО: ' + vCounterRusSurgRF, ' Caprini: ' + vCounterCapriniRF, ' Major Bleeding Score: ' + vCounterMajorBleedingScoreRF, ' Шкала риска кровотечений при больших травматологических вмешательствах: ' + vCounterTraumBleedingRF, ' Шкала риска ВТЭО в травматологии: ' + vCounterRusTraumRF, ' vCounterGreenTopGuideline37a: ' + vCounterGreenTop37a, ' Contraindications to LMWH use: ' + vCounterObstBleedingRF, ' vCounterGreenTopGuideline37aRus: ' + vCounterObstRuRF);
+
+
+    console.log(countStratRF(vCounterPaduaScore, 'Padua'));
+    console.log(countStratRF(vCounterIMPROVE, 'IMPROVE'));
+    console.log(countStratRF(vCounterCHA2DS2_VASс, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
+    console.log(countStratRF(vCounterHAS_BLED, 'HAS_BLED'));
+    console.log('Российская шкала ВТЭО ' + countStratRF(vCounterRusSurgRF, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
+    console.log(countStratRF(vCounterCapriniRF, 'Caprini'));
+    console.log(countStratRF(vCounterMajorBleedingScoreRF, 'SurgOrTraumBleedingRF'));
+    console.log(countStratRF(vCounterRusTraumRF, 'CHA2DS2_VASсOrRusSurgOrTraumRF'));
+    console.log(countStratRF(vCounterTraumBleedingRF, 'SurgOrTraumBleedingRF'));
+    console.log(countStratRF(vCounterGreenTop37a, 'GreenTop37aRus'));
+    console.log(countStratRF(vCounterObstRuRF, 'GreenTop37aRus'));
+$('#btnOne').unbind('click', countRF).html('Перейти к определению метода профилактики ВТЭО');
+    };
+
+//$('#btnTwo').on('click', function (
 //                 ){
-//    $('<p>', { text: 'Гугли!'}).appendTo($('#pTextCollector_1_2'));
+//    $('<p>', { text: 'Гугли!'});.appendTo($('#pTextCollector_1_2'));
 //
-//});
+//});;
