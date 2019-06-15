@@ -85,21 +85,33 @@ $('input[name=rdoSmallOrLargeOper]:radio').on('click', function () {
 
 $('#dateOfBirth').on('input', function () {
 vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
+vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
  });
+let vAgeOfPatient = 0;
 function getCurrentAge(date) {
   return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
 }
-function showBtnGoToRF() {
-    if(getCurrentAge(vBirthDateOfPatient) != 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)){
-    $('#btnOne').show(); 
-        ($('#weight').prop('value') < 50 || $('#weight').prop('value') > 120)? alert('Вес пациента действительно ' + ($('#weight').prop('value')) + ' кг?'):''; 
-        ($('#height').prop('value') < 150 || $('#height').prop('value') > 190)? alert('Рост пациента действительно ' + ($('#height').prop('value')) + ' кг?'):''; 
-    }else{
-        $('#btnOne').hide();
-}
-}
 
-$('#btnOne').bind('click', goToRF);
+function showBtnGoToRF() {
+    if (getCurrentAge(vBirthDateOfPatient) != 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)) {
+        $('#btnOne').show();
+//        $('#btnOne').bind('click',makeCaution);
+    } else {
+        $('#btnOne').hide();
+    }
+}
+function makeCaution(){
+let a = '';
+    (vAgeOfPatient < 16)? a += ('Пациент моложе 16 лет - шкалы могут подсчитывать риск ВТЭО некорректно (хотя явных указаний на это нет).'):(vAgeOfPatient > 100) ? a += ('Возраст пациента действительно ' + vAgeOfPatient + ' лет?'):'';
+    ($('#weight').prop('value') < 50 || $('#weight').prop('value') > 120)? a += ('\nВес пациента действительно ' + ($('#weight').prop('value')) + ' кг?'):'';
+    ($('#height').prop('value') < 150 || $('#height').prop('value') > 190)? a += ('\nРост пациента действительно ' + ($('#height').prop('value')) + ' кг?'):'';
+    return a;
+}
+$('#btnOne').on('click',function(){
+    alert(makeCaution());
+    $(this).unbind('click');
+    $('#btnOne').bind('click', goToRF);
+});
 
 $('#slctMedicalProfileOfPatient option').bind('click', showBtnGoToRF);
 $('#age, #weight, #height, #dateOfBirth').bind('input', showBtnGoToRF);
@@ -229,17 +241,20 @@ $('.chkThermalInhalationInjury_1').on('click', function () {  $('.chkThermalInha
 $('.chkSpinalCordInjure_1').on('click', function () {
     $('.chkSpinalCordInjure_1').not(this).prop('checked', false);
 });
+$('.chkHeartInsuff_1').on('click', function () {
+    $('.chkHeartInsuff_1').not(this).prop('checked', false);
+});
 
 $('#chkSepsis').on('click', function () {
     ($(this).is(':checked')) ? $('#chkAcuteInflammatoryDisease').prop('checked', true): '';
 });
-$('#chkHeartInsuff3_4').on('click', function () {
-    ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
-});
-$('#chkHeartInsuffLess1Month').on('click', () => ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true) : '')
+//$('#chkHeartInsuff3_4').on('click', function () {
+//    ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
+//});
+//$('#chkHeartInsuffLess1Month').on('click', () => ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true) : '')
 
 $('#chkCongestHeartFailOrSystLVDysfunctEFLess40Percent').on('click', function () {
-    ($(this).is(':checked') && $('#lblSomeHeartInsuff').is(':visible')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
+    ($(this).is(':checked')) ? $('#chkSomeHeartInsuff').prop('checked', true): '';
 });
 $('#chkSomeTherapyOfNeoplasm').on('click', function () {
     ($(this).is(':checked')) ? $('#chkActiveNeoplasm').prop('checked', true).closest('.divSingleLvlRF').hide():
@@ -358,15 +373,14 @@ function countRF() {
     ($('.chkSumTherRF_1').is(':checked')) ? $('#chkAcuteIschemicStrokeOrMiocardInfarction').prop('checked', true): '';
     ($('.chkSumTherRF_2').is(':checked')) ? $('#chkRheumaticDiseasesOrInfection').prop('checked', true): '';
     ($('.chkThromboemb_1').is(':checked')) ? $('#chkVascularAnamnesis, #chkWasSomeVeinThromb').prop('checked', true): '';
-    ($('.chkThromboemb_2').is(':checked')) ? $('#chkWasPulmEmb').prop('checked', true): '';
-    ($('.chkThromboemb_3').is(':checked')) ? $('#chkFamilyVeinThromb').prop('checked', true): '';
+    ($('.chkThromboemb_2').is(':checked')) ? $('#chkFamilyVeinThromb').prop('checked', true): '';
     ($('.chkProvocedVTE_1').is(':checked')) ? $('#chkWasProvocedVTE').prop('checked', true): '';
     ($('.chkTraum_1').is(':checked')) ? $('#chkFracturePpelvisFemurTibiaLess1Month').prop('checked', true): '';
     ($('.chkHighRiskThrombophilia_1').is(':checked')) ? $('#chkIsKnownHighRiskThrombophilia').prop('checked', true): '';
     ($('.chkNeoplasm_1').is(':checked')) ? $('#chkIsActiveNeoplasmOrTherapyOfNeoplasm').prop('checked', true): '';
     ($('.chkStroke_1').is(':checked')) ? $('#chkStroke').prop('checked', true): '';
     ($('#chkIsTraum, #chkLargeOperIn30Days').is(':checked')) ? $('#chkTraumOrOperIn30Days').prop('checked', true): '';
-    ($('#chkIsPulmonInsuff').is(':checked') || $('#chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
+    ($('#chkIsPulmonInsuff, #chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
     ($('.chkSevereRenalInsuff_1').is(':checked')) ? $('#chkSevereRenalInsuff').prop('checked', true): '';
     ($('#chkSevereRenalInsuff, #chkIsLiverFailure').is(':checked'))? $('#chkSevereRenalOrLiverFailure').prop('checked', true): $('#chkSevereRenalOrLiverFailure').prop('checked', false);
     ($('.chkBurns_1').is(':checked')) ? $('#chkBurnsLess20Percent').prop('checked', true): '';
@@ -407,7 +421,6 @@ function countRF() {
     console.log($('#chkLiverResection').is(':checked'));
     console.log($('.divGenSurgOper select').prop('selectedIndex'));
 //    console.log($('#chkBrainOrSpinalCordSurg').is(':checked'));
-let vAgeOfPatient = getCurrentAge(vBirthDateOfPatient); 
     (vAgeOfPatient > 35) ?
     $('#chkAgeMore35').prop('checked', true): '';
     (vAgeOfPatient > 40) ?

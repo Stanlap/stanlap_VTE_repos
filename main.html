@@ -137,6 +137,55 @@
         <label for='chkCalculateRiskOfBleeding'><input type='checkbox' id='chkCalculateRiskOfBleeding' checked /> Вычислять риск кровотечения при профилактике ВТЭО<br></label>
     </div>
     <div id='divAllRF'>
+        <div class='divGroupLvlRF clsTherRF clsSurgRF clsObstRF'>
+            <div class='divTogglerRF'>
+                <label>ограниченная подвижность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsRestrictedMobility' value='1300000000000010' hidden><br>
+            </div>
+            <div class='divMiddleLvlRF'>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF'>
+                    <label for='chkBedRestNoSurgPatient'><input type='checkbox' id='chkBedRestNoSurgPatient' value='1000000010000000'> постельный режим<br></label>
+                </div>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF clsObstRF'>
+                    <label for='chkBedRestMore3Days'><input type='checkbox' id='chkBedRestMore3Days' data-hasMarked='0' value='1000000120000000'> строгий постельный режим</label><span> &hellip;</span><span class='comments' hidden> (без посещения туалетной комнаты) &gt; 72 часов</span><br>
+                </div>
+                <div class='divSingleLvlRF clsSurgRF'>
+                    <label for='chkGypsumImmobOfLimbLess1Month'><input type='checkbox' id='chkGypsumImmobOfLimbLess1Month' value='1000000020000000'> гипсовая иммобилизация конечности</label><span> &hellip;</span><span class='comments' hidden> (давностью до 1 мес.)</span><br>
+                </div>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF'>
+                    <label for='chkPlegia'><input type='checkbox' id='chkPlegia' value='1000000100000000'> паралич или глубокий парез</label><span> &hellip;</span><span class='comments' hidden> (тетра- геми- или нижний грубый монопарез/плегия)</span><br>
+                </div>
+                <div class='divSingleLvlRF clsSurgRF'>
+                    <label for='chkLongSittingPosition'><input type='checkbox' id='chkLongSittingPosition' value='10000001000000000'> длительное положение сидя</label><span> &hellip;</span><span class='comments' hidden> (например длительный перелет в эконом-классе или поездка на транспорте сидя)</span><br>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
+            <div class='divTogglerRF'>
+                <label>ВТЭО в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
+            </div>
+            <div class='divMiddleLvlRF'>
+                <div class='divSingleLvlRF clsTherRF clsObstRF'>
+                    <label for='chkPreviousUnprovocedVTE'><input type='checkbox' class='chkThromboemb_1' id='chkPreviousUnprovocedVTE' value='1000000000000030'> предшествующее ВТЭО, ничем не спровоцированное или связанное с приемом эстрогенов<br></label>
+                </div>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
+                    <label for='chkPreviousProvokedVTO'><input type='checkbox' class='chkThromboemb_1 chkProvocedVTE_1' id='chkPreviousProvokedVTO' value='1000000000004000'> предшествующее спровоцированное ВТЭО, не связанное с большим хирургическим вмешательством<br></label>
+                </div>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
+                    <label for='chkPreviousProvokedVTO'><input type='checkbox' class='chkThromboemb_1 chkProvocedVTE_1' id='chkPreviousProvokedVTO' value='1000000000003000'> предшествующее ВТЭО, спровоцированное большим хирургическим вмешательством<br></label>
+                </div>
+                    <div class='divSingleLvlRF clsTherRF clsObstRF'>
+                    <label for='chkPreviousRecidivVTE'><input type='checkbox' class='chkThromboemb_1' id='chkPreviousRecidivVTE' value='1000000000004030'> предшествующие рецидивирующие ВТЭО<br></label>
+                </div>
+                <div class='divSingleLvlRF clsObstRF'>
+                    <label for='chkFamilyAnamnesisVTE'><input type='checkbox' class='chkThromboemb_2' id='chkFamilyAnamnesisVTE' value='1000000000001000'> семейный анамнез неспровоцированного или связанного с эстрогеном ВТЭО у родственника первой степени<br></label>
+                </div>
+                <div class='divSingleLvlRF clsSurgRF'>
+                    <label for='chkWasFamilyPulmEmb'><input type='checkbox' class='chkThromboemb_2' id='chkWasFamilyPulmEmb' value='10000000000000003'> тромбоэмболия в семейном анамнезе<br></label>
+                </div>
+                <hr>
+            </div>
+        </div>
         <div class='divGroupLvlRF clsAtrFibrRF clsFibrBleedingRF clsSurgBleedingRF'>
             <div class='divTogglerRF'>
                 <label>артериальная гипертензия <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000010000000000' hidden><br>
@@ -264,10 +313,10 @@
                     <label for='chkSomeLungDiseasesWithPulmInsuff'><input type='checkbox' id='chkSomeLungDiseasesWithPulmInsuff' value='1000000000000000'> любое<span hidden> заболевание легких с дыхательной недостаточностью</span></label><br>
                 </div>
 -->
-                <div class='divSingleLvlRF clsSurgRF'>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF'>
                     <label for='chkSevereLungDiseases'><input type='checkbox' class='chkBedRestMore3Days_1 chkLungDiseases_1' id='chkSevereLungDiseases' value='1000000300000000'><span hidden> тяжелые заболевания легких</span> на ИВЛ</label><span> &hellip;</span><span hidden>, с выраженной дыхательной недостаточностью, требующие искусственной вентиляцией легких</span><br>
                 </div>
-                <div class='divSingleLvlRF clsSurgRF'>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF'>
                     <label for='chkModerateLungDiseases'><input type='checkbox' class='chkLungDiseases_1' id='chkModerateLungDiseases' value='1000000200000000'><span hidden> заболевания легких</span> без ИВЛ</label><span> &hellip;</span><span class='comments' hidden>, в том числе пневмония, с дыхательной недостаточностью, не требующие искусственной вентиляции</span><br>
                 </div>
                 <div class='divSingleLvlRF clsSurgRF'>
@@ -398,80 +447,6 @@
             <label for='chkLabileINR'><input type='checkbox' id='chkLabileINR' value='1000001000000000' /> лабильное МНО</label><span> &hellip;</span><span class='comments' hidden> (&lt; 60% времени в терапевтическом диапазоне)</span><br>
         </div>
 
-        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
-            <div class='divTogglerRF'>
-                <label>ВТЭО в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
-            </div>
-            <!--
-            <label for='chkWasVeinThromb'><input type='checkbox' class='chk2_LvlRF' value='1000000000000000'> ВТЭО в анамнезе (выбрать):<br></label>
--->
-            <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF'>
-                    <label for='chkWasPulmEmb'><input type='checkbox' class='chkSumAtrFibrRF_1 chkThromboemb_1' id='chkWasPulmEmb' value='1000000000000000'> эпизод ВТЭО в анамнезе</label><span> &hellip;</span><span class='comments' hidden> (за исключением тромбоза поверхностных вен)</span><br>
-                </div>
-                <div class='divSingleLvlRF clsObstRF'>
-                    <label for='chkPreviousRecidivVTE'><input type='checkbox' class='chkThromboemb_1 chkThromboemb_2' id='chkPreviousRecidivVTE' value='1000000000004030'> предшествующие рецидивирующие ВТЭО<br></label>
-                </div>
-                <div class='divSingleLvlRF clsObstRF'>
-                    <label for='chkPreviousUnprovocedVTE'><input type='checkbox' class='chkThromboemb_1 chkThromboemb_2' id='chkPreviousUnprovocedVTE' value='1000000000000030'> предшествующие ВТЭО, ничем не спровоцированные или связанные с приемом эстрогенов<br></label>
-                </div>
-                <div class='divSingleLvlRF clsAtrFibrRF clsSurgRF clsObstRF'>
-                    <label for='chkPreviousProvokedVTO'><input type='checkbox' class='chkThromboemb_1 chkThromboemb_2 chkProvocedVTE_1' id='chkPreviousProvokedVTO' value='1000000000004000'> предшествующие спровоцированные ВТЭО, кроме единичного эпизода, связанного с большим хирургическим вмешательством<br></label>
-                </div>
-                <div class='divSingleLvlRF clsAtrFibrRF clsSurgRF clsObstRF'>
-                    <label for='chkPreviousProvokedVTO'><input type='checkbox' class='chkThromboemb_1 chkThromboemb_2 chkProvocedVTE_1' id='chkPreviousProvokedVTO' value='1000000000003000'> предшествующие ВТЭО спровоцированные большим хирургическим вмешательством<br></label>
-                </div>
-                <div class='divSingleLvlRF clsObstRF'>
-                    <label for='chkFamilyAnamnesisVTE'><input type='checkbox' class='chkThromboemb_3' id='chkFamilyAnamnesisVTE' value='1000000000001000'> семейный анамнез неспровоцированного или связанного с эстрогеном ВТЭО у родственника первой степени<br></label>
-                </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkWasFamilyPulmEmb'><input type='checkbox' class='chkThromboemb_3' id='chkWasFamilyPulmEmb' value='10000000000000003'> тромбоэмболия в семейном анамнезе<br></label>
-                </div>
-                <hr>
-            </div>
-        </div>
-        <div class='divGroupLvlRF clsTherRF clsSurgRF clsObstRF'>
-            <div class='divTogglerRF'>
-                <label>ограниченная подвижность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsRestrictedMobility' value='1000000000000010' hidden><br>
-            </div>
-            <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkBedRestNoSurgPatient'><input type='checkbox' id='chkBedRestNoSurgPatient' value='1000000010000000'> постельный режим<br></label>
-                </div>
-                <div class='divSingleLvlRF clsTherRF clsSurgRF clsObstRF'>
-                    <label for='chkBedRestMore3Days'><input type='checkbox' id='chkBedRestMore3Days' data-hasMarked='0' value='1300000120000000'> строгий постельный режим</label><span> &hellip;</span><span class='comments' hidden> (без посещения туалетной комнаты) &gt; 72 часов</span><br>
-                </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkGypsumImmobOfLimbLess1Month'><input type='checkbox' id='chkGypsumImmobOfLimbLess1Month' value='1000000020000000'> гипсовая иммобилизация конечности</label><span> &hellip;</span><span class='comments' hidden> (давностью до 1 мес.)</span><br>
-                </div>
-                <!--
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkAcuteSpinalCordDamage'><input type='checkbox' id='chkAcuteSpinalCordDamage' value='10000000000000005'> острое повреждение спинного мозга</label><span> &hellip;</span><span class='comments' hidden> (паралич &lt; 1 мес.)</span><br>
-                </div>
--->
-                <!--
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkBedRestMore3DaysAndOther'><input type='checkbox' id='chkBedRestMore3DaysAndOther' value='10000000000000003'> ограниченная подвижность</label><span> &hellip;</span><span class='comments' hidden> (постельный режим с выходом в туалет, инсульт с гемипарезом, нижняя параплегия), иммобилизация &gt; 3 сут</span><br>
-                </div>
--->
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkPlegia'><input type='checkbox' id='chkPlegia' value='1000000100000000'> паралич или глубокий парез</label><span> &hellip;</span><span class='comments' hidden> (тетра- геми- или нижний грубый монопарез/плегия)</span><br>
-                </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkLongSittingPosition'><input type='checkbox' id='chkLongSittingPosition' value='10000001000000000'> длительное положение сидя</label><span> &hellip;</span><span class='comments' hidden> (например длительный перелет в эконом-классе или поездка на транспорте сидя)</span><br>
-                </div>
-
-                <!--
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkLowParaplegia'><input type='checkbox' id='chkLowParaplegia' value='1000000100000000'> плегия или глубокий парез нижних конечностей<br></label>
-                </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkIshemicStrokeWithHemyplegia'><input type='checkbox' id='chkIshemicStrokeWithHemyplegia' value='1000000300000000'> ишемический инсульт с параличом или глубоким парезом<br></label>
-                </div>
--->
-                <hr>
-            </div>
-        </div>
         <div class='divGroupLvlRF clsTraumRF clsNeurosurgRF'>
             <div class='divTogglerRF'>
                 <label>есть травма &lt; 1 месяца назад <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsTraum' value='1000000000000000' hidden><br>
@@ -551,16 +526,16 @@
             </div>
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsTherRF clsAtrFibrRF'>
-                    <label for='chkSomeHeartInsuff' id='lblSomeHeartInsuff'><input type='checkbox' id='chkSomeHeartInsuff' value='1000000000000000'><span hidden> хроническая сердечная недостаточность</span> любой стадии<br></label>
+                    <label for='chkSomeHeartInsuff' id='lblHeartInsuff1_2'><input type='checkbox' class='chkHeartInsuff_1' id='chkHeartInsuff1_2' value='1000000000000000'><span hidden> хроническая сердечная недостаточность</span> I -II ФК по NYHA<br></label>
                 </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkHeartInsuffLess1Month'><input type='checkbox' id='chkHeartInsuffLess1Month' value='1000000010000000'><span hidden> сердечная недостаточность любой стадии</span> &lt; 1 мес.<br></label>
-                </div>
-                <div class='divSingleLvlRF clsSurgRF'>
-                    <label for='chkHeartInsuff3_4'><input type='checkbox' id='chkHeartInsuff3_4' value='10000002000000000'> хроническая сердечная недостаточность III—IV ФК по NYHA<br></label>
+                <div class='divSingleLvlRF clsTherRF clsSurgRF'>
+                    <label for='chkHeartInsuff3_4'><input type='checkbox' class='chkHeartInsuff_1' id='chkHeartInsuff3_4' value='10000002000000000'><span hidden> хроническая сердечная недостаточность</span> III—IV ФК по NYHA<br></label>
                 </div>
                 <div class='divSingleLvlRF clsSurgRF'>
                     <label for='chkCongestHeartFailOrSystLVDysfunctEFLess40Percent'><input type='checkbox' id='chkCongestHeartFailOrSystLVDysfunctEFLess40Percent' value='10000000000000001'> застойная сердечная недостаточность/дисфункция ЛЖ</label><span> &hellip;</span><span class='comments' hidden> (в частности, ФВ ≤ 40 %)</span><br>
+                </div>
+                <div class='divSingleLvlRF clsSurgRF'>
+                    <label for='chkHeartInsuffLess1Month'><input type='checkbox' id='chkHeartInsuffLess1Month' value='1000000010000000'><span hidden> сердечная недостаточность </span> &lt; 1 мес.<br></label>
                 </div>
                 <hr>
             </div>
@@ -669,7 +644,7 @@
                 <hr>
             </div>
         </div>
-        <div class='divGroupLvlRF clsTherRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF clsObstBleedingRF'>
+        <div class='divGroupLvlRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF clsObstBleedingRF'>
             <div class='divTogglerRF'>
                 <label>кровотечение активное или в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
             </div>
