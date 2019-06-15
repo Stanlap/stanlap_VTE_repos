@@ -11,7 +11,7 @@ $.extend({
     distinct: function (anArray) {
         let result = [];
         $.each(anArray, function (i, v) {
-            if ($.inArray(v, result) === -1) result.push(v);
+            if ($.inArray(v, result) == -1) result.push(v);
         });;
         return result;
     }
@@ -34,11 +34,10 @@ $('#slctMedicalProfileOfPatient').on('change', function () {
     $('#divObstOrGynProfile').show() : '';
 });;
 $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
-    if ($(this).val() === 0) {
+    if ($(this).val() == 0) {
         $('#divPregnancyOrChildbirth').show();
     } else {
-        $('#divPregnancyOrChildbirth').hide();
-        $('input[name="rdoPregnancyOrChildbirth"]:checked').prop('checked', false);
+        $('#divPregnancyOrChildbirth').hide();       $('input[name="rdoPregnancyOrChildbirth"]:checked').prop('checked', false);
     }
     $('.lblIsOrNoSurg').show();
 });;
@@ -51,7 +50,7 @@ $('#chkIsOrNoSurg').on('click', function () {
         (valuesMedPfofile.is('[value = 6]')) ? $('.btnCardiovascOper').show() : '';
         (valuesMedPfofile.is('[value = 7]')) ? $('.btnUrolOper').show() : '';
         (valuesMedPfofile.is('[value = 8]')) ? $('.btnCombustOper').show() : '';
-        (valuesMedPfofile.is('[value = 9]')) ? $('#divChooseKindOfOper').hide() : '';
+        (valuesMedPfofile.is('[value = 9]')) ? $('#pChooseOper').hide() : '';
         (valuesMedPfofile.is('[value = 10]')) ?
         $('.btnObsGynOper').show() : '';
     } else {
@@ -64,7 +63,7 @@ $('#chkIsOrNoSurg').on('click', function () {
 });;
 $('.btnAccordChooseOper').on('click', function (el) {
     el = $(this);
-    if (el.val() === 0) {
+    if (el.val() == 0) {
         el.next().hide();
         el.val(1);
     } else {
@@ -108,9 +107,8 @@ let a = '';
     return a;
 }
 $('#btnOne').on('click',function(){
-    alert(makeCaution());
-    $(this).unbind('click');
-    $('#btnOne').bind('click', goToRF);
+(makeCaution() !='')? (alert(makeCaution()), $(this).unbind('click'), $('#btnOne').bind('click', goToRF)):
+$('#btnOne').bind('click', goToRF());
 });
 
 $('#slctMedicalProfileOfPatient option').bind('click', showBtnGoToRF);
@@ -558,14 +556,14 @@ console.log(vSetRusSurgRF);
     (vCounterTraumBleedingRF > 0) ? vCounterTraumBleedingRF = 1: '';
 
     console.log($('#divAllRF input:checked'));
-    console.log(vAgeOfPatient);
-    console.log($('#chkTimeOfSurg').is(':checked'));
-    console.log(vSetRusSurgRF.includes('1'));
-    console.log(vGradeOfOper, vGradeOfOper == 0);
-    console.log(vSetRusSurgRF);
-    console.log(vCounterRusSurgRF);
-    console.log(vCounterCapriniRF);
-    console.log(vCounterRusTraumRF);
+//    console.log(vAgeOfPatient);
+//    console.log($('#chkTimeOfSurg').is(':checked'));
+//    console.log(vSetRusSurgRF.includes('1'));
+//    console.log(vGradeOfOper, vGradeOfOper == 0);
+//    console.log(vSetRusSurgRF);
+//    console.log(vCounterRusSurgRF);
+//    console.log(vCounterCapriniRF);
+//    console.log(vCounterRusTraumRF);
     
     let vIsBedRestBMI = $('#divAllRF input[id*="BMIMore"]:checked ').last();
     let vIsBedRestAge = $('#divAllRF input[id*="AgeMore"]:checked ').last();
@@ -687,6 +685,7 @@ vGeneralListOfOper = getStringOfRF($('#divChooseKindOfOper option:selected'));
 
     console.log(vGeneralListOfRF);
     console.log(vGeneralListOfOper);
+    console.log(vAgeOfPatient);
 
     console.log('Padua: ' + vCounterPaduaScore, ' IMPROVE: ' + vCounterIMPROVE, ' CHA2DS2-VASс: ' + vCounterCHA2DS2_VASс, ' HAS-BLED: ' + vCounterHAS_BLED, ' Российская шкала риска ВТЭО: ' + vCounterRusSurgRF, ' Caprini: ' + vCounterCapriniRF, ' Major Bleeding Score: ' + vCounterMajorBleedingScoreRF, ' Шкала риска кровотечений при больших травматологических вмешательствах: ' + vCounterTraumBleedingRF, ' Шкала риска ВТЭО в травматологии: ' + vCounterRusTraumRF, ' vCounterGreenTopGuideline37a: ' + vCounterGreenTop37a, ' Contraindications to LMWH use: ' + vCounterObstBleedingRF, ' vCounterGreenTopGuideline37aRus: ' + vCounterObstRuRF);
 

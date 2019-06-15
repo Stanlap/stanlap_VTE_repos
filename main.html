@@ -43,7 +43,7 @@
         </div><br>
         <label for='chkIsOrNoSurg' class='lblIsOrNoSurg' hidden><input type='checkbox' id='chkIsOrNoSurg'> Оперативное лечение:<br></label>
         <div id='divChooseKindOfOper' hidden>
-            <p>Выбрать операцию:</p>
+            <p id='pChooseOper'>Выбрать операцию:</p>
             <button class='btnAccordChooseOper btnGenSurgOper' hidden>Общая хирургия</button>
             <div class='divGenSurgOper' hidden>
                 <select size='15' multiple>
@@ -194,10 +194,10 @@
                 <div class='divSingleLvlRF clsAtrFibrRF'>
                     <label for='chkSystemicHypertension'><input type='checkbox' id='chkSystemicHypertension' data-hasMarked='0' value='1000000000000000' /><span hidden> артериальная гипертензия</span> 1 степени</label><span> &hellip;</span><span class='comments' hidden>, АД постоянно &gt; 140/90 мм рт. ст., либо контролируемая гипертония на медикаментах</span><br>
                 </div>
-                <div class='divSingleLvlRF clsFibrBleedingRF'>
+                <div class='divSingleLvlRF clsAtrFibrRF clsFibrBleedingRF'>
                     <label for='chkSystemicHypertension2Stage'><input type='checkbox' id='chkSystemicHypertension2Stage' data-hasMarked='0' value='1000001000000000' /><span hidden> артериальная гипертензия</span> 2 степени</label><span> &hellip;</span><span class='comments' hidden> систолическое АД &gt; 160 мм рт. ст.</span><br>
                 </div>
-                <div class='divSingleLvlRF clsSurgBleedingRF'>
+                <div class='divSingleLvlRF clsAtrFibrRF clsSurgBleedingRF'>
                     <label for='chkUncontrolledSystemicHypertension'><input type='checkbox' id='chkUncontrolledSystemicHypertension' data-hasMarked='0' value='1000000001000100' /> неконтролируемая артериальная гипертензия</label><span> &hellip;</span><span class='comments' hidden> (артериальное давление> 200 мм рт.ст. систолическое или > 120 мм рт.ст. диастолическое)</span><br>
                 </div>
             </div>
@@ -644,14 +644,11 @@
                 <hr>
             </div>
         </div>
-        <div class='divGroupLvlRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF clsObstBleedingRF'>
+        <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF clsObstBleedingRF'>
             <div class='divTogglerRF'>
                 <label>кровотечение активное или в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsNonsurgBleedingRF'>
-                    <label for='chkBbleeding3MonthsBefore'><input type='checkbox' id='chkBbleeding3MonthsBefore' value='104.000000000000' /><span hidden> кровотечения</span> &lt; чем за 3 мес до госпитализации<br></label>
-                </div>
                 <div class='divSingleLvlRF clsSurgBleedingRF clsObstBleedingRF'>
                     <label for='chkActiveBleeding'><input type='checkbox' id='chkActiveBleeding' value='1000000001000100' /> продолжающееся активное кровотечение<br></label>
                 </div>
@@ -661,6 +658,10 @@
                 <div class='divSingleLvlRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkPriorMajorBleeding'><input type='checkbox' id='chkPriorMajorBleeding' value='1000000001100000' /> предшествующее массивное кровотечение</label><span> &hellip;</span><span class='comments' hidden> (интракраниальное, либо требующее госпитализации, либо со снижением Hb &gt; 2 г/л, либо требующее гемотрансфузии)</span><br>
                 </div>
+                <div class='divSingleLvlRF clsNonsurgBleedingRF'>
+                    <label for='chkBbleeding3MonthsBefore'><input type='checkbox' id='chkBbleeding3MonthsBefore' value='104.000000000000' /><span hidden> кровотечения</span> &lt; чем за 3 мес до госпитализации<br></label>
+                </div>
+
                 <!--
                 <div class='divSingleLvlRF clsFibrBleedingRF'>
                     <label for='chkPpredispositionToBleedings'><input type='checkbox' id='chkPriorMajorBleedingOrPredisposingToBleeding' value='1000001000000000'/> предрасположенность к кровотечениям</label><span> &hellip;</span><span class='comments' hidden> (например, геморрагический диатез)</span><br>
