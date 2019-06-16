@@ -165,7 +165,7 @@
                 <label>ВТЭО в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsTherRF clsObstRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF  clsObstRF'>
                     <label for='chkPreviousUnprovocedVTE'><input type='checkbox' class='chkThromboemb_1' id='chkPreviousUnprovocedVTE' value='1000000000000030'> предшествующее ВТЭО, ничем не спровоцированное или связанное с приемом эстрогенов<br></label>
                 </div>
                 <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
@@ -174,7 +174,7 @@
                 <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
                     <label for='chkPreviousProvokedVTO'><input type='checkbox' class='chkThromboemb_1 chkProvocedVTE_1' id='chkPreviousProvokedVTO' value='1000000000003000'> предшествующее ВТЭО, спровоцированное большим хирургическим вмешательством<br></label>
                 </div>
-                    <div class='divSingleLvlRF clsTherRF clsObstRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF  clsObstRF'>
                     <label for='chkPreviousRecidivVTE'><input type='checkbox' class='chkThromboemb_1' id='chkPreviousRecidivVTE' value='1000000000004030'> предшествующие рецидивирующие ВТЭО<br></label>
                 </div>
                 <div class='divSingleLvlRF clsObstRF'>
@@ -517,12 +517,35 @@
                 <hr>
             </div>
         </div>
-        <div class='divSingleLvlRF clsTherRF clsSurgRF'>
-            <label for='chkAcuteMiocardInfarction'><input type='checkbox' class='chkBedRestMore3Days_1 chkSumTherRF_1' id='chkAcuteMiocardInfarction' value='1000000010000000'>острый инфаркт миокарда</label><span> &hellip;</span><span class='comments' hidden> - 12-14 дней от начала, подострый - до 2 месяцев.</span><br>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
+            <div class='divTogglerRF'>
+                <label> заболевания сосудов <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsVascularDisease' value='100000000000000' hidden><br>
+            </div>
+            <div class='divMiddleLvlRF'>
+            <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF'>
+                <label for='chkAcuteMiocardInfarction'><input type='checkbox' class='chkBedRestMore3Days_1 chkSumTherRF_1 chkArterialDisease_1' id='chkAcuteMiocardInfarction' value='1000000010000000'> острый инфаркт миокарда</label><span> &hellip;</span><span class='comments' hidden> - 12-14 дней от начала, подострый - до 2 месяцев.</span><br>
+            </div>
+            <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF'>
+                <label for='chkWasMiocardInfarction'><input type='checkbox' class='chkBedRestMore3Days_1 chkSumTherRF_1 chkArterialDisease_1' id='chkWasMiocardInfarction' value='1000000010000000'> инфаркт миокарда в анамнезе</label><span> &hellip;</span><span class='comments' hidden> - 12-14 дней от начала, подострый - до 2 месяцев.</span><br>
+            </div>
+            <div class='divSingleLvlRF clsAtrFibrRF'>
+                <label for='chkWasMyocardInfarctionOrAtherosclOfLargeArteries'><input type='checkbox' class='chkArterialDisease_1' id='chkWasMyocardInfarctionOrAtherosclOfLargeArteries' value='1000000000000000'> периферический атеросклероз, атеросклеротические бляшки в аорте</label><br>
+            </div>
+            <div class='divSingleLvlRF clsSurgRF clsObstRF'>
+                <label for='chkVaricoseVeins'><input type='checkbox' id='chkVaricoseVeins' value='1000000110001010'> варикозное расширение вен нижних конечностей<br></label>
+            </div>
         </div>
+            <div class='divSingleLvlRF clsSurgRF'>
+                <label for='chkVeinCompression'><input type='checkbox' id='chkVeinCompression' value='1000000100000000'> сдавление вен</label><span> &hellip;</span><span class='comments' hidden> опухолью, гематомой и пр.</span><br>
+            </div>
+        </div>
+        <div class='divSingleLvlRF clsSurgRF'>
+            <label for='chkLowerlimbEdema'><input type='checkbox' id='chkLowerlimbEdema' value='1000000010000000'> отек нижних конечностей<br></label>
+        </div>
+
         <div class='divGroupLvlRF clsTherRF clsAtrFibrRF'>
             <div class='divTogglerRF'>
-                <label>хроническая сердечная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkObstComorbidities' id='chkIsHeartInsuff' value='100001000000000' hidden><br>
+                <label> хроническая сердечная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkObstComorbidities' id='chkIsHeartInsuff' value='100001000000000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsTherRF clsAtrFibrRF'>
@@ -569,18 +592,18 @@
         </div>
         <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsFibrBleedingRF clsSurgRF clsSurgBleedingRF'>
             <div class='divTogglerRF'>
-                <label>ОНМК <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
+                <label>ОНМК <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsStroke' value='1000000000000000' hidden><br>
             </div>
             <!--            <label for='chkIsStroke'><input type='checkbox' class='chk2_LvlRF' value='1000000000000000'> ОНМК (выбрать):<br></label>-->
             <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsTherRF clsFibrBleedingRF clsSurgRF clsSurgBleedingRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF  clsFibrBleedingRF clsSurgRF clsSurgBleedingRF'>
                     <label for='chkAcuteStroke'><input type='checkbox' class='chkSumTherRF_1 chkStroke_1' id='chkAcuteStroke' value='1000000151000100'> острый период инсульта</label><span> &hellip;</span><span class='comments' hidden> - учитывается 30 суток т. к. используемая шкала принимает как параметр этот срок острого периода (несмотря на то, что в России острым считается период 21 сутки)</span><br>
                 </div>
                 <div class='divSingleLvlRF clsAtrFibrRF clsFibrBleedingRF'>
-                    <label for='chkStrokeHistory'><input type='checkbox' class='chkSumAtrFibrRF_1  chkStroke_1' id='chkStrokeHistory' value='1000000000000000' /> инсульт в анамнезе<br></label>
+                    <label for='chkStrokeHistory'><input type='checkbox' class='chkStroke_1' id='chkStrokeHistory' value='1000000000000000' /> инсульт в анамнезе<br></label>
                 </div>
                 <div class='divSingleLvlRF clsAtrFibrRF'>
-                    <label for='chkWasTIA'><input type='checkbox' class='chkSumAtrFibrRF_1' id='chkWasTIA' value='1000000000000000'> ТИА в анамнезе<br></label>
+                    <label for='chkWasTIA'><input type='checkbox' id='chkWasTIA' value='1000000000000000'> ТИА в анамнезе<br></label>
                 </div>
                 <hr>
             </div>
@@ -695,15 +718,6 @@
         <div class='divSingleLvlRF clsObstRF'>
             <label for='chkIsOperationInPregnancy'><input type='checkbox' id='chkIsOperationInPregnancy' value='1000000000003030'> хирургические вмешательства во время беременности или в раннем послеродовом периоде</label><span> &hellip;</span><span class='comments' hidden>, за исключением немедленного восстановления промежности, а также аппендэктомии, послеродовой стерилизации</span><br>
         </div>
-        <div class='divSingleLvlRF clsSurgRF'>
-            <label for='chkLowerlimbEdema'><input type='checkbox' id='chkLowerlimbEdema' value='1000000010000000'> отек нижних конечностей<br></label>
-        </div>
-        <div class='divSingleLvlRF clsSurgRF clsObstRF'>
-            <label for='chkVaricoseVeins'><input type='checkbox' id='chkVaricoseVeins' value='1000000110001010'> варикозное расширение вен нижних конечностей<br></label>
-        </div>
-        <div class='divSingleLvlRF clsSurgRF'>
-            <label for='chkVeinCompression'><input type='checkbox' id='chkVeinCompression' value='1000000100000000'> сдавление вен</label><span> &hellip;</span><span class='comments' hidden> опухолью, гематомой и пр.</span><br>
-        </div>
         <div class='divSingleLvlRF clsSurgRF clsTraumRF'>
             <label for='chkInflammatoryColonDiseases'><input type='checkbox' class='chkObstComorbidities' id='chkInflammatoryColonDiseases' value='1000000110020000'> воспалительные заболевания толстого кишечника<br></label>
         </div>
@@ -712,9 +726,6 @@
         </div>
         <div class='divSingleLvlRF clsTraumRF'>
             <label for='chkGeneralAnesthesia'><input type='checkbox' id='chkGeneralAnesthesia' value='10000001000000000' /> общая анестезия<br></label>
-        </div>
-        <div class='divSingleLvlRF clsAtrFibrRF'>
-            <label for='chkWasMyocardInfarctionOrAtherosclOfLargeArteries'><input type='checkbox' id='chkWasMyocardInfarctionOrAtherosclOfLargeArteries' value='1000010000000000'> сосудистое заболевание</label><span> &hellip;</span><span class='comments' hidden> (инфаркт миокарда в анамнезе, периферический атеросклероз, атеросклеротические бляшки в аорте)</span><br>
         </div>
         <div class='divSingleLvlRF clsFibrBleedingRF'>
             <label for='chkJointTakingOfAnticoagulantsAndNonsteroidalAntiinflammatoryDrugs'><input type='checkbox' id='chkJointTakingOfAnticoagulantsAndNonsteroidalAntiinflammatoryDrugs' value='1000001000000000'> совместный прием антикоагулянтов и НПВП</label><span> &hellip;</span><span class='comments' hidden> (нестероидных противовоспалительных препаратов)</span><br>
@@ -817,6 +828,7 @@
             <input type='checkbox' id='chkFamilyVeinThromb' value='1300000130000010'>
             <input type='checkbox' id='chkWasProvocedVTE' class='chk2_LvlRF' value='1000000000000020'>
             <input type='checkbox' id='chkSeverePreeclampsiaOrStillbirth' value='1000000000000020'>
+            <input type='checkbox' id='chkArterialDisease' value='1000010000000000'>
         </div>
     </div>
     <p id='pTitleOfConclusion' hidden>Комплексная оценка риска ВТЭО:</p>
