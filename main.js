@@ -321,32 +321,28 @@ let vCounterPaduaScore = 0,
     vCounterObstBleedingRF = 0;
 //  Функция countStratRF стратифицирует риск ВТЭО:
 function countStratRF(vCounterRF, x) {
+let vStratRF = '';
     switch (x) {
         case 'Padua':
-            (vCounterRF > 3) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            (vCounterRF > 3) ? vStratRF = 'высокий': '';
             return vStratRF;
-            break;
         case 'IMPROVE':
-            (vCounterRF > 7) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            (vCounterRF > 7) ? vStratRF = 'высокий': '';
             return vStratRF;
-            break;
         case 'HAS_BLED':
-            (vCounterRF > 2) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            (vCounterRF > 2) ? vStratRF = 'высокий': '';
             return vStratRF;
             break;
         case 'CHA2DS2_VASсOrRusSurgOrTraumRF':
-            (vCounterRF == 0) ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
+            (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
             return vStratRF;
-            break;
         case 'Caprini':
-            (vCounterRF == 0) ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
+            (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
             return vStratRF;
-            break;
         case 'SurgOrTraumBleedingRF':
-            (vCounterRF >= 1) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            (vCounterRF >= 1) ? vStratRF = 'высокий': '';
             return vStratRF;
-            break;
-        case 'GreenTop37aRus':
+         case 'GreenTop37aRus':
             (vCounterRF > 2) ? vStratRF = 'высокий': vStratRF = 'умеренный';
             return vStratRF;
     }
