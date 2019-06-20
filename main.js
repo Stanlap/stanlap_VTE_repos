@@ -237,6 +237,29 @@ $('.divSystemicHypertension input').on('click', function () {
 $('.divRheumaticDiseases input').on('click', function () {
     $('.divRheumaticDiseases input').not(this).prop('checked', false);
 });
+$('.chkSpinalCordInjure_1, .chkStroke_1').on('click', function () {
+    $('.chkSpinalCordInjure_1').not(this).prop('checked', false);
+    ($(this).is(':checked'))? alert('ВАЖНО! Если у пациента имеются грубые парезы или плегия, укажите это в подразделе "ограниченная повижность"'):'';
+});
+
+$('.chkBedRest_1').on('click', function () {
+    $('.chkBedRest_1').not(this).prop('checked', false);
+});
+
+
+$('#chkBedRestNoSurgPatient').on('click', function () {
+    if ($(this).is(':checked')) {
+        $('#chkBedRestMore3Days').attr('data-hasMarked', '0');
+        ($('#chkIsBedRestMore3Days').is(':checked')) ? (alert('Отмечены ранее патологические состояния и риск-факторы, которые требуют соблюдения больным строгого постального режима'), $('#chkBedRestMore3Days').prop('checked', true), $('#chkBedRestNoSurgPatient').prop('checked', false) ) : $('#chkBedRestMore3Days').prop('checked', false);
+
+    } else {
+        $('#chkBedRestMore3Days').attr('data-hasMarked', '1');
+    }
+});
+
+$('.chkBedRestMore3Days_1').on('click', function () {
+    ($(this).is(':checked')) ? $('#chkBedRestNoSurgPatient').prop('checked', false): '';
+});
 $('#chkSepsis').on('click', function () {
     ($(this).is(':checked')) ? $('#chkAcuteInflammatoryDisease').prop('checked', true): '';
 });
@@ -375,7 +398,7 @@ function countRF() {
     ($('.chkRenalInsuff_1').is(':checked')) ? $('#chkRenalInsuff').prop('checked', true): '';
     ($('.chkLiverFailure_1').is(':checked')) ? $('#chkLiverFailure').prop('checked', true): '';
     ($('#chkIsAcuteInflammatoryDiseaseOrInfection').is(':checked') && $('#chkIsRestrictedMobility').is(':checked')) ? $('#chkAcuteInflammatoryDiseaseOrInfectionWithBedRest').prop('checked', true): '';
-    ($('.chkSpinalCordInjure_1, #chkPlegia').is(':checked')) ? $('#chkSpinalCordDamageWithPlegia').prop('checked', true): '';
+    ($('.chkSpinalCordInjure_1') && $('#chkPlegia').is(':checked')) ? $('#chkSpinalCordDamageWithPlegia').prop('checked', true): '';
     ($('.chkStroke_1').is(':checked') && $('#chkPlegia').is(':checked')) ? $('#chkStrokeWithPlegia').prop('checked', true): '';
     ($('#chkArthritis').is(':checked') && $('#chkIsRestrictedMobility').is(':checked')) ? $('#chkArthritisWithRestrictedMobility').prop('checked', true): '';
     ($('#chkIsRestrictedMobility, #chkDehydration').is(':checked')) ? $('#chkIsRestrictedMobilityOrDehydration').prop('checked', true): '';
@@ -580,11 +603,11 @@ function countRF() {
         text: ('Российская риска ВТЭО в травматологии: ' + bindBalls(vCounterRusTraumRF) + '. Риск ' + countStratRF(vCounterRusTraumRF, 'CHA2DS2_VASсOrRusSurgOrTraumRF') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
-    (vCounterGreenTop37a < 3 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
+    (vCounterGreenTop37a > 2 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
         text: ('GreenTopGuideline37a: ' + bindBalls(vCounterGreenTop37a) + '. Риск ' + countStratRF(vCounterGreenTop37a, 'GreenTop37aRus') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
-    (vCounterObstRuRF < 3 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
+    (vCounterObstRuRF  > 2 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
         text: ('Российская риска ВТЭО в акушерстве-гинекологии: ' + bindBalls(vCounterObstRuRF) + '. Риск ' + countStratRF(vCounterObstRuRF, 'GreenTop37aRus') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
