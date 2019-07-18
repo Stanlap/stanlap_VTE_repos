@@ -98,7 +98,7 @@ function showBtnGoToRF() {
 }
 function makeCaution() {
     let a = '';
-    (vAgeOfPatient < 16) ? a += ('Пациент моложе 16 лет - шкалы могут подсчитывать риск ВТЭО некорректно (хотя явных указаний на это нет).'): (vAgeOfPatient > 100) ? a += ('Возраст пациента действительно ' + vAgeOfPatient + ' лет?') : '';
+    (vAgeOfPatient < 18) ? a += ('Пациент моложе 18 лет - шкалы могут подсчитывать риск ВТЭО и программа давать рекомендации некорректно.'): (vAgeOfPatient > 100) ? a += ('Возраст пациента действительно ' + vAgeOfPatient + ' лет?') : '';
     ($('#weight').prop('value') < 50 || $('#weight').prop('value') > 120) ? a += ('\nВес пациента действительно ' + ($('#weight').prop('value')) + ' кг?'): '';
     ($('#height').prop('value') < 150 || $('#height').prop('value') > 190) ? a += ('\nРост пациента действительно ' + ($('#height').prop('value')) + ' кг?'): '';
     return a;
@@ -543,6 +543,8 @@ function countRF() {
     (vCounterMajorBleedingScoreRF > 0) ? vCounterMajorBleedingScoreRF = 1: '';
     (vCounterTraumBleedingRF > 0) ? vCounterTraumBleedingRF = 1: '';
     console.log($('#divAllRF input:checked'));
+    let vAntitumorTherapyRF = 0;
+    ($('.chkAntitumorTherapyRF').is(':checked') && $('#chkSomeTherapyOfNeoplasm').is(':checked'))? vAntitumorTherapyRF = 1:''; 
     //    console.log(vAgeOfPatient);
     //    console.log($('#chkTimeOfSurg').is(':checked'));
     //    console.log(vSetRusSurgRF.includes('1'));
@@ -621,6 +623,12 @@ function countRF() {
         text: ('Модифицированная Российская версия GreenTopGuideline37a: ' + bindBalls(vCounterObstRuRF) + '. Риск ' + countStratRF(vCounterObstRuRF, 'GreenTop37aRus') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
+    
+    (vAntitumorTherapyRF == 1) ? $('<p>', {
+        text: ('Профилактика медикаментозными средствами в процессе противоопухолевой терапии целесообразна в связи с наличием факторов, создающих высокий риск ВТЭО.'),
+        class: 'pTextContainer'
+    }).appendTo($('#pTextCollector_2')): '';
+    
     ($('#pTextCollector_2').children().length > 0) ? $('#pTextCollector_2').show(): '';
 
     ($('#pTextCollector_2').children().length == 0) ? $('#pBestConclusion').show(): '';

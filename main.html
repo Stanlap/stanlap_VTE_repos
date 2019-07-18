@@ -167,7 +167,7 @@
         </div>
         <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
             <div class='divTogglerRF'>
-                <label>ВТЭО в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden><br>
+                <label>ВТЭО в анамнезе <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkAntitumorTherapyRF' value='1000000000000000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsObstRF'>
@@ -253,7 +253,7 @@
             </div>
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsFibrBleedingRF clsOncoRF'>
-                    <label for='chkHbLess_100'><input type='checkbox' id='chkHbLess_100' value='1000000100000000'> Hb &lt; 100 г/л</label>
+                    <label for='chkHbLess_100'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkHbLess_100' value='1000000100000000'> Hb &lt; 100 г/л</label>
                 </div>
                 <div class='divSingleLvlRF clsFibrBleedingRF clsObstRF'>
                     <label for='chkSickleCellAnemia'><input type='checkbox' class='chkObstComorbidities' id='chkSickleCellAnemia' value='1000000000000000'> серповидноклеточная анемия</label><br>
@@ -297,13 +297,16 @@
             <!--            <label for='chkIsHypercoagulation'><input type='checkbox' class='chk2_LvlRF' value='1000000000000000'> гиперкоагуляция (выбрать):</label><br>-->
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsOncoRF'>
-                    <label for='chkPlateletsMore_350'><input type='checkbox' id='chkPlateletsMore_350' value='1000000000000000'> тромбоциты &gt; 350 × 10 <sup><small>9</small></sup>/л</label><br>
+                    <label for='chkPlateletsMore_350'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkPlateletsMore_350' value='1000000000000000'> тромбоциты &gt; 350 × 10 <sup><small>9</small></sup>/л</label><br>
                 </div>
                 <div class='divSingleLvlRF clsOncoRF'>
                     <label for='chkFibrinogenMore_400'><input type='checkbox' id='chkFibrinogenMore_400' value='1000000000000000'> фибриноген &gt; 400 мг/мл</label><br>
                 </div>
                 <div class='divSingleLvlRF clsOncoRF'>
-                    <label for='chkDDimerMore_05'><input type='checkbox' id='chkDDimerMore_05' value='1000000000000000'> Д-димер &gt; 0,5 мкг/мл</label><br>
+                    <label for='chkDDimerMore_05'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkDDimerMore_05' value='1000000000000000'> Д-димер &gt; 0,5 мкг/мл</label><br>
+                </div>
+                <div class='divSingleLvlRF clsOncoRF'>
+                    <label for='chkUseOfErythropoiesisStimulants'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkUseOfErythropoiesisStimulants' value='1000000000000000'> использование стимуляторов эритропоэза</label><br>
                 </div>
                 <hr>
             </div>
@@ -434,7 +437,7 @@
         </div>
         <div class='divGroupLvlRF clsTherRF clsSurgRF'>
             <div class='divTogglerRF'>
-                <label>острое воспалительное заболевание или инфекция <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsAcuteInflammatoryDiseaseOrInfection' value='1000000000001000' hidden><br>
+                <label>острое воспалительное заболевание или инфекция <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkAntitumorTherapyRF' id='chkIsAcuteInflammatoryDiseaseOrInfection' value='1000000000001000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
                 <div class='divSingleLvlRF clsTherRF clsSurgRF'>
@@ -456,7 +459,7 @@
             <label for='chkInflammatoryColonDiseases'><input type='checkbox' class='chkObstComorbidities' id='chkInflammatoryColonDiseases' value='1000000110020000'> воспалительные заболевания толстого кишечника</label><br>
         </div>
         <div class='divSingleLvlRF clsOncoRF'>
-            <label for='chkWBCMore_11'><input type='checkbox' id='chkWBCMore_11' value='1000000100000000'> лейкоциты крови &gt; 11 × 10<sup><small>9</small></sup>/л</label><br>
+            <label for='chkWBCMore_11'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkWBCMore_11' value='1000000100000000'> лейкоциты крови &gt; 11 × 10<sup><small>9</small></sup>/л</label><br>
         </div>
         <div class='divGroupLvlRF clsTherRF clsNonsurgBleedingRF'>
             <div class='divTogglerRF'>
@@ -795,7 +798,7 @@
             <label for='chkBMIMore25'><input type='checkbox' id='chkBMIMore25' value='1000000010000000'> ИМТ &gt; 25 кг/м2</label>
             <label for='chkBMIMore30'><input type='checkbox' id='chkBMIMore30' value='1100000100000010'> ожирение (ИМТ &gt; 30 кг/м2)</label>
             <label for='chkBMI_30_39'><input type='checkbox' id='chkBMI_30_39' value='1000000100001000'> ожирение (ИМТ 30 - 39 кг/м2)</label>
-            <label for='chkBMIMore35'><input type='checkbox' id='chkBMIMore35' value='1000000000000000'> ожирение (ИМТ &gt; 35 кг/м2)</label>
+            <label for='chkBMIMore35'><input type='checkbox' class='chkAntitumorTherapyRF' id='chkBMIMore35' value='1000000000000000'> ожирение (ИМТ &gt; 35 кг/м2)</label>
             <label for='chkBMIMore40'><input type='checkbox' id='chkBMIMore40' value='1000000000002000'> ожирение (ИМТ &gt; 40 кг/м2)</label>
             <label for='chkAgeMore35'><input type='checkbox' id='chkAgeMore35' value='1000000000001010'> возраст &gt; 35 лет</label>
             <label for='chkAgeMore40'><input type='checkbox' id='chkAgeMore40' value='1000000000000000'> возраст &gt; 40 лет</label>
