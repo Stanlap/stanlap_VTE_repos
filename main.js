@@ -5,9 +5,12 @@ let vBirthDateOfPatient = '',
     vAgeOfPatient = '',
     vGeneralListOfRF = '',
     vGeneralListOfOper = '';
+
 $('#chkMale').on('click', function () {
     ($(this).is(':checked')) ? $('#slctMedicalProfileOfPatient [value="10"]').hide(): $('#slctMedicalProfileOfPatient [value="10"]').show();
 });
+
+
 $.extend({
     distinct: function (anArray) {
         let result = [];
@@ -115,202 +118,6 @@ $('input[name=rdoObstOrGynProfile], input[name=rdoPregnancyOrChildbirth]').click
     ($('input[name=rdoObstOrGynProfile]:checked').val() == 1) ? $('#btnOne').prop('disabled', false): ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 });
 
-let vCC = '';
-let vGFR = '';
-let vCreatinineValue = Number($('#inpCreatinineVal').val());
-let vGender = 0;
-($('#chkMale').is(':checked')) ? vGender = 1: '';
-let vWeight = Number($('#weight').val());
-let vHeight = Number($("#height").val());
-let vRace = Number($('input[name="race"]:checked').val());
-let vCreatinineUnits = Number($('input[name="rdoCrUnitsGroup"]:checked').val());
-
-function calculateGFR() {
-// Код универсального калькулятора для расчета КК и СКФ взят из открытолго источника http://boris.bikbov.ru/ Программирование: Бикбов Б.Т. Выполняя условия автора, дословно приводим комментарий, на котором настаивает автор кода:
-// Данный код может свободно распространяться и модифицироваться при использовании в некоммерческих целях
-// Обязательным условием использования и распространения данного кода являются:
-// 1. Сохранение комментариев с указанием авторства Бикбова Б.Т. в программном коде JavaScript
-// 2. Указание авторства Бикбова Б.Т. на странице с использованием данного програмного кода
-// 3. Указание активной ссылки на сайт http://boris.bikbov.ru/ на странице с использованием данного програмного кода
-//Комментарий автора кода.
-
-vCreatinineValue = Number($('#inpCreatinineVal').val());
-vGender = 0;
-($('#chkMale').is(':checked')) ? vGender = 1: '';
-vWeight = Number($('#weight').val());
-vHeight = Number($("#height").val());
-vRace = Number($('input[name="race"]:checked').val());
-vCreatinineUnits = Number($('input[name="rdoCrUnitsGroup"]:checked').val());
-
-    let gfr_cg = '',
-    bsa = '',
-    gfr_cg_bsa = '',
-    vMDRD = '',
-    vMDRD_Standartized = '',
-    vSKD_EPI = '';
-//    vCreatinineValue = vCreatinineValue.replace(/[,]+/g, '.');
-    if ((vCreatinineValue <= 0.00003) || (vCreatinineValue >= 6500)) {
-        vCreatinineValue = 0;
-    }
-    // конвертирую креатинин
-    switch (parseInt(vCreatinineUnits)) {
-        case 1: // ммоль/л
-            vCreatinineValue = 1000 * vCreatinineValue / 88.4;
-            break;
-        case 2: // мкмоль/л
-            vCreatinineValue = vCreatinineValue / 88.4;
-            break;
-    }
-// взрослые
-    if (vCreatinineValue > 0 & vGender >= 0 & vAgeOfPatient > 0) {
-        // CKD-EPI
-        if (vGender == 0) {
-            if (vCreatinineValue <= 0.7) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, vAgeOfPatient);
-            } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, vAgeOfPatient);
-            }
-        } else {
-            if (vCreatinineValue <= 0.9) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, vAgeOfPatient);
-            } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, vAgeOfPatient);
-            }
-        }
-// коэффициент для рассы
-        if (vRace == 1) { // белые
-            if (vGender == 0) {
-                vSKD_EPI = vSKD_EPI * 144;
-            } else {
-                vSKD_EPI = vSKD_EPI * 141;
-            }
-        } else { // негроидная
-            if (vGender == 0) {
-                vSKD_EPI = vSKD_EPI * 166;
-            } else {
-                vSKD_EPI = vSKD_EPI * 163;
-            }
-        }
-        vSKD_EPI = Math.round(vSKD_EPI);
-        if (vSKD_EPI > 0) {
-console.log('СКФ по формуле CKD-EPI = ' + vSKD_EPI + ' мл/мин/1,73м<sup>2</sup></div>')
-        }
-        // mdrd
-        if (vRace == 2) { // негродидная
-            vRace = 1.212;
-        }
-        // 186 - для нестандартизованных наборов креатинина, 175 - для стандартизованных
-        if (vGender == 0) {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
-        } else {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
-        }
-        if (vMDRD > 0) {
-console.log('СКФ по формуле MDRD = ' + vMDRD + ' мл/мин/1,73м<sup>2</sup> (для наборов без стандартизации креатинина)');
-console.log('СКФ по формуле MDRD = ' + vMDRD_Standartized + ' мл/мин/1,73м<sup>2</sup> (для наборов со стандартизацией креатинина по референтному реактиву SRM 967)');
-        }
-        // кокрофт
-        if (vWeight > 0) {
-            gfr_cg = ((140 - vAgeOfPatient) * vWeight / 72) / vCreatinineValue;
-            if (vGender == 0) {
-                gfr_cg = gfr_cg * 0.85;
-            }
-            if (gfr_cg > 0) {
-console.log('Клиренс креатинина по формуле Кокрофта-Голта = ' + Math.round(gfr_cg) + ' мл/мин');
-            }
-            if (vHeight > 0) {
-                bsa = (vHeight * vWeight / 3600);
-                bsa = Math.sqrt(bsa);
-                gfr_cg_bsa = gfr_cg * 1.73 / bsa;
-console.log('Клиренс креатинина по формуле Кокрофта-Голта со стандартизацией на площадь поверхности тела = ' + Math.round(gfr_cg_bsa) + ' мл/мин/1,73м<sup>2</sup>');
-            }
-        }
-    }
-}
-function GetSelectedRadioItem(name) {
-    let obj = document.getElementsByName(name);
-    chosen = "";
-    for (i = 0; i < obj.length; i++) {
-        if (obj[i].checked) {
-            chosen = obj[i].value
-        }
-    }
-    return chosen;
-}
-
-
-
-
-
-
-
-
-
-//function calculateGFR() {
-//
-//    //               let vAgeOfPatient = Number($("#age").val());
-////    let vCreatinineUnits = Number($('input[name="crunits"]').val());
-//    vCreatinineValue = Number($('#cr').val());
-//    let cr = vCreatinineValue/88.4;
-//    // синхронизация ед. изм. со значением креатинина
-////    switch (parseInt(vCreatinineUnits)) {
-////        case 1: // ммоль/л
-////            cr = 1000 * cr / 88.4;
-////        case 2: // мкмоль/л
-////            cr /= 88.4;
-////    }
-//    let bsa = '',
-//        vCG_bsa = '',
-//        vMDRD = '',
-//        vMDRD_Standartized = '',
-//        vCKD_EPI = '',
-//        vShwartz = '',
-//        vShwartz_quadratic = '';
-//    // CKD-EPI
-//    if (vGender >= 0) {
-//        if (vGender == 0) {
-//            if (cr <= 0.7) {
-//                vCKD_EPI = Math.pow((cr / 0.7), -0.329) * Math.pow(0.993, vAgeOfPatient);
-//            } else {
-//                vCKD_EPI = Math.pow((cr / 0.7), -1.209) * Math.pow(0.993, vAgeOfPatient);
-//            }
-//        } else {
-//            if (cr <= 0.9) {
-//                vCKD_EPI = Math.pow((cr / 0.9), -0.411) * Math.pow(0.993, vAgeOfPatient);
-//            } else {
-//                vCKD_EPI = Math.pow((cr / 0.9), -1.209) * Math.pow(0.993, vAgeOfPatient);
-//            }
-//        }
-//        // коэффициент для расы
-//        if (vRace == 1) { // белые
-//            (vGender == 0) ? vCKD_EPI = vCKD_EPI * 144: vCKD_EPI = vCKD_EPI * 141;
-//        }
-//    } else { // негроидная
-//        (vGender == 0) ? vCKD_EPI = vCKD_EPI * 166: vCKD_EPI = vCKD_EPI * 163;
-//    }
-//    vCKD_EPI = Math.round(vCKD_EPI);
-//    // MDRD
-//    function findMDRDValue(vRace, vGender) {
-//        (vRace == 2) ? vRace = 1.212: '';
-//        (vGender == 0) ? vRace *= 0.742: '';
-//        let vTemp = Math.pow(cr, -1.154) * Math.pow(vAgeOfPatient, -0.203) * vRace;
-//        vMDRD = Math.round(186 * vTemp);
-//        vMDRD_Standartized = Math.round(175 * vTemp);
-//    };
-//    findMDRDValue(vRace, vGender);
-//    vGFR = Math.min(vCKD_EPI, vMDRD, vMDRD_Standartized);
-//    // Cockroft-Golt
-//    let vCG = ((140 - vAgeOfPatient) * weight / 72) / cr;
-//    (vGender == 0) ? vCG *= 0.85: '';
-//    vCC = Math.round(vCG * 1.73 / (Math.sqrt(height * weight / 3600)));
-//    //               let vMlMinM = ' мл/мин/1,73м<sup>2</sup>';
-//    //               $('#myhtmloutput').html('Результат: скорость клубочковой фильтрации (СКФ) по формуле: ' + 'CKD-EPI = ' + vCKD_EPI + vMlMinM + 'MDRD = ' + vMDRD + vMlMinM + 'MDRD (со стандартизацией креатинина по референтному реактиву SRM 967) = ' + vMDRD_Standartized + vMlMinM + '. Клиренс креатинина по формуле Кокрофта-Голта ' + vCC + vMlMinM);
-//    console.log(' Clearance creatinine ' + vCC + ' Glomerular filtration rate: ' + vGFR);
-//};
-
-
 
 $('.divSingleLvlRF').on('click', function (el) {
     el = $(this).closest('.divMiddleLvlRF').prev().find('input:checkbox');
@@ -339,18 +146,9 @@ $('.btnTogglerRF').on('click', function () {
     //    console.log($(this).html());
 });
 $('#btnIsRenalInsuff').on('click', function () {
-($(this).html() == ('&gt;')) ? $('#frmGFR_CC').hide() : $('#frmGFR_CC').show();
- });
-$('#inpCreatinineVal').on('input', function(){
-    calculateGFR();
-    console.log(vCreatinineValue, vGender, vWeight, vHeight, vRace, vCreatinineUnits);
-    console.log(vCC, vGFR);
+    ($(this).html() == ('&gt;')) ? $('#frmGFR_CC').hide(): ($('#frmGFR_CC').show(), alert('Критически важно! Вводимые единицы измерения креатинина должны точно соответствовать его введенному значению. К сведению: если значение креатинина не введено, программа расценивает функцию почек как норму при назначении профилактики ВТЭО.'));
 });
-$(':reset').on('click', function(){
-    vCC = '';
-    vGFR = '';
-console.log(vCC, vGFR);
-});
+
 $('.chkLungDiseases_1').on('click', function () {
     $('.chkLungDiseases_1').not(this).prop('checked', false);
     if ($(this).is(':checked')) {
@@ -406,6 +204,10 @@ $('#chkBedRestMore3Days').on('click', function () {
 //    ($('.divMiddleLvlRF input').is(':checked')) ? (el.hide(), el.find('input:checkbox').prop('checked',true)): (el.show(), el.find('span:last-child').css('display', 'none'), el.find('span:first-child').css('display', 'block'), el.find('input:checkbox').prop('checked',false));
 //})
 
+let vGender = 0,
+    vWeight = 0,
+    vHeight = 0;
+
 function goToRF() {
 
     let selectedRF = [];
@@ -449,6 +251,10 @@ function goToRF() {
         $('#chkMaleDouble').prop('checked', false);
         $('.divFemaleLvl').show();
     }
+
+    ($('#chkMale').is(':checked')) ? vGender = 1: '';
+    vWeight = Number($('#weight').val());
+    vHeight = Number($("#height").val());
 
     $('#btnOne').unbind('click', goToRF);
     $('#btnOne').bind('click', countRF).html('Перейти к подсчету риск-факторов ВТЭО');
@@ -609,7 +415,11 @@ let vCounterPaduaScore = 0,
     vCounterTraumBleedingRF = 0,
     vCounterGreenTop37a = 0,
     vCounterObstRuRF = 0,
-    vCounterObstBleedingRF = 0;
+    vCounterObstBleedingRF = 0,
+    vCC = 125,
+    vGFR = 125;
+
+
 //  Функция countStratRF стратифицирует риск ВТЭО:
 function countStratRF(vCounterRF, x) {
     switch (x) {
@@ -643,11 +453,128 @@ function countStratRF(vCounterRF, x) {
     }
 }
 
+function calculateGFR() {
+    // Код универсального калькулятора для расчета КК и СКФ взят из открытолго источника http://boris.bikbov.ru/ Программирование: Бикбов Б.Т. Выполняя условия автора, дословно приводим комментарий, на котором настаивает автор кода:
+    // Данный код может свободно распространяться и модифицироваться при использовании в некоммерческих целях
+    // Обязательным условием использования и распространения данного кода являются:
+    // 1. Сохранение комментариев с указанием авторства Бикбова Б.Т. в программном коде JavaScript
+    // 2. Указание авторства Бикбова Б.Т. на странице с использованием данного програмного кода
+    // 3. Указание активной ссылки на сайт http://boris.bikbov.ru/ на странице с использованием данного програмного кода
+    //Комментарий автора кода.
+
+    let gfr_cg = '',
+        bsa = '',
+        gfr_cg_bsa = '',
+        vMDRD = '',
+        vMDRD_Standartized = '',
+        vSKD_EPI = '';
+    vCreatinineUnits = Number(vCreatinineUnits);
+    //    vCreatinineValue.replace(/[,]+/g, '.');
+
+    if ((vCreatinineValue <= 0.00003) || (vCreatinineValue >= 6500)) {
+        vCreatinineValue = 0;
+    }
+    // конвертирую креатинин
+    switch (parseInt(vCreatinineUnits)) {
+        case 1: // ммоль/л
+            vCreatinineValue = 1000 * vCreatinineValue / 88.4;
+            break;
+        case 2: // мкмоль/л
+            vCreatinineValue /= 88.4;
+            break;
+        case 4: // мкмоль/л
+            vCreatinineValue /= 10;
+            break;
+    }
+    // взрослые
+    if (vCreatinineValue > 0 & vGender >= 0 & vAgeOfPatient > 0) {
+        // CKD-EPI
+        if (vGender == 0) {
+            if (vCreatinineValue <= 0.7) {
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, vAgeOfPatient);
+            } else {
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, vAgeOfPatient);
+            }
+        } else {
+            if (vCreatinineValue <= 0.9) {
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, vAgeOfPatient);
+            } else {
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, vAgeOfPatient);
+            }
+        }
+        // коэффициент для расы
+        if (vRace == 1) { // белые
+            if (vGender == 0) {
+                vSKD_EPI = vSKD_EPI * 144;
+            } else {
+                vSKD_EPI = vSKD_EPI * 141;
+            }
+        } else { // негроидная
+            if (vGender == 0) {
+                vSKD_EPI = vSKD_EPI * 166;
+            } else {
+                vSKD_EPI = vSKD_EPI * 163;
+            }
+        }
+        vSKD_EPI = Math.round(vSKD_EPI);
+        //        if (vSKD_EPI > 0) {
+        //            console.log('СКФ по формуле CKD-EPI = ' + vSKD_EPI + ' мл/мин/1,73м<sup>2</sup>')
+        //        }
+        // mdrd
+        if (vRace == 2) { // негродидная
+            vRace = 1.212;
+        }
+        // 186 - для нестандартизованных наборов креатинина, 175 - для стандартизованных
+        if (vGender == 0) {
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
+        } else {
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
+        }
+        //        if (vMDRD > 0) {
+        //            console.log('СКФ по формуле MDRD = ' + vMDRD + ' мл/мин/1,73м<sup>2</sup> (для наборов без стандартизации креатинина)');
+        //            console.log('СКФ по формуле MDRD = ' + vMDRD_Standartized + ' мл/мин/1,73м<sup>2</sup> (для наборов со стандартизацией креатинина по референтному реактиву SRM 967)');
+        //        }
+        //         кокрофт
+        if (vWeight > 0) {
+            gfr_cg = ((140 - vAgeOfPatient) * vWeight / 72) / vCreatinineValue;
+            if (vGender == 0) {
+                gfr_cg = gfr_cg * 0.85;
+            }
+            //            if (gfr_cg > 0) {
+            //                console.log('Клиренс креатинина по формуле Кокрофта-Голта = ' + Math.round(gfr_cg) + ' мл/мин');
+            //            }
+            if (vHeight > 0) {
+                bsa = (vHeight * vWeight / 3600);
+                bsa = Math.sqrt(bsa);
+                gfr_cg_bsa = gfr_cg * 1.73 / bsa;
+                //                console.log('Клиренс креатинина по формуле Кокрофта-Голта со стандартизацией на площадь поверхности тела = ' + Math.round(gfr_cg_bsa) + ' мл/мин/1,73м<sup>2</sup>');
+            }
+        }
+
+    }
+    vGFR = Math.min(vSKD_EPI, vMDRD, vMDRD_Standartized);
+    vCC = Math.round(gfr_cg_bsa);
+    console.log(vGFR, vCC);
+    console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
+
+}
+
+let vRace = 1,
+    vCreatinineValue = '',
+    vCreatinineUnits = '';
+
 function countRF() {
     $('#divAllRF').hide();
+    vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     ($('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#chkPostpartum').prop('checked', true): '';
-
-
+    //vRace = Number($('input[name=rdoRace]:checked', '#frmGFR_CC').val());
+    vCreatinineValue = $('#inpCreatinineVal').val();
+    vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
+    ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
+    console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
+    calculateGFR();
     ($('.chkSumTherRF_1').is(':checked')) ? $('#chkAcuteIschemicStrokeOrMiocardInfarction').prop('checked', true): '';
     ($('.chkSumTherRF_2').is(':checked')) ? $('#chkRheumaticDiseasesOrInfection').prop('checked', true): '';
     ($('.chkThromboemb_1').is(':checked')) ? $('#chkVascularAnamnesis, #chkWasSomeVeinThromb').prop('checked', true): '';
@@ -661,7 +588,7 @@ function countRF() {
     ($('#chkIsTraum, #chkLargeOperIn30Days').is(':checked')) ? $('#chkTraumOrOperIn30Days').prop('checked', true): '';
     ($('#chkIsPulmonInsuff').is(':checked') || $('#chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
     ($('.chkSevereRenalInsuff_1').is(':checked')) ? $('#chkSevereRenalInsuff').prop('checked', true): '';
-    ($('.chkSevereRenalInsuff_2').is(':checked')|| vCreatinineValue > 200 ) ? $('#chkSevereRenalInsuff_3').prop('checked', true): '';
+    //    ($('.chkSevereRenalInsuff_2').is(':checked')|| vCreatinineValue > 200 ) ? $('#chkSevereRenalInsuff_3').prop('checked', true): '';
     ($('#chkSevereRenalInsuff, #chkIsLiverFailure').is(':checked')) ? $('#chkSevereRenalOrLiverFailure').prop('checked', true): $('#chkSevereRenalOrLiverFailure').prop('checked', false);
 
 
@@ -703,7 +630,6 @@ function countRF() {
     $('#chkElectiveCSection').prop('checked', true): '';
     ($('.divObsGynOper select').prop('selectedIndex') == 2) ?
     $('#chkCSectionInLabour').prop('checked', true): '';
-
     console.log($('#chkLiverResection').is(':checked'));
     console.log($('.divGenSurgOper select').prop('selectedIndex'));
     console.log($('#chkPancreatoDuodResection').is(':checked'));
@@ -897,22 +823,8 @@ function countRF() {
     console.log(countStratRF(vCounterGreenTop37a, 'GreenTop37aRus'));
     console.log(countStratRF(vCounterObstRuRF, 'GreenTop37aRus'));
 
-    //        let vStratPadua = '',
-    //            vStratIMPROVE = '',
-    //            vStratHAS_BLED = '',
-    //            vStratCHA2DS2_VASс = '',
-    //            vStratRusSurgRF = '',
-    //            vStratCaprini = '',
-    //            vStratSurgBleedingRF = '';
-    //
-    //        (vCounterPaduaScore > 3)? vStratPadua = 'высокий': vStratPadua = 'низкий';
-    //        (vCounterIMPROVE > 7)? vStratIMPROVE = 'высокий': vStratIMPROVE = 'низкий';
-    //        (vCounterHAS_BLED > 2)? vStratHAS_BLED = 'высокий': vStratHAS_BLED = 'низкий';
-    //        (vCounterCHA2DS2_VASс == 0)? vStratCHA2DS2_VASс = 'низкий': (2 >= vCounterCHA2DS2_VASс >= 1)? vStratCHA2DS2_VASс = 'умеренный' : vStratCHA2DS2_VASс = 'высокий';
-    //        (vCounterRusSurgRF == 0)? vStratRusSurgRF = 'низкий':
-    //            (2 >= vCounterRusSurgRF >= 1)? vStratRusSurgRF = 'умеренный' : vStratRusSurgRF = 'высокий';
-    //        (vCounterCapriniRF == 0)? vStratCaprini = 'низкий': (2 >= vCounterCapriniRF >= 1)? vStratCaprini = 'умеренный' : (4 >= vCounterCapriniRF >= 3)? vStratCaprini = 'высокий' : vStratCaprini = 'очень высокий';
-    //        (vCounterMajorBleedingScoreRF > 1)? vStratSurgBleedingRF = 'высокий': vStratSurgBleedingRF = 'низкий';
+    console.log(vGFR, vCC);
+
 }
 
 
@@ -1068,20 +980,13 @@ $('#btnTwo').on('click', function () {
         'color': 'orange'
     });
 })
-$('#btnThree').on('click', function (){
-vCreatinineValue = Number($('#inpCreatinineVal').val());
-vGender = 0;
-($('#chkMale').is(':checked')) ? vGender = 1: '';
-vWeight = Number($('#weight').val());
-vHeight = Number($("#height").val());
-vRace = Number($('input[name="race"]:checked').val());
-vCreatinineUnits = Number($('input[name="rdoCrUnitsGroup"]:checked').val());
-
-    calculateGFR();
-    console.log(vCreatinineValue, vGender, vWeight, vHeight, vRace, vCreatinineUnits);
-    console.log(vCC, vGFR);
-
-});
+//$('#btnThree').on('click', function (){
+//
+//    calculateGFR();
+//    console.log(vCreatinineValue, vGender, vWeight, vHeight, vRace, vCreatinineUnits);
+//    console.log(vCC, vGFR);
+//
+//});
 
 function createAlgorithmOfThromboembolismProphylaxis() {
     let vHighRiskOfBleeding = 0;

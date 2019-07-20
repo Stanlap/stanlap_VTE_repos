@@ -25,4 +25,7 @@ body {
   font-family: Verdana;
     font-size: 13px;
 }
+   form {
+    border: 1px solid black; /* Невидимая рамка */
+   }
 

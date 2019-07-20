@@ -611,13 +611,13 @@
         </div>
         <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF'>
             <div class='divTogglerRF'>
-                <label>почечная недостаточность <button class='btnTogglerRF' id = 'btnIsRenalInsuff'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF'  value='1000000000000000' hidden>
+                <label>почечная недостаточность <button class='btnTogglerRF' id='btnIsRenalInsuff'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden>
             </div>
             <!--
             <label for='chkIsRenalInsuff' id='lblIsRenalInsuff'><input type='checkbox' class='chk2_LvlRF' value='1000000000000000'/> почечная недостаточность (выбрать):<br></label>
 -->
 
-                <div class='divMiddleLvlRF'>
+            <div class='divMiddleLvlRF'>
 
                 <!--Скорость клубочковой фильтрации (клиренс креатинина): <input type='number' id='chkGFR'><br>               -->
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'> Скорость клубочковой фильтрации (клиренс креатинина): <br>
@@ -640,11 +640,21 @@
                     <label for='chkGlomerularFiltrationRateLess15'><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkSevereRenalInsuff_1' id='chkGlomerularFiltrationRateLess15' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> &lt; 15 мл/мин<br>
                     </label>
                 </div>
-<!--
+                <!--
                 <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkSevereRenalFailure'><input type='checkbox' class='chkSevereRenalInsuff_1' id='chkSevereRenalFailure' value='1000001000000000' /> нарушение функции почек</label><span> &hellip;</span><span class='comments' hidden>. Хронический диализ, либо трансплантация почки, либо креатинин сыворотки &gt; 200 мкмоль/л (&gt; 6 мг/дл)</span><br>
                 </div>
 -->
+
+                <!--
+                <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
+                    <label for='chkCreatinineMore_200'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkCreatinineMore_200' value='1000000000000000' /> креатинин сыворотки &gt; 200 мкмоль/л (&gt; 6 мг/дл)</label><br>
+                </div>
+-->
+
+
+
+
                 <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkChronicDialysis'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkChronicDialysis' value='1000000000000000' /> хронический диализ</label><br>
                 </div>
@@ -653,42 +663,22 @@
                     <label for='chkKidneyTransplantation'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkKidneyTransplantation' value='1000000000000000' /> трансплантация почки</label><br>
                 </div>
 
-<!--
-                <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
-                    <label for='chkCreatinineMore_200'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkCreatinineMore_200' value='1000000000000000' /> креатинин сыворотки &gt; 200 мкмоль/л (&gt; 6 мг/дл)</label><br>
+                <div class='divSingleLvlRF clsSurgRF'>
+                    <label for='chkNephroticSyndrome'><input type='checkbox' class='chkObstComorbidities' id='chkNephroticSyndrome' value='1000000100000000'> нефротический синдром<br></label>
                 </div>
--->
-
             </div>
-                         <form id='frmGFR_CC' hidden><strong>Важно
-                   !</strong> Введите данные для расчета СКФ и КК: <br>
-                    Раса:
-                    <label><input type='radio' class='chk2_LvlRF' name='race' id='raceW' value='1' checked>европеоидная</label>
-                    <label><input type='radio' class='chk2_LvlRF' name='race' id='raceB' value='2'>негроидная</label><br>
-                        Креатинин:
-                    <input type='number' id='inpCreatinineVal'><br>
-
-        <label><input type='radio' name='rdoCrUnitsGroup' id='rdoCrUnits_1' value='2' checked>мкмоль/л </label>
-        <label><input type='radio' name='rdoCrUnitsGroup' id='rdoCrUnits_2' value='1'>ммоль/л</label>
-        <label><input type='radio' name='rdoCrUnitsGroup' id='rdoCrUnits_3' value='3'>мг/дл</label><br>
-
-<!--
-                    <label><input type='radio' name='crunits' id='crunits_2' value='2' checked>мкмоль/л</label>
-                    <label><input type='radio' name='crunits' id='crunits_1' value='1'>ммоль/л</label>
-                    <label><input type='radio' name='crunits' id='crunits_3' value='3'>мг/дл</label><br><br>
--->
-<!--                    <input type='button' value='Рассчитать' onClick='calculateGFR();'>-->
-                    <input type='reset' value='Сброс'>
-                <a href="http://unitslab.com/ru/node/44" target="_blank"> Перевести в мкмоль/л из др. единиц</a>
-
-                    <hr>
-                </form>
-
+            <form id='frmGFR_CC' hidden>
+                <input type='number' id='inpCreatinineVal' placeholder='Значение креатинина'>
+                <select class='chk2_LvlRF' id='slctCrUnitsGroup'>
+                    <option id='optCrUnits_mcmol' value='2' selected><label for='opnCrUnits_mcmol'>мкмоль/л</label></option>
+                    <option id='optCrUnits_mmol' value='1'><label for='opnCrUnits_mmol'>ммоль/л</label></option>
+                    <option id='optCrUnits_mg' value='3'><label for='opnCrUnits_mg'>мг/дл(мг/100 мл, мг/%)</label></option>
+                    <option id='optCrUnits_mgX10' value='4'><label for='opnCrUnits_mgX10'>мг/дл(мг/л, мкг/мл)</label></option>
+                </select>
+                <br>
+                <label for='chkRaceB'><input type='checkbox' class='chk2_LvlRF' id='chkRaceB' value='1000000000000000' /> негроидная раса</label>
+            </form>
         </div>
-        <div class='divSingleLvlRF clsSurgRF'>
-            <label for='chkNephroticSyndrome'><input type='checkbox' class='chkObstComorbidities' id='chkNephroticSyndrome' value='1000000100000000'> нефротический синдром<br></label>
-        </div>
-
         <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF'>
             <div class='divTogglerRF'>
                 <label>печеночная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsLiverFailure' value='102.500000000100' hidden><br>
@@ -912,7 +902,7 @@
 
 
 
-            <button id='btnThree'>OK</button>
+    <!--    <button id='btnThree'>OK</button>-->
     <script src='//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script src='main.js' defer></script>
 </body>
