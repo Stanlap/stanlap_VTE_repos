@@ -129,6 +129,35 @@ $('input[name=rdoPregnancyOrChildbirth]').click(function () {
 
     ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()):($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide());
  });
+let vDateOfChildbirth = '';
+let vDateOfChildbirth_1 = '';
+//$('#btnChildbirthToday').click(function () {
+//let d = new Date();
+//vDateOfChildbirth = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+//console.log(vDateOfChildbirth);
+// });
+$('#btnChildbirthToday').click(function () {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    vDateOfChildbirth = [year, month, day].join('-');
+
+console.log(vDateOfChildbirth);
+console.log(vDateOfChildbirth == vDateOfChildbirth_1);
+
+ });
+$('#inpDateOfChildbirth').on('input', function () {
+vDateOfChildbirth_1 = $(this).val();
+
+console.log(vDateOfChildbirth_1);
+console.log(vDateOfChildbirth === vDateOfChildbirth_1);
+ });
+
 //$(".surname").val("Задерищенко")
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 //    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
