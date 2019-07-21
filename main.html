@@ -36,10 +36,15 @@
         </div>
         <div id='divPregnancyOrChildbirth' hidden>
             <p>Период наблюдения женщины:</p>
-            <label for='rdoPregnancyPeriod' class='lblPregnancyOrChildbirth'> <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoPregnancyPeriod' value='0'> беременность, срок (недели): <br></label>
-<!--            <input type='number' id='inpWeekOfPregnancy'>-->
+            <label for='rdoPregnancyPeriod' class='lblPregnancyOrChildbirth'> <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoPregnancyPeriod' value='0'> беременность </label>
+            <input type='number' id='inpWeekOfPregnancy' placeholder='срок в неделях' hidden> <br>
             <label for='rdoChildbirthPeriod' class='lblPregnancyOrChildbirth'>
-                <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoChildbirthPeriod' value='1'> роды и ранний послеродовый период <br></label>
+                <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoChildbirthPeriod' value='1'> роды и ранний послеродовый период<br></label>
+<div id='divDateOfChildbirth' hidden>
+Дата родов:
+<button id='btnChildbirthToday'>Сегодня</button>
+Ранее: </button><input type='date' id='inpDateOfСhildbirth'>
+</div>
         </div><br>
         <label for='chkIsOrNoSurg' class='lblIsOrNoSurg' hidden><input type='checkbox' id='chkIsOrNoSurg'> Оперативное лечение:<br></label>
         <div id='divChooseKindOfOper' hidden>
@@ -901,6 +906,7 @@
 <input type='checkbox' id='chkCongenitalLactaseDeficiency' value='100000000000000'>
 <input type='checkbox' id='chkAsthma' value='100000000000000'>
 <input type='checkbox' id='chkBreastFeeding' value='100000000000000'>
+<input type='checkbox' id='chkArtificialHeartValve' value='100000000000000'>
 </div>
 
 

@@ -38,7 +38,7 @@ $('#slctMedicalProfileOfPatient').on('change', function () {
     $('#divObstOrGynProfile').show(): '';
 });
 $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
-    if ($(this).val() === 0) {
+    if ($(this).val() == 0) {
         $('#divPregnancyOrChildbirth').show();
     } else {
         $('#divPregnancyOrChildbirth').hide();
@@ -95,6 +95,12 @@ function getCurrentAge(date) {
 $('#dateOfBirth').on('input', function () {
     vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
 })
+let vWeekOfPregnancy = 0;
+$('#inpWeekOfPregnancy').on('input', function () {
+    vWeekOfPregnancy = Number($(this).val());
+(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+console.log(vWeekOfPregnancy);
+});
 
 function showBtnGoToRF() {
     if (getCurrentAge(vBirthDateOfPatient) != 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)) {
@@ -115,8 +121,18 @@ $('#slctMedicalProfileOfPatient option').click(function () {
 })
 
 $('input[name=rdoObstOrGynProfile], input[name=rdoPregnancyOrChildbirth]').click(function () {
-    ($('input[name=rdoObstOrGynProfile]:checked').val() == 1) ? $('#btnOne').prop('disabled', false): ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+    ($('input[name=rdoObstOrGynProfile]:checked').val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0): ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? ($('#btnOne').prop('disabled', false)) : $('#btnOne').prop('disabled', true);
+    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 });
+
+$('input[name=rdoPregnancyOrChildbirth]').click(function () {
+
+    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()):($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide());
+ });
+//$(".surname").val("Задерищенко")
+//    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+//    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+
 
 
 $('.divSingleLvlRF').on('click', function (el) {
@@ -569,7 +585,7 @@ function countRF() {
     $('#divAllRF').hide();
     vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     ($('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#chkPostpartum').prop('checked', true): '';
-    //vRace = Number($('input[name=rdoRace]:checked', '#frmGFR_CC').val());
+
     vCreatinineValue = $('#inpCreatinineVal').val();
     vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
     ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
@@ -1002,7 +1018,7 @@ function createAlgorithmOfThromboembolismProphylaxis() {
 
     ($('#chkSevereHepaticFailure, #chkBreastFeeding').is(':checked')) ? $('#chkVarfarinum, #chkHeparinum, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis').prop('visible', false): '';
 
-    ($('#chkHeartInsuff3_4').is(':checked')) ? $('#chkAspirin').prop('visible', false): '';
+    ($('#chkHeartInsuff3_4').is(':checked')) ? $('#chkAspirin').hide(): '';
 
     ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#chkHeparinum').prop('visible', false): '';
 
@@ -1019,6 +1035,14 @@ function createAlgorithmOfThromboembolismProphylaxis() {
     (vCC < 30)? $('#chkArixtra, #chkAspirin, #chkPradaxa, #chkVarfarinum').prop('visible', false): '';
     (vCC < 15 || $('#chkChronicDialysis').is(':checked'))? $('#chkXarelto, #chkEliquis').prop('visible', false): '';
 
+
+(vWeekOfPregnancy > 0) ? $('#chkHeparinum, #chkXarelto, #chkEliquis').hide():'';
+
+(vWeekOfPregnancy > 0 || $('#chkArtificialHeartValve').is(':checked')) ? $('#chkClexane').hide():'';
+
+(vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#chkAspirin').hide():'';
+
+(vWeekOfPregnancy < 13 || vWeekOfPregnancy > 36) ? $('#chkVarfarinum').hide():'';
 
 
 
