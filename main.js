@@ -453,7 +453,7 @@ function countStratRF(vCounterRF, x) {
     }
 }
 
-function calculateGFR() {
+function calculateGFRAndСС() {
     // Код универсального калькулятора для расчета КК и СКФ взят из открытолго источника http://boris.bikbov.ru/ Программирование: Бикбов Б.Т. Выполняя условия автора, дословно приводим комментарий, на котором настаивает автор кода:
     // Данный код может свободно распространяться и модифицироваться при использовании в некоммерческих целях
     // Обязательным условием использования и распространения данного кода являются:
@@ -574,7 +574,11 @@ function countRF() {
     vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
     ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
     console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
-    calculateGFR();
+    calculateGFRAndСС();
+
+    (vGFR > 29 && vGFR < 60) ? $('#chkGlomerularFiltrationRate30_59').prop('checked', true): '';
+    (vGFR  < 30) ? $('#chkGlomerularFiltrationRateLess30').prop('checked', true): '';
+
     ($('.chkSumTherRF_1').is(':checked')) ? $('#chkAcuteIschemicStrokeOrMiocardInfarction').prop('checked', true): '';
     ($('.chkSumTherRF_2').is(':checked')) ? $('#chkRheumaticDiseasesOrInfection').prop('checked', true): '';
     ($('.chkThromboemb_1').is(':checked')) ? $('#chkVascularAnamnesis, #chkWasSomeVeinThromb').prop('checked', true): '';
@@ -982,7 +986,7 @@ $('#btnTwo').on('click', function () {
 })
 //$('#btnThree').on('click', function (){
 //
-//    calculateGFR();
+//    calculateGFRAndСС();
 //    console.log(vCreatinineValue, vGender, vWeight, vHeight, vRace, vCreatinineUnits);
 //    console.log(vCC, vGFR);
 //
@@ -993,20 +997,28 @@ function createAlgorithmOfThromboembolismProphylaxis() {
     (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? vHighRiskOfBleeding = 1: '';
 
 
-    (vAgeOfPatient < 18) ? $('#chkClexane, #chkFraxiparine, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis, ').prop('visible', false): '';
+    (vAgeOfPatient < 18) ? $('#chkClexane, #chkFraxiparine, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis').prop('visible', false): '';
     (vAgeOfPatient > 60) ? $('#chkVarfarin').prop('visible', false): '';
 
-    ($('#chkSevereHepaticFailure').is(':checked')) ? $('#chkVarfarinum, #chkHeparinum, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis, ').prop('visible', false): '';
+    ($('#chkSevereHepaticFailure, #chkBreastFeeding').is(':checked')) ? $('#chkVarfarinum, #chkHeparinum, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis').prop('visible', false): '';
 
     ($('#chkHeartInsuff3_4').is(':checked')) ? $('#chkAspirin').prop('visible', false): '';
 
     ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#chkHeparinum').prop('visible', false): '';
 
     ($('#chkAcuteInfection').is(':checked')) ? console.log('септический эндокардит?'): '';
+//    Для аспирина
+    ($('#chkMethotrexateTaking').is(':checked') || $('#chkchkAsthma').is(':checked')) ? $('#chkAspirin').prop('visible', false): '';
     //    Для гепарина
     ($('#chkIsOrNoSurg').is(':checked')) ? console.log('операция на глазах?'): '';
     ($('#chkIsDiabetes').is(':checked')) ? console.log('диабетическая ретинопатия?'): '';
+//Ксарелто
+($('№chkCongenitalLactaseDeficiency').is(':checked')) ? $('#chkchkXarelto').prop('visible', false): '';
     //   ...
+
+    (vCC < 30)? $('#chkArixtra, #chkAspirin, #chkPradaxa, #chkVarfarinum').prop('visible', false): '';
+    (vCC < 15 || $('#chkChronicDialysis').is(':checked'))? $('#chkXarelto, #chkEliquis').prop('visible', false): '';
+
 
 
 
