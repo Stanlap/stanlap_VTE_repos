@@ -90,17 +90,9 @@ function getCurrentAge(date) {
     return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
 }
 
-
-
 $('#dateOfBirth').on('input', function () {
     vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
 })
-let vWeekOfPregnancy = 0;
-$('#inpWeekOfPregnancy').on('input', function () {
-    vWeekOfPregnancy = Number($(this).val());
-(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
-console.log(vWeekOfPregnancy);
-});
 
 function showBtnGoToRF() {
     if (getCurrentAge(vBirthDateOfPatient) != 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)) {
@@ -120,45 +112,45 @@ $('#slctMedicalProfileOfPatient option').click(function () {
     ($('#slctMedicalProfileOfPatient option:selected').is('[value = 10]') && $('input[name=rdoObstOrGynProfile]:checked').val() == undefined) ? $('#btnOne').prop('disabled', true): $('#btnOne').prop('disabled', false);
 })
 
-$('input[name=rdoObstOrGynProfile], input[name=rdoPregnancyOrChildbirth]').click(function () {
-    ($('input[name=rdoObstOrGynProfile]:checked').val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0): ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? ($('#btnOne').prop('disabled', false)) : $('#btnOne').prop('disabled', true);
-    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+$('input[name=rdoObstOrGynProfile]').click(function () {
+    ($(this).val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0): ($('#btnOne').prop('disabled', true), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '');
+});
+
+$('input[name=rdoPregnancyOrChildbirth]').click(function () {
+    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = ''):($('#inpWeekOfPregnancy').hide(), vWeekOfPregnancy = 0, $('#divDateOfChildbirth').show());
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
 
-    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()):($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide());
+    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()):(vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()):(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
  });
+
+let vWeekOfPregnancy = 0;
+$('#inpWeekOfPregnancy').on('input', function () {
+    vWeekOfPregnancy = Number($(this).val());
+(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+console.log(vWeekOfPregnancy);
+});
+
+
 let vDateOfChildbirth = '';
-let vDateOfChildbirth_1 = '';
-//$('#btnChildbirthToday').click(function () {
-//let d = new Date();
-//vDateOfChildbirth = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-//console.log(vDateOfChildbirth);
-// });
 $('#btnChildbirthToday').click(function () {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
-
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
-
     vDateOfChildbirth = [year, month, day].join('-');
-
-console.log(vDateOfChildbirth);
-console.log(vDateOfChildbirth == vDateOfChildbirth_1);
+    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 
  });
 $('#inpDateOfChildbirth').on('input', function () {
-vDateOfChildbirth_1 = $(this).val();
+vDateOfChildbirth = $(this).val();
+    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 
-console.log(vDateOfChildbirth_1);
-console.log(vDateOfChildbirth === vDateOfChildbirth_1);
  });
 
-//$(".surname").val("Задерищенко")
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 //    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 
