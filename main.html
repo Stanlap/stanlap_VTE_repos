@@ -902,15 +902,26 @@
 
     <button id='btnTwo'>OK</button>
 <div id='divContraindicationsToDrugsUse' hidden>
+Имеются ли у пациента следующие состояния? (отметить)
 <input type='checkbox' id='chkMethotrexateTaking' value='100000000000000'>
 <input type='checkbox' id='chkCongenitalLactaseDeficiency' value='100000000000000'>
 <input type='checkbox' id='chkAsthma' value='100000000000000'>
 <input type='checkbox' id='chkBreastFeeding' value='100000000000000'>
 <input type='checkbox' id='chkArtificialHeartValve' value='100000000000000'>
 </div>
+<select name='slctDrugsForVTEPrevention' id='slctListOfDrugsForVTEPrevention' hidden>
+    <option value='0'>Клексан</option>
+    <option value='1'>Фраксипарин</option>
+    <option value='2'>Гепарин</option>
+    <option value='3'>Арикстра</option>
+    <option value='4'>Прадакса</option>
+    <option value='5'>Ксарелто</option>
+    <option value='6'>Эликвис</option>
+    <option value='7'>Варфарин</option>
+    <option value='8'>Аспирин-Кардио</option>
+</select>
 
-
-    <!--    <button id='btnThree'>OK</button>-->
+        <button id='btnThree'>OK</button>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script src='main.js' defer></script>
 </body>

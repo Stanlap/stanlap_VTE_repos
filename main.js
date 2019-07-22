@@ -1021,27 +1021,34 @@ $('#btnTwo').on('click', function () {
         'color': 'orange'
     });
 })
-//$('#btnThree').on('click', function (){
-//
-//    calculateGFRAndСС();
-//    console.log(vCreatinineValue, vGender, vWeight, vHeight, vRace, vCreatinineUnits);
-//    console.log(vCC, vGFR);
-//
-//});
+$('#btnThree').on('click', function (){
+createAlgorithmOfThromboembolismProphylaxis();
+});
 
 function createAlgorithmOfThromboembolismProphylaxis() {
     let vHighRiskOfBleeding = 0;
-    (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? vHighRiskOfBleeding = 1: '';
+    (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? (vHighRiskOfBleeding = 1, alert('Медикаментозная профилактика ВТЭО невозможна в связи с высоким риском кровотечения.')): $('#slctListOfDrugsForVTEPrevention').show();
 
+(vGender ==0 && vAgeOfPatient < 40 )? $('#chkBreastFeeding').show():'';
 
-    (vAgeOfPatient < 18) ? $('#chkClexane, #chkFraxiparine, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis').prop('visible', false): '';
-    (vAgeOfPatient > 60) ? $('#chkVarfarin').prop('visible', false): '';
+    (vAgeOfPatient < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="8"]').hide())
+:(vAgeOfPatient > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
 
-    ($('#chkSevereHepaticFailure, #chkBreastFeeding').is(':checked')) ? $('#chkVarfarinum, #chkHeparinum, #chkAspirin, #chkPradaxa, #chkXarelto, #chkEliquis').prop('visible', false): '';
+($('#chkSevereHepaticFailure, #chkBreastFeeding').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+$('#slctListOfDrugsForVTEPrevention [value="8"]').hide()):'';
 
-    ($('#chkHeartInsuff3_4').is(':checked')) ? $('#chkAspirin').hide(): '';
+($('#chkHeartInsuff3_4').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
 
-    ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#chkHeparinum').prop('visible', false): '';
+($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
 
     ($('#chkAcuteInfection').is(':checked')) ? console.log('септический эндокардит?'): '';
 //    Для аспирина
