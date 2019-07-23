@@ -10,7 +10,7 @@
 <body>
     <div id='divProfileOfPatient'>
         Антропометрические данные пациента:<br><br>
-        <!--        Возраст <input type='number' id='age'><br>-->
+<!--        Возраст <input type='number' id='age'><br>-->
         Дата рождения <input type='date' id='dateOfBirth'><br>
         Вес <input type='number' id='weight'><br>
         Рост <input type='number' id='height'><br>
@@ -43,7 +43,7 @@
 <div id='divDateOfChildbirth' hidden>
 Дата родов:
 <button id='btnChildbirthToday'>Сегодня</button>
-Ранее: </button><input type='date' id='inpDateOfChildbirth'>
+Ранее: <input type='date' id='inpDateOfChildbirth'>
 </div>
         </div><br>
         <label for='chkIsOrNoSurg' class='lblIsOrNoSurg' hidden><input type='checkbox' id='chkIsOrNoSurg'> Оперативное лечение:<br></label>
@@ -228,7 +228,7 @@
                 <hr>
             </div>
         </div>
-        <div class='divGroupLvlRF clsTherRF clsSurgRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF'>
             <div class='divTogglerRF'>
                 <label>острое воспалительное заболевание или инфекция <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsAcuteInflammatoryDiseaseOrInfection' value='1000000000001000' hidden><br>
             </div>
@@ -238,6 +238,9 @@
                 </div>
                 <div class='divSingleLvlRF clsSurgRF'>
                     <label for='chkSepsis'><input type='checkbox' id='chkSepsis' value='1000000310000000'> сепсис (&lt; 1 мес.)<br></label>
+                </div>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF'>
+                    <label for='chkSepticEndocarditis'><input type='checkbox' id='chkSepticEndocarditis' value='100000000000000'> септический эндокардит<br></label>
                 </div>
                 <div class='divSingleLvlRF clsTherRF clsSurgRF'>
                     <label for='chkAcuteInfection'><input type='checkbox' class='chkSumTherRF_2' id='chkAcuteInfection' value='1000000000000000'> острая инфекция<br></label>
@@ -901,15 +904,17 @@
     <p id='pBestConclusion' hidden>Риск ВТЭО низкий.</p>
 
     <button id='btnTwo'>OK</button>
+    <button id='btnThree'>OK</button>
+
 <div id='divContraindicationsToDrugsUse' hidden>
-Имеются ли у пациента следующие состояния? (отметить)
-<input type='checkbox' id='chkMethotrexateTaking' value='100000000000000'>
-<input type='checkbox' id='chkCongenitalLactaseDeficiency' value='100000000000000'>
-<input type='checkbox' id='chkAsthma' value='100000000000000'>
-<input type='checkbox' id='chkBreastFeeding' value='100000000000000'>
-<input type='checkbox' id='chkArtificialHeartValve' value='100000000000000'>
-</div>
-<select name='slctDrugsForVTEPrevention' id='slctListOfDrugsForVTEPrevention' hidden>
+<p id='pDrugsShooseComment'>Подбор препарата для профилактики ВТЭО:</p>
+<div id='divBreastFeeding' hidden>
+Если пациентка кормит грудью, планируете отменить грудное вскармливание?
+  <input type='radio' name= 'rdoBreastFeeding' value='1'/> Да
+  <input type='radio' name= 'rdoBreastFeeding' value='2'/> Нет<br>
+  </div><br>
+
+<select id='slctListOfDrugsForVTEPrevention' hidden>
     <option value='0'>Клексан</option>
     <option value='1'>Фраксипарин</option>
     <option value='2'>Гепарин</option>
@@ -919,9 +924,16 @@
     <option value='6'>Эликвис</option>
     <option value='7'>Варфарин</option>
     <option value='8'>Аспирин-Кардио</option>
-</select>
+</select><br>
 
-        <button id='btnThree'>OK</button>
+Имеются ли у пациента следующие состояния? (отметить)
+<input type='checkbox' id='chkMethotrexateTaking' value='100000000000000'>
+<input type='checkbox' id='chkCongenitalLactaseDeficiency' value='100000000000000'>
+<input type='checkbox' id='chkAsthma' value='100000000000000'>
+<input type='checkbox' id='chkArtificialHeartValve' value='100000000000000'>
+
+</div>
+
     <script src='//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script src='main.js' defer></script>
 </body>
