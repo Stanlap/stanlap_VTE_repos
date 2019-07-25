@@ -113,43 +113,49 @@ $('#slctMedicalProfileOfPatient option').click(function () {
 })
 
 $('input[name=rdoObstOrGynProfile]').click(function () {
-    ($(this).val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0): ($('#btnOne').prop('disabled', true), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '');
+    ($(this).val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0) : ($('#btnOne').prop('disabled', true), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '');
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
-    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = ''):($('#inpWeekOfPregnancy').hide(), vWeekOfPregnancy = 0, $('#divDateOfChildbirth').show());
+    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '') : ($('#inpWeekOfPregnancy').hide(), vWeekOfPregnancy = 0, $('#divDateOfChildbirth').show());
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
 
-    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()):(vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()):(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
- });
+    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()) : (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()) : (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
 
 let vWeekOfPregnancy = 0;
 $('#inpWeekOfPregnancy').on('input', function () {
     vWeekOfPregnancy = Number($(this).val());
-(vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
-console.log(vWeekOfPregnancy);
+    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    console.log(vWeekOfPregnancy);
 });
-
-
 let vDateOfChildbirth = '';
-$('#btnChildbirthToday').click(function () {
+
+function formatDate() {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
-        year = d.getFullYear();
+        year = d.getFullYear(),
+        vDateNow = '';
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
-    vDateOfChildbirth = [year, month, day].join('-');
-    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+    vDateNow = [year, month, day].join('-');
+    return vDateNow;
+};
 
- });
+$('#btnChildbirthToday').click(function () {
+    vDateOfChildbirth = formatDate();
+    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+
 $('#inpDateOfChildbirth').on('input', function () {
-vDateOfChildbirth = $(this).val();
-    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+    vDateOfChildbirth = $(this).val();
+    (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 
- });
+});
 
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 //    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
@@ -606,14 +612,14 @@ function countRF() {
     $('#divAllRF').hide();
     vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
     ($('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#chkPostpartum').prop('checked', true): '';
-($('#inpCreatinineVal').val() == '')?   vCreatinineValue = 90 : vCreatinineValue = $('#inpCreatinineVal').val();
+    ($('#inpCreatinineVal').val() == '') ? vCreatinineValue = 90: vCreatinineValue = $('#inpCreatinineVal').val();
     vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
     ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
     console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
     calculateGFRAndСС();
 
     (vGFR > 29 && vGFR < 60) ? $('#chkGlomerularFiltrationRate30_59').prop('checked', true): '';
-    (vGFR  < 30) ? $('#chkGlomerularFiltrationRateLess30').prop('checked', true): '';
+    (vGFR < 30) ? $('#chkGlomerularFiltrationRateLess30').prop('checked', true): '';
 
     ($('.chkSumTherRF_1').is(':checked')) ? $('#chkAcuteIschemicStrokeOrMiocardInfarction').prop('checked', true): '';
     ($('.chkSumTherRF_2').is(':checked')) ? $('#chkRheumaticDiseasesOrInfection').prop('checked', true): '';
@@ -1020,83 +1026,120 @@ $('#btnTwo').on('click', function () {
         'color': 'orange'
     });
 })
-$('#btnThree').on('click', function (){
-createAlgorithmOfThromboembolismProphylaxis();
+$('#btnThree').on('click', function () {
+    createAlgorithmOfThromboembolismProphylaxis();
 });
 
 $('input[name=rdoBreastFeeding]').on('click', function () {
-        $('#divBreastFeeding').hide();
-        $('#slctListOfDrugsForVTEPrevention').show();
-        ($('input[name=rdoBreastFeeding]:checked').val() == 2) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-
-    });
-
-function createAlgorithmOfThromboembolismProphylaxis() {
-    console.log(vCounterIMPROVE, vCounterHAS_BLED, vCounterMajorBleedingScoreRF, vCounterTraumBleedingRF, vCounterObstBleedingRF);
-
-    ($('#chkSepticEndocarditis').is(':checked')) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с септическим эндокардитом.'): (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с высоким риском кровотечения.'): $('#divContraindicationsToDrugsUse').show(), checkDrugsContraindications();
-function checkDrugsContraindications(){
-     (vGender == 0 && vAgeOfPatient < 40) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
-
-    (vAgeOfPatient < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) :
-    (vAgeOfPatient > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
-
-    if ($('#chkIsOrNoSurg').is(':checked')) {
-        ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper').prop('selectedIndex') == 0 || $('.divUrolOper').prop('selectedIndex') == 1) ? $('#chkHeparinum').hide(): '';
-    }
-
-    ($('#chkSevereHepaticFailure').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+    $('#divBreastFeeding').hide();
+    $('#slctListOfDrugsForVTEPrevention').show();
+    ($('input[name=rdoBreastFeeding]:checked').val() == 2) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
         $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
         $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
         $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
         $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
         $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
 
-    ($('#chkHeartInsuff3_4').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
+});
 
-    ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
+function createAlgorithmOfThromboembolismProphylaxis() {
+    console.log(vCounterIMPROVE, vCounterHAS_BLED, vCounterMajorBleedingScoreRF, vCounterTraumBleedingRF, vCounterObstBleedingRF);
 
-    (vCC < 30) ? ($('#slctListOfDrugsForVTEPrevention [value="3"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()):(vCC < 15 || $('#chkChronicDialysis').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : '';
+    //    ($('#chkSepticEndocarditis').is(':checked')) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с септическим эндокардитом.'): (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с высоким риском кровотечения.'): $('#divContraindicationsToDrugsUse').show(), checkDrugsContraindications();
 
-    (vWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()): ($('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
 
-    (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():(vWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
+    $('#divContraindicationsToDrugsUse').show();
+    checkDrugsContraindications();
 
-}
-    $('#slctListOfDrugsForVTEPrevention option:selected').on('click', function(){
-let t = '', a = $(this).val();
-    (a == 0 && vWeekOfPregnancy > 0)? t = 'пациентке установлен искусственный клапан сердца.':'';
-    (a == 2 && $('#chkIsOrNoSurg').is(':checked'))? t = 'выполнена операция на глазных яблоках':(a == 2 && $('#chkIsDiabetes').is(':checked'))? t = a + 'имеется диабетическая ретинопатия.':'';
-    (a == 5)? t = 'имеется врожденный дефицит лактазы.':'';
-    (a == 8)? t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.':'';
-alert('Назначение препарата противопоказано, если ' + t);
+    function checkDrugsContraindications() {
+        (vGender == 0 && vAgeOfPatient < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
+
+        (vWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
+
+        (vDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
+
+        (vAgeOfPatient < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+        (vAgeOfPatient > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
+
+        if ($('#chkIsOrNoSurg').is(':checked')) {
+            ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 1) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
+        }
+
+        ($('#chkSevereHepaticFailure').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+
+        ($('#chkHeartInsuff3_4').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
+
+        ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
+        ($('#chkActiveUlcerOfStomachOrDuodenum').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
+
+        (vCC < 30) ? ($('#slctListOfDrugsForVTEPrevention [value="3"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+        (vCC < 15 || $('#chkChronicDialysis').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : '';
+
+        (vWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : ($('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
+
+        (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():'';
+        (vWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide() : '';
+
+    }
+
+    $('#slctListOfDrugsForVTEPrevention').on('change', function () {
+        let a = $(this),
+            vAdd = '. '
+        t = '',
+            t1 = 'Назначение препарата противопоказано, если ',
+            t2 = ' Отменить выбранный препарат?';
+
+        function confirmIt() {
+            if (confirm(t1 + t + t2)) {
+                a.find(':selected').hide();
+                a.find('[value="9"]').attr("selected", "selected");
+            } else {
+                alert("Вы нажали кнопку отмена");
+            }
+        }
+
+        if (a.val() == 0 && vWeekOfPregnancy > 0) {
+            t = 'пациентке установлен искусственный клапан сердца.';
+            confirmIt();
+        };
+        if (a.val() == 2) {
+            if ($('#chkIsOrNoSurg').is(':checked')) {
+                t = 'выполнена операция на глазных яблоках' + vAdd;
+                ($('.chkDiabetes_1').prop('checked', false)) ? confirmIt(): '';
+            };
+            if ($('.chkDiabetes_1').is(':checked')) {
+                (t != '') ? (vAdd = ', ', t = t + vAdd + 'имеется диабетическая ретинопатия.') : t = 'имеется диабетическая ретинопатия.';
+                confirmIt();
+            };
+        };
+        if (a.val() == 5) {
+            t = 'имеется врожденный дефицит лактазы.';
+            confirmIt();
+        };
+        if (a.val() == 8) {
+            t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.';
+            confirmIt();
+        };
     });
-
-// Для клексана
-    (vWeekOfPregnancy > 0 && $('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
-
-    //    Для аспирина
-    ($('#chkMethotrexateTaking').is(':checked') || $('#chkchkAsthma').is(':checked')) ? $('#chkAspirin').prop('visible', false): '';
-    //    Для гепарина
-    ($('#chkIsOrNoSurg').is(':checked')) ? console.log('операция на глазах?'): '';
-    ($('#chkIsDiabetes').is(':checked')) ? console.log('диабетическая ретинопатия?'): '';
-    //Ксарелто
-    ($('№chkCongenitalLactaseDeficiency').is(':checked')) ? $('#chkchkXarelto').prop('visible', false): '';
-
-};
+    let drugAttrArray = new Object();
+    drugAttrArray = {
+        nameCyrillic: '',
+        nameLatin: '',
+        nameINP: ''
+    };};

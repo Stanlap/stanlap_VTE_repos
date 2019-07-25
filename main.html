@@ -553,7 +553,7 @@
         <div class='divSingleLvlRF clsTherRF clsSurgRF'>
             <label for='chkAcuteMiocardInfarction'><input type='checkbox' class='chkBedRestMore3Days_1 chkSumTherRF_1' id='chkAcuteMiocardInfarction' value='1000000010000000'>острый инфаркт миокарда</label><span> &hellip;</span><span class='comments' hidden> - 12-14 дней от начала, подострый - до 2 месяцев.</span><br>
         </div>
-        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF'>
             <div class='divTogglerRF'>
                 <label>хроническая сердечная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkObstComorbidities' id='chkIsHeartInsuff' value='100001000000000' hidden><br>
             </div>
@@ -618,7 +618,7 @@
                 <hr>
             </div>
         </div>
-        <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF'>
+        <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF clsTraumBleedingRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF'>
             <div class='divTogglerRF'>
                 <label>почечная недостаточность <button class='btnTogglerRF' id='btnIsRenalInsuff'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000000000000000' hidden>
             </div>
@@ -629,12 +629,17 @@
             <div class='divMiddleLvlRF'>
 
                 <!--Скорость клубочковой фильтрации (клиренс креатинина): <input type='number' id='chkGFR'><br>               -->
+<!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'> Скорость клубочковой фильтрации (клиренс креатинина): <br>
                     <label for='chkGlomerularFiltrationRateMore80' id='lblGlomerularFiltrationRateMore80'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRateMore80' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> &gt; 80 мл/мин<br></label>
                 </div>
+-->
+<!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'>
                     <label for='chkGlomerularFiltrationRate61_80' id='lblGlomerularFiltrationRate61_80'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRate61_80' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> 61— 80 мл/мин<br></label>
                 </div>
+-->
+<!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'>
                     <label for='chkGlomerularFiltrationRate51_60' id='lblGlomerularFiltrationRate51_60'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRate51_60' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> 51— 60 мл/мин<br></label>
                 </div>
@@ -642,6 +647,7 @@
                     <label for='chkGlomerularFiltrationRateLess15'><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkSevereRenalInsuff_1' id='chkGlomerularFiltrationRateLess15' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> &lt; 15 мл/мин<br>
                     </label>
                 </div>
+-->
                 <!--
                 <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkSevereRenalFailure'><input type='checkbox' class='chkSevereRenalInsuff_1' id='chkSevereRenalFailure' value='1000001000000000' /> нарушение функции почек</label><span> &hellip;</span><span class='comments' hidden>. Хронический диализ, либо трансплантация почки, либо креатинин сыворотки &gt; 200 мкмоль/л (&gt; 6 мг/дл)</span><br>
@@ -653,7 +659,7 @@
                     <label for='chkCreatinineMore_200'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkCreatinineMore_200' value='1000000000000000' /> креатинин сыворотки &gt; 200 мкмоль/л (&gt; 6 мг/дл)</label><br>
                 </div>
 -->
-                <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkChronicDialysis'><input type='checkbox' class='chkSevereRenalInsuff_1 chkSevereRenalInsuff_2' id='chkChronicDialysis' value='1000000000000000' /> хронический диализ</label><br>
                 </div>
 
@@ -915,7 +921,8 @@
   </div><br>
 
 <select id='slctListOfDrugsForVTEPrevention' hidden>
-    <option value='0'>Клексан</option>
+    <option value='9'>Выбрать препарат: </option>
+<option value='0'>Клексан</option>
     <option value='1'>Фраксипарин</option>
     <option value='2'>Гепарин</option>
     <option value='3'>Арикстра</option>
@@ -925,13 +932,6 @@
     <option value='7'>Варфарин</option>
     <option value='8'>Аспирин-Кардио</option>
 </select><br>
-
-Имеются ли у пациента следующие состояния? (отметить)
-<input type='checkbox' id='chkMethotrexateTaking' value='100000000000000'>
-<input type='checkbox' id='chkCongenitalLactaseDeficiency' value='100000000000000'>
-<input type='checkbox' id='chkAsthma' value='100000000000000'>
-<input type='checkbox' id='chkArtificialHeartValve' value='100000000000000'>
-
 </div>
 
     <script src='//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
