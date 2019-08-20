@@ -4,7 +4,7 @@ $(document).ready(function () {
             vRiscVTE: 0,
             vCC: 80,
             //            vDateOfSurg: '',
-            vWeight: 0,
+            vWeight: 80,
             vAge: 18
         },
 
@@ -59,11 +59,12 @@ $(document).ready(function () {
                 pair: {
                     'Nadroparin calcium': 'Надропарин кальция'
                 },
-                drugs: {
                     'singleProphDose': 0.4,
                     delivery: 'п/к',
                     container: 'шприц',
                     timesADay: 1,
+
+                drugs: {
                     Fraxiparine: {
                         nameCyr: 'Фраксипарин',
                         nameLat: 'Fraxiparine',
@@ -80,11 +81,11 @@ $(document).ready(function () {
                 pair: {
                     'Heparin sodium': 'Гепарин натрия'
                 },
-                drugs: {
                     'singleProphDose': 5000,
                     delivery: 'п/к',
                     container: 'амп.',
                     timesADay: 3,
+                drugs: {
                     Heparinum: {
                         nameCyr: 'Гепарин',
                         nameLat: 'Heparinum',
@@ -101,11 +102,12 @@ $(document).ready(function () {
                 pair: {
                     'Fondaparinux sodium': 'Фондапаринукс натрия'
                 },
-                drugs: {
                     'singleProphDose': 0.5,
                     delivery: 'п/к',
                     container: 'шприц',
                     timesADay: 1,
+
+                drugs: {
                     Arixrta: {
                         nameCyr: 'Арикстра',
                         nameLat: 'Arixrta',
@@ -117,11 +119,11 @@ $(document).ready(function () {
                 pair: {
                     'Acetylsalicylic acid': 'Ацетилсалициловая кислота'
                 },
+                'singleProphDose': 100,
+                delivery: 'внутрь',
+                container: 'таб.',
+                timesADay: 1,
                 drugs: {
-                    'singleProphDose': 100,
-                    delivery: 'внутрь',
-                    container: 'таб.',
-                    timesADay: 1,
                     'Acetylsalicylic acid': {
                         nameCyr: 'Ацетилсалициловая кислота',
                         nameLat: 'Acetylsalicylic acid',
@@ -187,11 +189,11 @@ $(document).ready(function () {
                 pair: {
                     'Dabigatran etexilate': 'Дабигатрана этексилат'
                 },
+                'singleProphDose': 110,
+                delivery: 'внутрь',
+                container: 'капс.',
+                timesADay: 1,
                 drugs: {
-                    'singleProphDose': 110,
-                    delivery: 'внутрь',
-                    container: 'капс.',
-                    timesADay: 1,
                     Pradaxa: {
                         nameCyr: 'Прадакса',
                         nameLat: 'Pradaxa',
@@ -203,11 +205,11 @@ $(document).ready(function () {
                 pair: {
                     'Rivaroxaban': 'Ривароксабан'
                 },
+                'singleProphDose': 20,
+                delivery: 'внутрь',
+                container: 'таб.',
+                timesADay: 1,
                 drugs: {
-                    'singleProphDose': 20,
-                    delivery: 'внутрь',
-                    container: 'таб.',
-                    timesADay: 1,
                     Xarelto: {
                         nameCyr: 'Ксарелто',
                         nameLat: 'Xarelto',
@@ -219,11 +221,11 @@ $(document).ready(function () {
                 pair: {
                     'Apixaban': 'Апиксабан'
                 },
+                'singleProphDose': 2.5,
+                delivery: 'внутрь',
+                container: 'таб.',
+                timesADay: 1,
                 drugs: {
-                    'singleProphDose': 2.5,
-                    delivery: 'внутрь',
-                    container: 'таб.',
-                    timesADay: 1,
                     Eliquis: {
                         nameCyr: 'Эликвис',
                         nameLat: 'Eliquis',
@@ -235,11 +237,11 @@ $(document).ready(function () {
                 pair: {
                     'Warfarin': 'Варфарин'
                 },
+                'singleProphDose': 2.5,
+                delivery: 'внутрь',
+                container: 'таб.',
+                timesADay: 1,
                 drugs: {
-                    'singleProphDose': 2.5,
-                    delivery: 'внутрь',
-                    container: 'таб.',
-                    timesADay: 1,
                     Warfarex: {
                         nameCyr: 'Варфарекс',
                         nameLat: 'Warfarex',
@@ -495,9 +497,8 @@ $(document).ready(function () {
                     vI += vI;
                     vChoosedDrug.numberOfOfficDose++;
                 }
-                console.log(vT_2.Ml, vT_1.singleProphDose);
-                console.log(vT_1.singleProphDose);
-
+                vT_1.singleProphDose += ' ml,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
 
@@ -508,6 +509,9 @@ $(document).ready(function () {
                 vT_2.ME = vOfficDose_Gen;
                 vT_2.Ml = vT_2.ME / 1000;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / 25000).toFixed(1);
+                vT_1.singleProphDose += ' ME,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+
                 break;
 
             case 'Fondaparinux sodium':
@@ -515,6 +519,8 @@ $(document).ready(function () {
                 vPatient.vCC < 30 ? (vT_1.singleProphDose = 1.5 + ' mg,', vChoosedDrug.temporaryCont = 0.3 + ' ml,') : '';
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.Mg = vT_2.Ml * 5;
+                vT_1.singleProphDose += ' Ml,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
             case 'Acetylsalicylic acid':
@@ -522,8 +528,10 @@ $(document).ready(function () {
                 vT_2.Mg = vOfficDose_Gen;
                 vT_1.singleProphDose = $('#inpText_2').val();
                 vChoosedDrug.temporaryCont = (`${(vT_1.singleProphDose/vOfficDose_Gen).toFixed(1)} ${vT_1.container},`);
-                vT_1.singleProphDose += ' mg, ';
                 $('#btnTry').trigger('click').remove();
+                vT_1.singleProphDose += ' Mg,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+
                 break;
 
             case 'Dabigatran etexilate':
@@ -535,37 +543,35 @@ $(document).ready(function () {
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.temporaryCont = '';
                 vI = +$('#inpText_1').val();
-                while (vI < vDrugsList['Dabigatran etexilate'].singleProphDose) {
+                while (vI < vT_1.singleProphDose) {
                     vI += vI;
                     vT_1++;
                 }
-                vDrugsList['Dabigatran etexilate'].singleProphDose += ' mg,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container}: ${vT_1},`);
+                vT_1.singleProphDose += ' mg,';
                 break;
 
             case 'Rivaroxaban':
                 console.log('Rivaroxaban');
                 (vPatient.vCC > 30 || vPatient.vCC < 51) ? vT_1.singleProphDose = 15: '';
                 vT_2.Mg = vOfficDose_Gen;
-                vT_1 = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vChoosedDrug.temporaryCont = (`${vT_1.container}: ${vT_1},`);
+                vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
                 vT_1.singleProphDose += ' mg,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
             case 'Apixaban':
                 console.log('Apixaban');
                 vT_2.Mg = vOfficDose_Gen;
-                vT_1 = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vChoosedDrug.temporaryCont = (`${vT_1.container}: ${vT_1},`);
+                vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 vT_1.singleProphDose += ' mg,';
                 break;
             case 'Warfarin':
                 console.log('Warfarin');
                 vT_2.Mg = vOfficDose_Gen;
-                vT_1 = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vChoosedDrug.temporaryCont = (`${vT_1.container}: ${vT_1},`);
-                vT_1.singleProphDose += ' mg,';
-
-                break;
+                vChoosedDrug.temporaryCont = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
+               vT_1.singleProphDose += ' mg,';
+                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.temporaryCont},`);
+                 break;
         };
 
         let vTimE_S = 'раза',
