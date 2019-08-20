@@ -1,0 +1,11 @@
+{
+    "esversion": 6,
+    "quotmark": "single",
+    "jquery": true,
+    "browser": true,
+    "esnext": true,
+    "globals": {},
+    "globalstrict": true,
+    "undef": true,
+    "unused": true
+}
