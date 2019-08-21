@@ -1,10 +1,9 @@
 $(document).ready(function () {
     vPatient = {
-            vMedProfile: 0,
+            vMedProfile: 4,
             vRiscVTE: 0,
-            vCC: 80,
-            //            vDateOfSurg: '',
-            vWeight: 80,
+            vCC: 40,
+            vWeight: 65,
             vAge: 18
         },
 
@@ -59,10 +58,10 @@ $(document).ready(function () {
                 pair: {
                     'Nadroparin calcium': 'Надропарин кальция'
                 },
-                    'singleProphDose': 0.4,
-                    delivery: 'п/к',
-                    container: 'шприц',
-                    timesADay: 1,
+                'singleProphDose': 0.4,
+                delivery: 'п/к',
+                container: 'шприц',
+                timesADay: 1,
 
                 drugs: {
                     Fraxiparine: {
@@ -81,10 +80,10 @@ $(document).ready(function () {
                 pair: {
                     'Heparin sodium': 'Гепарин натрия'
                 },
-                    'singleProphDose': 5000,
-                    delivery: 'п/к',
-                    container: 'амп.',
-                    timesADay: 3,
+                'singleProphDose': 5000,
+                delivery: 'п/к',
+                container: 'амп.',
+                timesADay: 3,
                 drugs: {
                     Heparinum: {
                         nameCyr: 'Гепарин',
@@ -102,10 +101,10 @@ $(document).ready(function () {
                 pair: {
                     'Fondaparinux sodium': 'Фондапаринукс натрия'
                 },
-                    'singleProphDose': 0.5,
-                    delivery: 'п/к',
-                    container: 'шприц',
-                    timesADay: 1,
+                'singleProphDose': 0.5,
+                delivery: 'п/к',
+                container: 'шприц',
+                timesADay: 1,
 
                 drugs: {
                     Arixrta: {
@@ -276,7 +275,7 @@ $(document).ready(function () {
         titleLat: '',
         officDose: {},
         numberOfOfficDose: 1,
-        frequencyOfDrugTaking: ''
+        frequencyOfDrugTaking: 'сут.'
     };
 
     $('<div/>').attr({
@@ -409,12 +408,12 @@ $(document).ready(function () {
             };
             addOptionsToDatalist(vSingleDosesList, $('#dlstList_2'));
         };
-        vPatient.vMedProfile === 2 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 2, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]) : '';
-
-        vPatient.vMedProfile === 4 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 220, vDrugsList['Dabigatran etexilate'].timesADay = 1, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]) : '';
-        vPatient.age > 75 ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150] : '';
-        (vPatient.age > 80 || (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]: '';
-        (vPatient.vMedProfile === 4 && (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]: '';
+        //        vPatient.vMedProfile === 2 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 2, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]) : '';
+        //
+        //        vPatient.vMedProfile === 4 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 220, vDrugsList['Dabigatran etexilate'].timesADay = 1, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]) : '';
+        //        vPatient.age > 75 ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150] : '';
+        //        (vPatient.age > 80 || (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]: '';
+        //        (vPatient.vMedProfile === 4 && (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]: '';
 
         let vTPath_1 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs;
         addOptionsToDatalist(vTPath_1[vChoosedDrug.titleLat].officDose, $('#dlstList_1'));
@@ -460,24 +459,23 @@ $(document).ready(function () {
         switch (vChoosedDrug.vChoosedDrugGroupLat) {
 
             case 'Enoxaparin sodium':
+                console.log('Enoxaparin sodium');
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.Mg = vT_2.Ml * 100;
                 vT_2.aXa = vT_2.Ml * 10000;
                 if (vT_2.Mg === 30 && vPatient.vRiscVTE === 2) {
                     vT_1.timesADay = 2;
                     vT_1.singleProphDose = 30;
-                } else {
-                    vT_3 = vT_2.Mg;
-                    while (vT_3 < vT_1.singleProphDose) {
-                        vT_3 += vT_3;
-                        vChoosedDrug.numberOfOfficDose++;
-                    }
+                }
+                (vPatient.vRiscVTE === 1 || vPatient.vCC < 30) ? (vT_1.singleProphDose = 20, vChoosedDrug.numberOfOfficDose = 1) : '';
+                vT_3 = vT_2.Mg;
+                while (vT_3 < vT_1.singleProphDose) {
+                    vT_3 += vT_3;
+                    vChoosedDrug.numberOfOfficDose++;
                 };
-                (vPatient.vRiscVTE === 1 || vPatient.vCC < 30) ? (vT_1.singleProphDose.Mg = 20, vChoosedDrug.numberOfOfficDose = 1) : '';
-                vT_1.singleProphDose += ' mg,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose/100} ml, ${vT_1.singleProphDose} mg,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
-
 
             case 'Nadroparin calcium':
                 console.log('Nadroparin calcium');
@@ -485,20 +483,20 @@ $(document).ready(function () {
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.aXa = vT_2.Ml * 9500;
 
-                (vPatient.vMedProfile === 1 && vPatient.vWeight > 70) ? vT_1.singleProphDose = 0.6: '';
-                (vPatient.vMedProfile === 2) ? vT_1.singleProphDose = 0.3: '';
-                if (vPatient.vMedProfile === 3) {
+                ((vPatient.vMedProfile === 1 || vPatient.vMedProfile === 2) && vPatient.vWeight > 70) ? vT_1.singleProphDose = 0.6: '';
+                (vPatient.vMedProfile === 3) ? vT_1.singleProphDose = 0.3: '';
+                if (vPatient.vMedProfile === 4) {
                     vPatient.vWeight < 50 ? vT_1.singleProphDose = 0.2 : vPatient.vWeight > 70 ? vT_1.singleProphDose = 0.4 : vT_1.singleProphDose = 0.3;
                 };
-                vPatient.vCC < 30 ? vT_1.singleProphDose = +(vT_1.singleProphDose *= 0.75).toFixed(1) : '';
+                vPatient.vCC < 30 ? vT_1.singleProphDose = +(vT_1.singleProphDose *= 0.75).toFixed(2) : '';
 
                 vI = vT_2.Ml;
                 while (vI < vT_1.singleProphDose) {
                     vI += vI;
                     vChoosedDrug.numberOfOfficDose++;
                 }
-                vT_1.singleProphDose += ' ml,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} ml, ${vT_1.singleProphDose*100} mg,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
 
@@ -509,29 +507,27 @@ $(document).ready(function () {
                 vT_2.ME = vOfficDose_Gen;
                 vT_2.Ml = vT_2.ME / 1000;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / 25000).toFixed(1);
-                vT_1.singleProphDose += ' ME,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
-
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} ME,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
             case 'Fondaparinux sodium':
                 console.log('Fondaparinux sodium');
-                vPatient.vCC < 30 ? (vT_1.singleProphDose = 1.5 + ' mg,', vChoosedDrug.temporaryCont = 0.3 + ' ml,') : '';
+                vPatient.vCC < 50 ? vChoosedDrug.singleProphDose = (`0,3 ml, 1,5 mg,`) : vChoosedDrug.singleProphDose = (`0,5 ml, 2,5 mg,`);
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.Mg = vT_2.Ml * 5;
-                vT_1.singleProphDose += ' Ml,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
             case 'Acetylsalicylic acid':
                 console.log('Acetylsalicylic acid');
                 vT_2.Mg = vOfficDose_Gen;
                 vT_1.singleProphDose = $('#inpText_2').val();
-                vChoosedDrug.temporaryCont = (`${(vT_1.singleProphDose/vOfficDose_Gen).toFixed(1)} ${vT_1.container},`);
+                vChoosedDrug.tempCont = (`${(vT_1.singleProphDose/vOfficDose_Gen).toFixed(1)} ${vT_1.container},`);
                 $('#btnTry').trigger('click').remove();
-                vT_1.singleProphDose += ' Mg,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
-
+                vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vT_2.Mg).toFixed(1);
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} Mg,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
             case 'Dabigatran etexilate':
@@ -541,7 +537,7 @@ $(document).ready(function () {
                 (vPatient.vMedProfile === 4 && (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 1) : '';
 
                 vT_2.Mg = vOfficDose_Gen;
-                vChoosedDrug.temporaryCont = '';
+                vChoosedDrug.tempCont = '';
                 vI = +$('#inpText_1').val();
                 while (vI < vT_1.singleProphDose) {
                     vI += vI;
@@ -556,27 +552,27 @@ $(document).ready(function () {
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
                 vT_1.singleProphDose += ' mg,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
+
             case 'Apixaban':
                 console.log('Apixaban');
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 vT_1.singleProphDose += ' mg,';
                 break;
+
             case 'Warfarin':
                 console.log('Warfarin');
                 vT_2.Mg = vOfficDose_Gen;
-                vChoosedDrug.temporaryCont = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-               vT_1.singleProphDose += ' mg,';
-                vChoosedDrug.temporaryCont = (`${vT_1.container} ${vChoosedDrug.temporaryCont},`);
-                 break;
+                vChoosedDrug.tempCont = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
+                vT_1.singleProphDose += ' mg,';
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.tempCont},`);
+                break;
         };
 
-        let vTimE_S = 'раза',
-            vText_1 = '',
-            vText_2 = '';
+         let vTimE_S = 'раза';
 
         function convertObjPairsToString(vObj) {
             let vText = '',
@@ -589,10 +585,10 @@ $(document).ready(function () {
             return vText;
         }
         (vT_1.timesADay === 1 || vT_1.timesADay > 4) ? vTimE_S = 'раз': '';
-        vText_1 = convertObjPairsToString(vT_2);
-        vText_2 = (`${vChoosedDrug.temporaryCont} ${vT_1.singleProphDose} `);
+    let vText_1 = convertObjPairsToString(vT_2),
+        vText_2 = (`${vChoosedDrug.tempCont} ${vChoosedDrug.singleProphDose} `);
 
-        console.log(`Выбран препарат: ${vChoosedDrug.titleCyr} (${vChoosedDrug.titleLat}${vText_1}, ${vT_1.container} 1) ${vT_1.delivery}, ${vText_2}${vT_1.timesADay} ${vTimE_S}/сут.${vChoosedDrug.frequencyOfDrugTaking}`);
+        console.log(`Выбран препарат: ${vChoosedDrug.titleCyr} (${vChoosedDrug.titleLat}${vText_1}, ${vT_1.container} 1) ${vT_1.delivery}, ${vText_2}${vT_1.timesADay} ${vTimE_S}/${vChoosedDrug.frequencyOfDrugTaking}`);
     });
 
     //                let vObjDrugPairs = {},
@@ -607,10 +603,10 @@ $(document).ready(function () {
     //                addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
 
     $('#btnTry').on('click', function () {
-
-        //Код не удалять!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (vPatient.vMedProfile === 3 && +$('#inpText_2').val() === 300) {
-            vChoosedDrug.frequencyOfDrugTaking = ' ' + $('#inpText_3').val() + '.';
+        //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (vPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
+$('#inpText_3').val() === 'через день' ?
+            vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
             console.log(vChoosedDrug.frequencyOfDrugTaking);
         };
     });
