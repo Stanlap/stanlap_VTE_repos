@@ -2,9 +2,9 @@ $(document).ready(function () {
     vPatient = {
             vMedProfile: 4,
             vRiscVTE: 0,
-            vCC: 40,
+            vCC: 70,
             vWeight: 65,
-            vAge: 18
+            vAge: 80
         },
 
         vDrugsList = {
@@ -188,15 +188,15 @@ $(document).ready(function () {
                 pair: {
                     'Dabigatran etexilate': 'Дабигатрана этексилат'
                 },
-                'singleProphDose': 110,
+                'singleProphDose': 150,
                 delivery: 'внутрь',
                 container: 'капс.',
-                timesADay: 1,
+                timesADay: 2,
                 drugs: {
                     Pradaxa: {
                         nameCyr: 'Прадакса',
                         nameLat: 'Pradaxa',
-                        officDose: [75, 110, 150],
+                        officDose: [75, 150],
                     }
                 }
             },
@@ -236,7 +236,7 @@ $(document).ready(function () {
                 pair: {
                     'Warfarin': 'Варфарин'
                 },
-                'singleProphDose': 2.5,
+                'singleProphDose': 5.0,
                 delivery: 'внутрь',
                 container: 'таб.',
                 timesADay: 1,
@@ -408,17 +408,16 @@ $(document).ready(function () {
             };
             addOptionsToDatalist(vSingleDosesList, $('#dlstList_2'));
         };
-        //        vPatient.vMedProfile === 2 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 2, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]) : '';
-        //
-        //        vPatient.vMedProfile === 4 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 220, vDrugsList['Dabigatran etexilate'].timesADay = 1, vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]) : '';
-        //        vPatient.age > 75 ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150] : '';
-        //        (vPatient.age > 80 || (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [110]: '';
-        //        (vPatient.vMedProfile === 4 && (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? vDrugsList['Dabigatran etexilate'].Pradaxa.officDose = [75, 150]: '';
+        let vTPath_1 = vDrugsList['Dabigatran etexilate'];
+        (vPatient.vMedProfile === 2 && (vPatient.vAge > 75 || vPatient.vCC < 51)) ? (vTPath_1.singleProphDose = 110, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
+        if (vPatient.vMedProfile === 4) {
+            vTPath_1.timesADay = 1;
+            vPatient.vAge < 76 ? (vTPath_1.singleProphDose = 220, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
+        };
 
-        let vTPath_1 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs;
-        addOptionsToDatalist(vTPath_1[vChoosedDrug.titleLat].officDose, $('#dlstList_1'));
-        //        $('#inpText_1').val(vTPath_1[vChoosedDrug.titleLat].singleProphDose);
-        //console.log($('#inpText_1').val());
+        let vTPath_2 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs;
+        addOptionsToDatalist(vTPath_2[vChoosedDrug.titleLat].officDose, $('#dlstList_1'));
+
         $('#btnOne').unbind('click', addDrugTitles);
     };
     $('#btnOne').bind('click', addDrugTitles);
@@ -532,18 +531,15 @@ $(document).ready(function () {
 
             case 'Dabigatran etexilate':
                 console.log('Dabigatran etexilate');
-                vPatient.age > 75 ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 1) : '';
-                (vPatient.age > 80 || (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 110, vDrugsList['Dabigatran etexilate'].timesADay = 2) : '';
-                (vPatient.vMedProfile === 4 && (vPatient.age > 75 && (vPatient.vCC > 30 || vPatient.vCC < 51))) ? (vDrugsList['Dabigatran etexilate'].singleProphDose = 150, vDrugsList['Dabigatran etexilate'].timesADay = 1) : '';
 
                 vT_2.Mg = vOfficDose_Gen;
-                vChoosedDrug.tempCont = '';
-                vI = +$('#inpText_1').val();
+                vI = vOfficDose_Gen;
                 while (vI < vT_1.singleProphDose) {
                     vI += vI;
-                    vT_1++;
+                    vChoosedDrug.numberOfOfficDose++;
                 }
-                vT_1.singleProphDose += ' mg,';
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} Mg,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
             case 'Rivaroxaban':
@@ -551,7 +547,7 @@ $(document).ready(function () {
                 (vPatient.vCC > 30 || vPatient.vCC < 51) ? vT_1.singleProphDose = 15: '';
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vT_1.singleProphDose += ' mg,';
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} Mg,`);
                 vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
 
@@ -559,20 +555,20 @@ $(document).ready(function () {
                 console.log('Apixaban');
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} Mg,`);
                 vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
-                vT_1.singleProphDose += ' mg,';
                 break;
 
             case 'Warfarin':
                 console.log('Warfarin');
                 vT_2.Mg = vOfficDose_Gen;
-                vChoosedDrug.tempCont = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                vT_1.singleProphDose += ' mg,';
-                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.tempCont},`);
+                vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
+                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} Mg,`);
+                vChoosedDrug.tempCont = (`${vT_1.container} ${vChoosedDrug.numberOfOfficDose},`);
                 break;
         };
 
-         let vTimE_S = 'раза';
+        let vTimE_S = 'раза';
 
         function convertObjPairsToString(vObj) {
             let vText = '',
@@ -585,28 +581,17 @@ $(document).ready(function () {
             return vText;
         }
         (vT_1.timesADay === 1 || vT_1.timesADay > 4) ? vTimE_S = 'раз': '';
-    let vText_1 = convertObjPairsToString(vT_2),
-        vText_2 = (`${vChoosedDrug.tempCont} ${vChoosedDrug.singleProphDose} `);
+        let vText_1 = convertObjPairsToString(vT_2),
+            vText_2 = (`${vChoosedDrug.tempCont} ${vChoosedDrug.singleProphDose} `);
 
         console.log(`Выбран препарат: ${vChoosedDrug.titleCyr} (${vChoosedDrug.titleLat}${vText_1}, ${vT_1.container} 1) ${vT_1.delivery}, ${vText_2}${vT_1.timesADay} ${vTimE_S}/${vChoosedDrug.frequencyOfDrugTaking}`);
     });
 
-    //                let vObjDrugPairs = {},
-    //                    vArrPairs = Object.keys(vDrugsList).map(function (name) {
-    //                        return vDrugsList[name].pair;
-    //                    });
-    //                vObjDrugPairs[Object.keys(vArrPairs[0])] = Object.values(vArrPairs[0])[0];
-    //                $(vArrPairs).each(function (index) {
-    //                    vObjDrugPairs[Object.keys(vArrPairs[index])] = Object.values(vArrPairs[index])[0];
-    //                });
-    //                console.log(vObjDrugPairs);
-    //                addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
-
     $('#btnTry').on('click', function () {
         //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (vPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
-$('#inpText_3').val() === 'через день' ?
-            vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
+            $('#inpText_3').val() === 'через день' ?
+                vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
             console.log(vChoosedDrug.frequencyOfDrugTaking);
         };
     });
