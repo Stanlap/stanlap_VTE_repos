@@ -1,5 +1,5 @@
 $(document).ready(function () {
-let vWeekOfPregnancy = 5,
+let vWeekOfPregnancy = 0,
     vDateOfChildbirth = 25/08/2019;
 
     vPatient = {
@@ -285,6 +285,7 @@ let vWeekOfPregnancy = 5,
     $('<div/>').attr({
             id: 'invitToAct_1'
         })
+
         .html('Выберите препарат по МНН:')
         .appendTo('#drugChooser');
 $('<label/>')
@@ -324,8 +325,7 @@ $('<label/>')
             id: 'inpText_1',
             type: 'text',
             list: 'dlstList_1'
-        })
-        .appendTo('#drugChooser');
+        }).hide().appendTo('#drugChooser');
     $('<datalist/>').attr({
             id: 'dlstList_1',
         })
@@ -361,11 +361,62 @@ $('<label/>')
         })
         .appendTo('#inpText_2');
 
-(vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) ? ($('#invitToAct_1').html('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?'), $('#lblBreastFeeding_1, #lblBreastFeeding_2').show()) : '';
+(vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) ? ($('#invitToAct_1').html('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?'), $('#lblBreastFeeding_1, #lblBreastFeeding_2').show()) : $('#inpText_1').show();;
+//
+//vObjDrugPairs = {},
+
+$('input[name = "rdoBreastFeeding"]').on('click', function () {
+   let vArrDrugPairs = Object.keys(vDrugsList).map(function (index) {
+        return vDrugsList[index].pair;
+        });
+ console.log(vArrDrugPairs);
+   if(+$('input[name=rdoBreastFeeding]:checked').val() === 2){
+let vIds = [0, 1, 3],
+    order = [],
+    vObjDrugPairs ={};
+
+$(vIds).each(function(indx, element){
+    let vT = vIds[indx];
+    order.push(vArrDrugPairs[vT]);
+});
+    vObjDrugPairs[Object.keys(order[0])] = Object.values(order[0])[0];
+    $(order).each(function (index) {
+        vObjDrugPairs[Object.keys(order[index])] = Object.values(order[index])[0];
+    });
+
+console.log(order);
+console.log(vObjDrugPairs);
+     addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+
+//    }
+//    else{
+
+//    vObjDrugPairs[Object.keys(vArrDrugPairs[0])] = Object.values(vArrDrugPairs[0])[0];
+//    $(vArrDrugPairs).each(function (index) {
+//        vObjDrugPairs[Object.keys(vArrDrugPairs[index])] = Object.values(vArrDrugPairs[index])[0];
+//    });
+//    console.log(vObjDrugPairs);
+//
+//    addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+
+    };
+
+    $('#invitToAct_1').html('Выберите препарат по МНН:');
+$('#lblBreastFeeding_1, #lblBreastFeeding_2').hide();
+$('#inpText_1').show();
+console.log($('#dlstList_1').val());
+});
+
+
 
 
 $('#btnThree').on('click', function () {
-    createAlgorithmOfThromboembolismProphylaxis();
+
+//console.log(vObjDrugPairs);
+//     addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+//
+
+//    createAlgorithmOfThromboembolismProphylaxis();
 });
 
 //    addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
@@ -378,11 +429,6 @@ $('#btnThree').on('click', function () {
 
 
 
-$('input[name=rdoBreastFeeding]').on('click', function () {
-$('#invitToAct_1').html('Выберите препарат по МНН:');
-$('#lblBreastFeeding_1, #lblBreastFeeding_2').hide();
-console.log($('#dlstList_1').val());
-});
 
 function createAlgorithmOfThromboembolismProphylaxis() {
 
