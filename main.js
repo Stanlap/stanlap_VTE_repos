@@ -3,7 +3,6 @@ $('#divAllRF div').hide();
 $('.divMiddleLvlRF').hide();
 $('.divFemaleLvl').show();
 let vBirthDateOfPatient = '',
-    vAgeOfPatient = '',
     vGeneralListOfRF = '',
     vGeneralListOfOper = '';
 
@@ -94,8 +93,8 @@ function getCurrentAge(date) {
 $('#dateOfBirth').on('input', function () {
     vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
 });
-
 function showBtnGoToRF() {
+
     if (getCurrentAge(vBirthDateOfPatient) !== 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)) {
         $('#btnOne').show();
         ($('#weight').prop('value') < 50 || $('#weight').prop('value') > 120) ? alert('Вес пациента действительно ' + ($('#weight').prop('value')) + ' кг?'): '';
@@ -248,8 +247,12 @@ $('#chkBedRestMore3Days').on('click', function () {
 //    ($('.divMiddleLvlRF input').is(':checked')) ? (el.hide(), el.find('input:checkbox').prop('checked',true)): (el.show(), el.find('span:last-child').css('display', 'none'), el.find('span:first-child').css('display', 'block'), el.find('input:checkbox').prop('checked',false));
 //})
 
+let vPatient = {
+    vWeight : 0,
+    vAge : 0
+};
+
 let vGender = 0,
-    vWeight = 0,
     vHeight = 0;
 
 function goToRF() {
@@ -297,7 +300,7 @@ function goToRF() {
     }
 
     ($('#chkMale').is(':checked')) ? vGender = 1: '';
-    vWeight = Number($('#weight').val());
+    vPatient.vWeight = Number($('#weight').val());
     vHeight = Number($('#height').val());
 
     $('#btnOne').unbind('click', goToRF);
@@ -466,6 +469,7 @@ let vCounterPaduaScore = 0,
 
 //  Функция countStratRF стратифицирует риск ВТЭО:
 function countStratRF(vCounterRF, x) {
+    let vStratRF = '';
     switch (x) {
         case 'Padua':
             (vCounterRF > 3) ? vStratRF = 'высокий': vStratRF = 'низкий';
@@ -531,19 +535,19 @@ function calculateGFRAndСС() {
             break;
     }
     // взрослые
-    if (vCreatinineValue > 0 & vGender >= 0 & vAgeOfPatient > 0) {
+    if (vCreatinineValue > 0 & vGender >= 0 & vPatient.vAge > 0) {
         // CKD-EPI
         if (vGender == 0) {
             if (vCreatinineValue <= 0.7) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, vAgeOfPatient);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, vPatient.vAge);
             } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, vAgeOfPatient);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, vPatient.vAge);
             }
         } else {
             if (vCreatinineValue <= 0.9) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, vAgeOfPatient);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, vPatient.vAge);
             } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, vAgeOfPatient);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, vPatient.vAge);
             }
         }
         // коэффициент для расы
@@ -570,19 +574,19 @@ function calculateGFRAndСС() {
         }
         // 186 - для нестандартизованных наборов креатинина, 175 - для стандартизованных
         if (vGender == 0) {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * 0.742));
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * 0.742));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * 0.742));
         } else {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vAgeOfPatient, -0.203)) * vRace * vGender));
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * vGender));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * vGender));
         }
         //        if (vMDRD > 0) {
         //            console.log('СКФ по формуле MDRD = ' + vMDRD + ' мл/мин/1,73м<sup>2</sup> (для наборов без стандартизации креатинина)');
         //            console.log('СКФ по формуле MDRD = ' + vMDRD_Standartized + ' мл/мин/1,73м<sup>2</sup> (для наборов со стандартизацией креатинина по референтному реактиву SRM 967)');
         //        }
         //         кокрофт
-        if (vWeight > 0) {
-            gfr_cg = ((140 - vAgeOfPatient) * vWeight / 72) / vCreatinineValue;
+        if (vPatient.vWeight > 0) {
+            gfr_cg = ((140 - vPatient.vAge) * vPatient.vWeight / 72) / vCreatinineValue;
             if (vGender == 0) {
                 gfr_cg = gfr_cg * 0.85;
             }
@@ -590,7 +594,7 @@ function calculateGFRAndСС() {
             //                console.log('Клиренс креатинина по формуле Кокрофта-Голта = ' + Math.round(gfr_cg) + ' мл/мин');
             //            }
             if (vHeight > 0) {
-                bsa = (vHeight * vWeight / 3600);
+                bsa = (vHeight * vPatient.vWeight / 3600);
                 bsa = Math.sqrt(bsa);
                 gfr_cg_bsa = gfr_cg * 1.73 / bsa;
                 //                console.log('Клиренс креатинина по формуле Кокрофта-Голта со стандартизацией на площадь поверхности тела = ' + Math.round(gfr_cg_bsa) + ' мл/мин/1,73м<sup>2</sup>');
@@ -601,7 +605,7 @@ function calculateGFRAndСС() {
     vGFR = Math.min(vSKD_EPI, vMDRD, vMDRD_Standartized);
     vCC = Math.round(gfr_cg_bsa);
     console.log(vGFR, vCC);
-    console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
+    console.log(vCreatinineValue, vCreatinineUnits, vGender, vPatient.vAge, vRace, vPatient.vWeight, vHeight);
 
 }
 
@@ -611,12 +615,12 @@ let vRace = 1,
 
 function countRF() {
     $('#divAllRF').hide();
-    vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
+    vPatient.vAge = getCurrentAge(vBirthDateOfPatient);
     ($('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#chkPostpartum').prop('checked', true): '';
     ($('#inpCreatinineVal').val() == '') ? vCreatinineValue = 90: vCreatinineValue = $('#inpCreatinineVal').val();
     vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
     ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
-    console.log(vCreatinineValue, vCreatinineUnits, vGender, vAgeOfPatient, vRace, vWeight, vHeight);
+    console.log(vCreatinineValue, vCreatinineUnits, vGender, vPatient.vAge, vRace, vPatient.vWeight, vHeight);
     calculateGFRAndСС();
 
     (vGFR > 29 && vGFR < 60) ? $('#chkGlomerularFiltrationRate30_59').prop('checked', true): '';
@@ -686,23 +690,23 @@ function countRF() {
     console.log($('#chkHeartSurger').is(':checked'));
 
     console.log($('#chkBrainOrSpinalCordSurg').is(':checked'));
-    vAgeOfPatient = getCurrentAge(vBirthDateOfPatient);
-    (vAgeOfPatient > 35) ?
+    vPatient.vAge = getCurrentAge(vBirthDateOfPatient);
+    (vPatient.vAge > 35) ?
     $('#chkAgeMore35').prop('checked', true): '';
-    (vAgeOfPatient > 40) ?
+    (vPatient.vAge > 40) ?
     $('#chkAgeMore40').prop('checked', true): '';
-    (vAgeOfPatient > 40 && vAgeOfPatient < 61) ?
+    (vPatient.vAge > 40 && vPatient.vAge < 61) ?
     $('#chkAge_41_60').prop('checked', true): '';
-    (vAgeOfPatient > 60 && vAgeOfPatient < 76) ?
+    (vPatient.vAge > 60 && vPatient.vAge < 76) ?
     $('#chkAge_61_75').prop('checked', true): '';
-    (vAgeOfPatient > 64 && vAgeOfPatient < 75) ?
+    (vPatient.vAge > 64 && vPatient.vAge < 75) ?
     $('#chkAge_65_74').prop('checked', true): '';
-    (vAgeOfPatient >= 40 && vAgeOfPatient < 85) ?
+    (vPatient.vAge >= 40 && vPatient.vAge < 85) ?
     $('#chkAge_40_84').prop('checked', true): '';
-    (vAgeOfPatient > 65) ? $('#chkAgeMore65').prop('checked', true): '';
-    (vAgeOfPatient > 70) ? $('#chkAgeMore70').prop('checked', true): '';
-    (vAgeOfPatient >= 75) ? $('#chkAgeMore75').prop('checked', true): '';
-    (vAgeOfPatient >= 85) ? $('#chkAgeMore85').prop('checked', true): '';
+    (vPatient.vAge > 65) ? $('#chkAgeMore65').prop('checked', true): '';
+    (vPatient.vAge > 70) ? $('#chkAgeMore70').prop('checked', true): '';
+    (vPatient.vAge >= 75) ? $('#chkAgeMore75').prop('checked', true): '';
+    (vPatient.vAge >= 85) ? $('#chkAgeMore85').prop('checked', true): '';
 
     function searchBMI(w, h) {
         return (Math.ceil(w / (Math.pow((h / 100), 2))));
@@ -789,7 +793,7 @@ function countRF() {
     //            vCounterSurgRF = 3;
     //        } else {
     //            if (($('#chkIsOrNoSurg').is(':checked'))){
-    //                vCounterSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+    //                vCounterSurgRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
     //
     //            }
     //        }
@@ -798,7 +802,7 @@ function countRF() {
     //        }
     console.log(vSetRusSurgRF);
     if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
     }
     (vSetRusSurgRF.indexOf('2') != -1 && vCounterRusSurgRF < 3) ? vCounterRusSurgRF = 2: '';
     (vSetRusSurgRF.indexOf('3') != -1) ? vCounterRusSurgRF = 3: '';
@@ -808,7 +812,7 @@ function countRF() {
     }
 
     if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(vAgeOfPatient, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
+        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
     }
     (vSetRusTraumRF.indexOf('2') != -1 && vCounterRusTraumRF < 3) ? vCounterRusTraumRF = 2: '';
     (vSetRusTraumRF.indexOf('3') != -1) ? vCounterRusTraumRF = 3: '';
@@ -819,7 +823,7 @@ function countRF() {
     (vCounterTraumBleedingRF > 0) ? vCounterTraumBleedingRF = 1: '';
 
     console.log($('#divAllRF input:checked'));
-    console.log(vAgeOfPatient);
+    console.log(vPatient.vAge);
     console.log($('#chkTimeOfSurg').is(':checked'));
     console.log(vSetRusSurgRF.includes('1'));
     console.log(vGradeOfOper, vGradeOfOper == 0);
@@ -1053,19 +1057,19 @@ function createAlgorithmOfThromboembolismProphylaxis() {
     checkDrugsContraindications();
 
     function checkDrugsContraindications() {
-        (vGender == 0 && vAgeOfPatient < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
+        (vGender == 0 && vPatient.vAge < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
 
         (vWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
 
         (vDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
 
-        (vAgeOfPatient < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
+        (vPatient.vAge < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
             $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
             $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
             $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
             $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
             $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-        (vAgeOfPatient > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
+        (vPatient.vAge > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
 
         if ($('#chkIsOrNoSurg').is(':checked')) {
             ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 1) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
@@ -1101,11 +1105,10 @@ function createAlgorithmOfThromboembolismProphylaxis() {
 let vDrugVal ='';
     $('#slctListOfDrugsForVTEPrevention').on('change', function () {
         let a = $(this),
-            vAdd = '. '
+            vAdd = '. ',
         t = '',
-            t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
-            t2 = ' Отменить выбранный препарат?';
-
+        t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
+        t2 = ' Отменить выбранный препарат?';
 
         function confirmIt() {
             if (confirm(t1 + t + t2)) {
