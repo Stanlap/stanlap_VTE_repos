@@ -1,4 +1,32 @@
 'use strict';
+
+    let vWeekOfPregnancy = 0,
+        //        vDateOfChildbirth = '2019-08-26',
+        vDateOfChildbirth = '',
+        vSevereHepaticFailure = false,
+        vHeartInsuff3_4 = false,
+        vIsOrNoSurg = false,
+        vSomeSurg = false,
+        vDiabetes = true,
+        vActiveUlcerOfStomachOrDuodenum = false,
+        vChronicDialysis = false,
+        vArtificialHeartValve = false,
+        vUncontrolledSystemicHypertension = false;
+
+
+
+let objPatient = {
+            pkGender: 0,
+            pkAge: 0,
+            pkHeight: 0,
+            pkWeight: 0,
+            pkMedProfile: 0,
+            pkRiscVTE: 0,
+            pkCC: 125
+        };
+
+
+
 $('#divAllRF div').hide();
 $('.divMiddleLvlRF').hide();
 $('.divFemaleLvl').show();
@@ -126,13 +154,12 @@ $('input[name=rdoPregnancyOrChildbirth]').click(function () {
     ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()) : (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
-let vWeekOfPregnancy = 0;
+vWeekOfPregnancy = 0;
 $('#inpWeekOfPregnancy').on('input', function () {
     vWeekOfPregnancy = Number($(this).val());
     (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
     console.log(vWeekOfPregnancy);
 });
-let vDateOfChildbirth = '';
 
 function formatDate() {
     var d = new Date(),
@@ -247,13 +274,6 @@ $('#chkBedRestMore3Days').on('click', function () {
 //    ($('.divMiddleLvlRF input').is(':checked')) ? (el.hide(), el.find('input:checkbox').prop('checked',true)): (el.show(), el.find('span:last-child').css('display', 'none'), el.find('span:first-child').css('display', 'block'), el.find('input:checkbox').prop('checked',false));
 //})
 
-let vPatient = {
-    vWeight : 0,
-    vAge : 0
-};
-
-let vGender = 0,
-    vHeight = 0;
 
 function goToRF() {
 
@@ -299,9 +319,9 @@ function goToRF() {
         $('.divFemaleLvl').show();
     }
 
-    ($('#chkMale').is(':checked')) ? vGender = 1: '';
-    vPatient.vWeight = Number($('#weight').val());
-    vHeight = Number($('#height').val());
+    ($('#chkMale').is(':checked')) ? objPatient.pkGender = 1: '';
+    objPatient.pkWeight = Number($('#weight').val());
+    objPatient.pkHeight = Number($('#height').val());
 
     $('#btnOne').unbind('click', goToRF);
     $('#btnOne').bind('click', countRF).html('Перейти к подсчету риск-факторов ВТЭО');
@@ -463,8 +483,12 @@ let vCounterPaduaScore = 0,
     vCounterGreenTop37a = 0,
     vCounterObstRuRF = 0,
     vCounterObstBleedingRF = 0,
-    vCC = 125,
     vGFR = 125;
+
+
+
+
+
 
 
 //  Функция countStratRF стратифицирует риск ВТЭО:
@@ -535,30 +559,30 @@ function calculateGFRAndСС() {
             break;
     }
     // взрослые
-    if (vCreatinineValue > 0 & vGender >= 0 & vPatient.vAge > 0) {
+    if (vCreatinineValue > 0 & objPatient.pkGender >= 0 & objPatient.pkAge > 0) {
         // CKD-EPI
-        if (vGender == 0) {
+        if (objPatient.pkGender == 0) {
             if (vCreatinineValue <= 0.7) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, vPatient.vAge);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -0.329) * Math.pow(0.993, objPatient.pkAge);
             } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, vPatient.vAge);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.7), -1.209) * Math.pow(0.993, objPatient.pkAge);
             }
         } else {
             if (vCreatinineValue <= 0.9) {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, vPatient.vAge);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -0.411) * Math.pow(0.993, objPatient.pkAge);
             } else {
-                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, vPatient.vAge);
+                vSKD_EPI = Math.pow((vCreatinineValue / 0.9), -1.209) * Math.pow(0.993, objPatient.pkAge);
             }
         }
         // коэффициент для расы
         if (vRace == 1) { // белые
-            if (vGender == 0) {
+            if (objPatient.pkGender == 0) {
                 vSKD_EPI = vSKD_EPI * 144;
             } else {
                 vSKD_EPI = vSKD_EPI * 141;
             }
         } else { // негроидная
-            if (vGender == 0) {
+            if (objPatient.pkGender == 0) {
                 vSKD_EPI = vSKD_EPI * 166;
             } else {
                 vSKD_EPI = vSKD_EPI * 163;
@@ -573,28 +597,28 @@ function calculateGFRAndСС() {
             vRace = 1.212;
         }
         // 186 - для нестандартизованных наборов креатинина, 175 - для стандартизованных
-        if (vGender == 0) {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * 0.742));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * 0.742));
+        if (objPatient.pkGender == 0) {
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(objPatient.pkAge, -0.203)) * vRace * 0.742));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(objPatient.pkAge, -0.203)) * vRace * 0.742));
         } else {
-            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * vGender));
-            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(vPatient.vAge, -0.203)) * vRace * vGender));
+            vMDRD = Math.round((186 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(objPatient.pkAge, -0.203)) * vRace * objPatient.pkGender));
+            vMDRD_Standartized = Math.round((175 * (Math.pow(vCreatinineValue, -1.154)) * (Math.pow(objPatient.pkAge, -0.203)) * vRace * objPatient.pkGender));
         }
         //        if (vMDRD > 0) {
         //            console.log('СКФ по формуле MDRD = ' + vMDRD + ' мл/мин/1,73м<sup>2</sup> (для наборов без стандартизации креатинина)');
         //            console.log('СКФ по формуле MDRD = ' + vMDRD_Standartized + ' мл/мин/1,73м<sup>2</sup> (для наборов со стандартизацией креатинина по референтному реактиву SRM 967)');
         //        }
         //         кокрофт
-        if (vPatient.vWeight > 0) {
-            gfr_cg = ((140 - vPatient.vAge) * vPatient.vWeight / 72) / vCreatinineValue;
-            if (vGender == 0) {
+        if (objPatient.pkWeight > 0) {
+            gfr_cg = ((140 - objPatient.pkAge) * objPatient.pkWeight / 72) / vCreatinineValue;
+            if (objPatient.pkGender == 0) {
                 gfr_cg = gfr_cg * 0.85;
             }
             //            if (gfr_cg > 0) {
             //                console.log('Клиренс креатинина по формуле Кокрофта-Голта = ' + Math.round(gfr_cg) + ' мл/мин');
             //            }
-            if (vHeight > 0) {
-                bsa = (vHeight * vPatient.vWeight / 3600);
+            if (objPatient.pkHeight > 0) {
+                bsa = (objPatient.pkHeight * objPatient.pkWeight / 3600);
                 bsa = Math.sqrt(bsa);
                 gfr_cg_bsa = gfr_cg * 1.73 / bsa;
                 //                console.log('Клиренс креатинина по формуле Кокрофта-Голта со стандартизацией на площадь поверхности тела = ' + Math.round(gfr_cg_bsa) + ' мл/мин/1,73м<sup>2</sup>');
@@ -603,9 +627,9 @@ function calculateGFRAndСС() {
 
     }
     vGFR = Math.min(vSKD_EPI, vMDRD, vMDRD_Standartized);
-    vCC = Math.round(gfr_cg_bsa);
-    console.log(vGFR, vCC);
-    console.log(vCreatinineValue, vCreatinineUnits, vGender, vPatient.vAge, vRace, vPatient.vWeight, vHeight);
+    objPatient.pkCC = Math.round(gfr_cg_bsa);
+    console.log(vGFR, objPatient.pkCC);
+    console.log(vCreatinineValue, vCreatinineUnits, objPatient.pkGender, objPatient.pkAge, vRace, objPatient.pkWeight, objPatient.pkHeight);
 
 }
 
@@ -615,12 +639,12 @@ let vRace = 1,
 
 function countRF() {
     $('#divAllRF').hide();
-    vPatient.vAge = getCurrentAge(vBirthDateOfPatient);
+    objPatient.pkAge = getCurrentAge(vBirthDateOfPatient);
     ($('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#chkPostpartum').prop('checked', true): '';
     ($('#inpCreatinineVal').val() == '') ? vCreatinineValue = 90: vCreatinineValue = $('#inpCreatinineVal').val();
     vCreatinineUnits = ($('#slctCrUnitsGroup').val()).replace(/[,]+/g, '.');
     ($('#chkRaceB').is(':checked')) ? vRace = 2: '';
-    console.log(vCreatinineValue, vCreatinineUnits, vGender, vPatient.vAge, vRace, vPatient.vWeight, vHeight);
+    console.log(vCreatinineValue, vCreatinineUnits, objPatient.pkGender, objPatient.pkAge, vRace, objPatient.pkWeight, objPatient.pkHeight);
     calculateGFRAndСС();
 
     (vGFR > 29 && vGFR < 60) ? $('#chkGlomerularFiltrationRate30_59').prop('checked', true): '';
@@ -690,23 +714,23 @@ function countRF() {
     console.log($('#chkHeartSurger').is(':checked'));
 
     console.log($('#chkBrainOrSpinalCordSurg').is(':checked'));
-    vPatient.vAge = getCurrentAge(vBirthDateOfPatient);
-    (vPatient.vAge > 35) ?
+    objPatient.pkAge = getCurrentAge(vBirthDateOfPatient);
+    (objPatient.pkAge > 35) ?
     $('#chkAgeMore35').prop('checked', true): '';
-    (vPatient.vAge > 40) ?
+    (objPatient.pkAge > 40) ?
     $('#chkAgeMore40').prop('checked', true): '';
-    (vPatient.vAge > 40 && vPatient.vAge < 61) ?
+    (objPatient.pkAge > 40 && objPatient.pkAge < 61) ?
     $('#chkAge_41_60').prop('checked', true): '';
-    (vPatient.vAge > 60 && vPatient.vAge < 76) ?
+    (objPatient.pkAge > 60 && objPatient.pkAge < 76) ?
     $('#chkAge_61_75').prop('checked', true): '';
-    (vPatient.vAge > 64 && vPatient.vAge < 75) ?
+    (objPatient.pkAge > 64 && objPatient.pkAge < 75) ?
     $('#chkAge_65_74').prop('checked', true): '';
-    (vPatient.vAge >= 40 && vPatient.vAge < 85) ?
+    (objPatient.pkAge >= 40 && objPatient.pkAge < 85) ?
     $('#chkAge_40_84').prop('checked', true): '';
-    (vPatient.vAge > 65) ? $('#chkAgeMore65').prop('checked', true): '';
-    (vPatient.vAge > 70) ? $('#chkAgeMore70').prop('checked', true): '';
-    (vPatient.vAge >= 75) ? $('#chkAgeMore75').prop('checked', true): '';
-    (vPatient.vAge >= 85) ? $('#chkAgeMore85').prop('checked', true): '';
+    (objPatient.pkAge > 65) ? $('#chkAgeMore65').prop('checked', true): '';
+    (objPatient.pkAge > 70) ? $('#chkAgeMore70').prop('checked', true): '';
+    (objPatient.pkAge >= 75) ? $('#chkAgeMore75').prop('checked', true): '';
+    (objPatient.pkAge >= 85) ? $('#chkAgeMore85').prop('checked', true): '';
 
     function searchBMI(w, h) {
         return (Math.ceil(w / (Math.pow((h / 100), 2))));
@@ -793,7 +817,7 @@ function countRF() {
     //            vCounterSurgRF = 3;
     //        } else {
     //            if (($('#chkIsOrNoSurg').is(':checked'))){
-    //                vCounterSurgRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+    //                vCounterSurgRF = estimateSurgRiskGrade(objPatient.pkAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
     //
     //            }
     //        }
@@ -802,7 +826,7 @@ function countRF() {
     //        }
     console.log(vSetRusSurgRF);
     if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
+        (vGradeOfOper == 3) ? vCounterRusSurgRF = 3: vCounterRusSurgRF = estimateSurgRiskGrade(objPatient.pkAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusSurgRF.includes('1'));
     }
     (vSetRusSurgRF.indexOf('2') != -1 && vCounterRusSurgRF < 3) ? vCounterRusSurgRF = 2: '';
     (vSetRusSurgRF.indexOf('3') != -1) ? vCounterRusSurgRF = 3: '';
@@ -812,7 +836,7 @@ function countRF() {
     }
 
     if ($('#chkIsOrNoSurg').is(':checked')) {
-        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(vPatient.vAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
+        (vGradeOfOper == 3) ? vCounterRusTraumRF = 3: vCounterRusTraumRF = estimateSurgRiskGrade(objPatient.pkAge, $('#chkTimeOfSurg').is(':checked'), vGradeOfOper, vSetRusTraumRF.includes('1'));
     }
     (vSetRusTraumRF.indexOf('2') != -1 && vCounterRusTraumRF < 3) ? vCounterRusTraumRF = 2: '';
     (vSetRusTraumRF.indexOf('3') != -1) ? vCounterRusTraumRF = 3: '';
@@ -823,7 +847,7 @@ function countRF() {
     (vCounterTraumBleedingRF > 0) ? vCounterTraumBleedingRF = 1: '';
 
     console.log($('#divAllRF input:checked'));
-    console.log(vPatient.vAge);
+    console.log(objPatient.pkAge);
     console.log($('#chkTimeOfSurg').is(':checked'));
     console.log(vSetRusSurgRF.includes('1'));
     console.log(vGradeOfOper, vGradeOfOper == 0);
@@ -874,7 +898,7 @@ function countRF() {
     console.log(countStratRF(vCounterGreenTop37a, 'GreenTop37aRus'));
     console.log(countStratRF(vCounterObstRuRF, 'GreenTop37aRus'));
 
-    console.log(vGFR, vCC);
+    console.log(vGFR, objPatient.pkCC);
 
 }
 
@@ -1031,184 +1055,151 @@ $('#btnTwo').on('click', function () {
         'color': 'orange'
     });
 })
+
 $('#btnThree').on('click', function () {
-    createAlgorithmOfThromboembolismProphylaxis();
-});
-
-$('input[name=rdoBreastFeeding]').on('click', function () {
-    $('#divBreastFeeding').hide();
-    $('#slctListOfDrugsForVTEPrevention').show();
-    ($('input[name=rdoBreastFeeding]:checked').val() == 2) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
-        $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-
-});
-
-function createAlgorithmOfThromboembolismProphylaxis() {
-    console.log(vCounterIMPROVE, vCounterHAS_BLED, vCounterMajorBleedingScoreRF, vCounterTraumBleedingRF, vCounterObstBleedingRF);
-
-    //    ($('#chkSepticEndocarditis').is(':checked')) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с септическим эндокардитом.'): (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с высоким риском кровотечения.'): $('#divContraindicationsToDrugsUse').show(), checkDrugsContraindications();
-
-
-    $('#divContraindicationsToDrugsUse').show();
-    checkDrugsContraindications();
-
-    function checkDrugsContraindications() {
-        (vGender == 0 && vPatient.vAge < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
-
-        (vWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
-
-        (vDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
-
-        (vPatient.vAge < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-        (vPatient.vAge > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
-
-        if ($('#chkIsOrNoSurg').is(':checked')) {
-            ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 1) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
-        }
-
-        ($('#chkSevereHepaticFailure').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-
-        ($('#chkHeartInsuff3_4').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
-
-        ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
-        ($('#chkActiveUlcerOfStomachOrDuodenum').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
-
-        (vCC < 30) ? ($('#slctListOfDrugsForVTEPrevention [value="3"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
-        (vCC < 15 || $('#chkChronicDialysis').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : '';
-
-        (vWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
-            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : ($('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
-
-        (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():'';
-        (vWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide() : '';
-
-    }
-let vDrugVal ='';
-    $('#slctListOfDrugsForVTEPrevention').on('change', function () {
-        let a = $(this),
-            vAdd = '. ',
-        t = '',
-        t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
-        t2 = ' Отменить выбранный препарат?';
-
-        function confirmIt() {
-            if (confirm(t1 + t + t2)) {
-                a.find(':selected').hide();
-                a.find('[value="9"]').attr("selected", "selected");
-            } else {
-                vDrugVal = a.val();
-            }
-        }
-
-        if (a.val() == 0 && vWeekOfPregnancy > 0) {
-            t = 'пациентке установлен искусственный клапан сердца.';
-            confirmIt();
-        };
-        if (a.val() == 2) {
-            if ($('#chkIsOrNoSurg').is(':checked')) {
-                t = 'выполнена операция на глазных яблоках' + vAdd;
-                ($('.chkDiabetes_1').prop('checked', false)) ? confirmIt(): '';
-            };
-            if ($('.chkDiabetes_1').is(':checked')) {
-                (t != '') ? (vAdd = ', ', t = t + vAdd + 'имеется диабетическая ретинопатия.') : t = 'имеется диабетическая ретинопатия.';
-                confirmIt();
-            };
-        };
-        if (a.val() == 5) {
-            t = 'имеется врожденный дефицит лактазы.';
-            confirmIt();
-        };
-        if (a.val() == 8) {
-            t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.';
-            confirmIt();
-        };
-        if (a.val() == 1 ||a.val() == 3 ||a.val() == 1 ||a.val() == 4 || a.val() == 6 ||a.val() == 7) {
-            vDrugVal = a.val();
-        };
-
+console.log('Gender ' + objPatient.pkGender);
+console.log('Age ' + objPatient.pkAge);
+console.log('Height ' + objPatient.pkHeight);
+console.log('Weight ' + objPatient.pkWeight);
+console.log('Med Profile ' + objPatient.pkMedProfile);
+console.log('RiskVTE ' + objPatient.pkRiscVTE);
+console.log('CC ' + objPatient.pkCC);
     });
-//    let vChoosedDrug = {
-//        nameCyrillic: '',
-//        nameLatin: '',
-//        nameINP: ''
-//        unitTitle_1 = 'мг';
-//        unitTitle_2 = 'мл';
-//        vDrugstoreDose_mg = 0;
-//        vDrugstoreDose_ml = vDrugstoreDose_mg/ 100;
+
+//$('#btnThree').on('click', function () {
+//    createAlgorithmOfThromboembolismProphylaxis();
+//});
+//
+//$('input[name=rdoBreastFeeding]').on('click', function () {
+//    $('#divBreastFeeding').hide();
+//    $('#slctListOfDrugsForVTEPrevention').show();
+//    ($('input[name=rdoBreastFeeding]:checked').val() == 2) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+//        $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+//        $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+//        $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+//        $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+//        $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+//
+//});
+//
+//function createAlgorithmOfThromboembolismProphylaxis() {
+//    console.log(vCounterIMPROVE, vCounterHAS_BLED, vCounterMajorBleedingScoreRF, vCounterTraumBleedingRF, vCounterObstBleedingRF);
+//
+//    //    ($('#chkSepticEndocarditis').is(':checked')) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с септическим эндокардитом.'): (vCounterIMPROVE > 7 || vCounterHAS_BLED > 2 || vCounterMajorBleedingScoreRF > 0 || vCounterTraumBleedingRF > 0 || vCounterObstBleedingRF > 0) ? alert('Медикаментозная профилактика ВТЭО невозможна в связи с высоким риском кровотечения.'): $('#divContraindicationsToDrugsUse').show(), checkDrugsContraindications();
 //
 //
-//    };
-//function makeChoosedDrugProfile(){
-//if(vDrugVal = 0){
-//vChoosedDrug.nameCyrillic = 'Клексан';
-//vChoosedDrug.nameLatin = 'Clexane';
-//vChoosedDrug.nameINP = 'Эноксапарин натрия';
-////vChoosedDrug.unitTitle_1 = 'мг';
-////vChoosedDrug.unitTitle_2 = 'мл';
-//vDrugstoreDose_mg = 40;
-//vDrugstoreDose_ml = vDrugstoreDose_mg/ 100;
-//};
-};
-//добавим эти элементы несколькими способами
-let vClexane = {
-'': 'Анфибра',
-'': 'Гемапаксан',
-'': 'Клексан',
-'': 'Фленокс НЕО',
-'': 'Эниксум',
-'': 'Эноксапарин',
-'': 'Эноксапарин-Бинергия'
-};
-//способ 1
-//$.each(vClexane, function(key, value) {
-//$('#my_select').append($("", {
-//value: key,
-//text: value
-//}));
-//});
-function fillSelectNewValues(a, b){
-$.each(a, function(key, value) {
-b.append($('', {
-value: key,
-text: value
-}));
-});
-}
-////способ 2
-//var new_options = '';
-//$.each(vNewOptionsVal, function(key, value) {
-//new_options += '' + value + '';
-//});
-//$('#my_select').html(new_options);
-////способ 3
-//var select = $('#my_select');
-//if(select.prop) {
-//var options = select.prop('options');
-//}
-//else {
-//var options = select.attr('options');
-//}
-//$.each(vNewOptionsVal, function(val, text) {
-//options[options.length] = new Option(text, val);
-//});
+//    $('#divContraindicationsToDrugsUse').show();
+//    checkDrugsContraindications();
+//
+//    function checkDrugsContraindications() {
+//        (objPatient.pkGender == 0 && objPatient.pkAge < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
+//
+//        (vWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
+//
+//        (vDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
+//
+//        (objPatient.pkAge < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+//        (objPatient.pkAge > 60) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(): '';
+//
+//        if ($('#chkIsOrNoSurg').is(':checked')) {
+//            ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 1) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
+//        }
+//
+//        ($('#chkSevereHepaticFailure').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+//
+//        ($('#chkHeartInsuff3_4').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
+//
+//        ($('#chkUncontrolledSystemicHypertension').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide(): '';
+//        ($('#chkActiveUlcerOfStomachOrDuodenum').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide(): '';
+//
+//        (objPatient.pkCC < 30) ? ($('#slctListOfDrugsForVTEPrevention [value="3"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="4"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="7"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="8"]').hide()) : '';
+//        (objPatient.pkCC < 15 || $('#chkChronicDialysis').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : '';
+//
+//        (vWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
+//            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : ($('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
+//
+//        (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():'';
+//        (vWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide() : '';
+//
+//    }
+//let vDrugVal ='';
+//    $('#slctListOfDrugsForVTEPrevention').on('change', function () {
+//        let a = $(this),
+//            vAdd = '. ',
+//        t = '',
+//        t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
+//        t2 = ' Отменить выбранный препарат?';
+//
+//        function confirmIt() {
+//            if (confirm(t1 + t + t2)) {
+//                a.find(':selected').hide();
+//                a.find('[value="9"]').attr("selected", "selected");
+//            } else {
+//                vDrugVal = a.val();
+//            }
+//        }
+//
+//        if (a.val() == 0 && vWeekOfPregnancy > 0) {
+//            t = 'пациентке установлен искусственный клапан сердца.';
+//            confirmIt();
+//        };
+//        if (a.val() == 2) {
+//            if ($('#chkIsOrNoSurg').is(':checked')) {
+//                t = 'выполнена операция на глазных яблоках' + vAdd;
+//                ($('.chkDiabetes_1').prop('checked', false)) ? confirmIt(): '';
+//            };
+//            if ($('.chkDiabetes_1').is(':checked')) {
+//                (t != '') ? (vAdd = ', ', t = t + vAdd + 'имеется диабетическая ретинопатия.') : t = 'имеется диабетическая ретинопатия.';
+//                confirmIt();
+//            };
+//        };
+//        if (a.val() == 5) {
+//            t = 'имеется врожденный дефицит лактазы.';
+//            confirmIt();
+//        };
+//        if (a.val() == 8) {
+//            t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.';
+//            confirmIt();
+//        };
+//        if (a.val() == 1 ||a.val() == 3 ||a.val() == 1 ||a.val() == 4 || a.val() == 6 ||a.val() == 7) {
+//            vDrugVal = a.val();
+//        };
+//
+//    });
+////    let vChoosedDrug = {
+////        nameCyrillic: '',
+////        nameLatin: '',
+////        nameINP: ''
+////        unitTitle_1 = 'мг';
+////        unitTitle_2 = 'мл';
+////        vDrugstoreDose_mg = 0;
+////        vDrugstoreDose_ml = vDrugstoreDose_mg/ 100;
 ////
+////
+////    };
+////function makeChoosedDrugProfile(){
+////if(vDrugVal = 0){
+////vChoosedDrug.nameCyrillic = 'Клексан';
+////vChoosedDrug.nameLatin = 'Clexane';
+////vChoosedDrug.nameINP = 'Эноксапарин натрия';
+//////vChoosedDrug.unitTitle_1 = 'мг';
+//////vChoosedDrug.unitTitle_2 = 'мл';
+////vDrugstoreDose_mg = 40;
+////vDrugstoreDose_ml = vDrugstoreDose_mg/ 100;
+////};
 //};
