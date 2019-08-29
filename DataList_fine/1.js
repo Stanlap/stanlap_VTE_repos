@@ -1,18 +1,19 @@
 $(document).ready(function () {
     let vWeekOfPregnancy = 0,
-//        vDateOfChildbirth = '2019-08-26',
+        //        vDateOfChildbirth = '2019-08-26',
         vDateOfChildbirth = '',
         vSevereHepaticFailure = false,
         vHeartInsuff3_4 = false,
         vIsOrNoSurg = false,
         vSomeSurg = false,
+        vDiabetes = true,
         vActiveUlcerOfStomachOrDuodenum = false,
         vChronicDialysis = false,
         vArtificialHeartValve = false,
         vUncontrolledSystemicHypertension = false;
     vPatient = {
             vGender: 0,
-            vAge: 25,
+            vAge: 50,
             vWeight: 65,
             vMedProfile: 1,
             vRiscVTE: 0,
@@ -291,48 +292,47 @@ $(document).ready(function () {
     };
 
     $('<div/>').attr({
-            id: 'invitToAct_1'
-        })
-        .html('Выберите препарат по МНН:')
-        .appendTo('#drugChooser');
-//$('<label/>')
-//  .attr({
-//  id: 'lblBreastFeeding_1',
-//  for: 'rdoBreastFeeding_1'
-//  }).text('Согласиться').css('margin-right', '10px').hide().appendTo('#drugChooser');
-//    $('<label/>')
-//        .attr({
-//            id: 'lblBreastFeeding_1',
-//            for: 'rdoBreastFeeding_1'
-//        }).text('Согласиться').css('margin-right', '10px').hide().appendTo('#drugChooser');
-//
-//    $('<input/>')
-//        .attr({
-//            type: 'radio',
-//            name: 'rdoBreastFeeding',
-//            id: 'rdoBreastFeeding_1',
-//
-//            value: 1
-//        }).appendTo('#lblBreastFeeding_1');
-//
-//
-//    $('<label/>')
-//        .attr({
-//            id: 'lblBreastFeeding_2',
-//            for: 'rdoBreastFeeding_2'
-//        }).text('Отказаться').hide().appendTo('#drugChooser');
-//
-//    $('<input/>')
-//        .attr({
-//            type: 'radio',
-//            name: 'rdoBreastFeeding',
-//            id: 'rdoBreastFeeding_2',
-//            value: 2,
-//            text: 'Нет'
-//        }).appendTo('#lblBreastFeeding_2');
-//
-//    $('<br>').appendTo('#drugChooser');
-//
+        id: 'invitToAct_1'
+    }).html('Выберите препарат по МНН:').appendTo('#drugChooser');
+    //$('<label/>')
+    //  .attr({
+    //  id: 'lblBreastFeeding_1',
+    //  for: 'rdoBreastFeeding_1'
+    //  }).text('Согласиться').css('margin-right', '10px').hide().appendTo('#drugChooser');
+    //    $('<label/>')
+    //        .attr({
+    //            id: 'lblBreastFeeding_1',
+    //            for: 'rdoBreastFeeding_1'
+    //        }).text('Согласиться').css('margin-right', '10px').hide().appendTo('#drugChooser');
+    //
+    //    $('<input/>')
+    //        .attr({
+    //            type: 'radio',
+    //            name: 'rdoBreastFeeding',
+    //            id: 'rdoBreastFeeding_1',
+    //
+    //            value: 1
+    //        }).appendTo('#lblBreastFeeding_1');
+    //
+    //
+    //    $('<label/>')
+    //        .attr({
+    //            id: 'lblBreastFeeding_2',
+    //            for: 'rdoBreastFeeding_2'
+    //        }).text('Отказаться').hide().appendTo('#drugChooser');
+    //
+    //    $('<input/>')
+    //        .attr({
+    //            type: 'radio',
+    //            name: 'rdoBreastFeeding',
+    //            id: 'rdoBreastFeeding_2',
+    //            value: 2,
+    //            text: 'Нет'
+    //        }).appendTo('#lblBreastFeeding_2');
+    //
+    //    $('<br>').appendTo('#drugChooser');
+    //
+
     $('<input/>').attr({
         id: 'inpText_1',
         type: 'text',
@@ -347,7 +347,7 @@ $(document).ready(function () {
             id: 'lblLatinTitle',
             for: 'chkUseLatinDrugName'
         })
-    .hide()
+        .hide()
         .html('Указывать латинское название')
         .appendTo('#drugChooser');
     $('<input/>').attr({
@@ -390,8 +390,12 @@ $(document).ready(function () {
     }
     vObjDrugPairs = getObjFromArrPairs(vArrPairs);
     console.log(vObjDrugPairs);
-    let vCopyObj = Object.assign({}, vObjDrugPairs);
-    console.log(vCopyObj);
+//    let vObjDrugPairs = Object.assign({}, vObjDrugPairs);
+//    console.log(vObjDrugPairs);
+//    vObjDrugPairs = getObjFromArrPairs(vArrPairs);
+//    console.log(vObjDrugPairs);
+//    let vObjDrugPairs = Object.assign({}, vObjDrugPairs);
+//    console.log(vObjDrugPairs);
 
     function formatDate() {
         var d = new Date(),
@@ -404,56 +408,66 @@ $(document).ready(function () {
         vDateNow = [year, month, day].join('-');
         return vDateNow;
     }
-    vDateOfChildbirth === formatDate() ? delete vCopyObj['Heparin sodium'] : '';
+    vDateOfChildbirth === formatDate() ? delete vObjDrugPairs['Heparin sodium'] : '';
     if (vPatient.vAge < 18) {
-        with(vCopyObj) {
+        with(vObjDrugPairs) {
             delete Apixaban;
             delete Rivaroxaban;
         }
-        delete vCopyObj['Enoxaparin sodium'];
-        delete vCopyObj['Nadroparin calcium'];
-        delete vCopyObj['Dabigatran etexilate'];
-        delete vCopyObj['Acetylsalicylic acid'];
+        delete vObjDrugPairs['Enoxaparin sodium'];
+        delete vObjDrugPairs['Nadroparin calcium'];
+        delete vObjDrugPairs['Dabigatran etexilate'];
+        delete vObjDrugPairs['Acetylsalicylic acid'];
     };
-    (vPatient.vAge > 60) ? delete vCopyObj.Warfarin: '';
+    (vPatient.vAge > 60) ? delete vObjDrugPairs.Warfarin: '';
     if (vSevereHepaticFailure) {
-        with(vCopyObj) {
+        with(vObjDrugPairs) {
             delete Rivaroxaban;
             delete Apixaban;
             delete Warfarin;
         }
-        delete vCopyObj['Heparin sodium'];
-        delete vCopyObj['Dabigatran etexilate'];
-        delete vCopyObj['Acetylsalicylic acid'];
+        delete vObjDrugPairs['Heparin sodium'];
+        delete vObjDrugPairs['Dabigatran etexilate'];
+        delete vObjDrugPairs['Acetylsalicylic acid'];
     };
-    (vHeartInsuff3_4 || vActiveUlcerOfStomachOrDuodenum) ? delete vCopyObj['Acetylsalicylic acid']: '';
-    vUncontrolledSystemicHypertension ? delete vCopyObj['Heparin sodium'] : '';
-    (vIsOrNoSurg && vSomeSurg) ? delete vCopyObj['Heparin sodium']: '';
+    (vHeartInsuff3_4 || vActiveUlcerOfStomachOrDuodenum) ? delete vObjDrugPairs['Acetylsalicylic acid']: '';
+    vUncontrolledSystemicHypertension ? delete vObjDrugPairs['Heparin sodium'] : '';
+    (vIsOrNoSurg && vSomeSurg) ? delete vObjDrugPairs['Heparin sodium']: '';
+    //        if(!vIsOrNoSurg && vSomeSurg){
+    // let vDecision = confirm('Гепарин противопоказан при офтальмологических операциях. Отказаться от данного препарата?');
+    //        vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision):'';
+    //        }
+    //        if(vDiabetes){
+    // vDecision = confirm('Гепарин противопоказан при наличии диабетической ретинопатии. Отказаться от данного препарата?');
+    //        vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision):'';
+    //        }
 
-    (vPatient.vCC < 15 || vChronicDialysis) ? (delete vCopyObj.Rivaroxaban, delete vCopyObj.Apixaban):''; vPatient.vCC < 30 ? (delete vCopyObj['Acetylsalicylic acid'], delete vCopyObj['Dabigatran etexilate'], delete vCopyObj['Fondaparinux sodium'], delete vCopyObj.Warfarin):  '';
+    (vPatient.vCC < 15 || vChronicDialysis) ? (delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
+    vPatient.vCC < 30 ? (delete vObjDrugPairs['Acetylsalicylic acid'], delete vObjDrugPairs['Dabigatran etexilate'], delete vObjDrugPairs['Fondaparinux sodium'], delete vObjDrugPairs.Warfarin) : '';
 
-            vWeekOfPregnancy > 0 ? (delete vCopyObj['Heparin sodium'], delete vCopyObj.Rivaroxaban, delete vCopyObj.Apixaban): '';
-            (vWeekOfPregnancy > 0 && vArtificialHeartValve) ? delete vCopyObj['Enoxaparin sodium']: '';
+    vWeekOfPregnancy > 0 ? (delete vObjDrugPairs['Heparin sodium'], delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
+    (vWeekOfPregnancy > 0 && vArtificialHeartValve) ? delete vObjDrugPairs['Enoxaparin sodium']: '';
 
-            (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) && vWeekOfPregnancy !== 0  ? delete vCopyObj['Acetylsalicylic acid']: '';
-            vWeekOfPregnancy > 36 ? delete vCopyObj.Warfarin: '';
+    (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) && vWeekOfPregnancy !== 0 ? delete vObjDrugPairs['Acetylsalicylic acid'] : '';
+    vWeekOfPregnancy > 36 ? delete vObjDrugPairs.Warfarin : '';
 
     if (vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) {
         let vAns = confirm('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?');
         if (vAns == false) {
-            with(vCopyObj) {
+            with(vObjDrugPairs) {
                 delete Apixaban;
                 delete Rivaroxaban;
                 delete Warfarin;
             }
-            delete vCopyObj['Acetylsalicylic acid'];
-            delete vCopyObj['Dabigatran etexilate'];
-            delete vCopyObj['Heparin sodium'];
-//            console.log(vCopyObj);
-//            addOptionsToDatalist(vCopyObj, $('#dlstList_1'));
+            delete vObjDrugPairs['Acetylsalicylic acid'];
+            delete vObjDrugPairs['Dabigatran etexilate'];
+            delete vObjDrugPairs['Heparin sodium'];
+            //            console.log(vObjDrugPairs);
+            //            addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
 
         }
     };
+
 
     function addOptionsToDatalist(vDrug, vDL) {
         vDL.find('option').remove();
@@ -465,92 +479,116 @@ $(document).ready(function () {
         });
         vDrug = {};
     }
-    addOptionsToDatalist(vCopyObj, $('#dlstList_1'));
+    addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
 
 
+//was hidden old
+    //    (vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) ? ($('#invitToAct_1').html('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?'), $('#lblBreastFeeding_1, #lblBreastFeeding_2').show()) : $('#inpText_1').show();;
+    //
+    //    $('input[name = "rdoBreastFeeding"]').on('click', function () {
+    //        if (+$('input[name=rdoBreastFeeding]:checked').val() === 2) {
+    //            with(vObjDrugPairs) {
+    //                delete Apixaban;
+    //                delete Rivaroxaban;
+    //                delete Warfarin;
+    //            }
+    //            delete vObjDrugPairs['Acetylsalicylic acid'];
+    //            delete vObjDrugPairs['Dabigatran etexilate'];
+    //            delete vObjDrugPairs['Heparin sodium'];
+    //            console.log(vObjDrugPairs);
+    //            addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+    //        };
+    //
+    //
+    //        $('#invitToAct_1').html('Выберите препарат по МНН:');
+    //        $('#lblBreastFeeding_1, #lblBreastFeeding_2').hide();
+    //        $('#inpText_1').show();
+    //        console.log($('#dlstList_1').val());
+    //    });
 
-//    (vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) ? ($('#invitToAct_1').html('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?'), $('#lblBreastFeeding_1, #lblBreastFeeding_2').show()) : $('#inpText_1').show();;
-//
-//    $('input[name = "rdoBreastFeeding"]').on('click', function () {
-//        if (+$('input[name=rdoBreastFeeding]:checked').val() === 2) {
-//            with(vCopyObj) {
-//                delete Apixaban;
-//                delete Rivaroxaban;
-//                delete Warfarin;
-//            }
-//            delete vCopyObj['Acetylsalicylic acid'];
-//            delete vCopyObj['Dabigatran etexilate'];
-//            delete vCopyObj['Heparin sodium'];
-//            console.log(vCopyObj);
-//            addOptionsToDatalist(vCopyObj, $('#dlstList_1'));
-//        };
-//
-//
-//        $('#invitToAct_1').html('Выберите препарат по МНН:');
-//        $('#lblBreastFeeding_1, #lblBreastFeeding_2').hide();
-//        $('#inpText_1').show();
-//        console.log($('#dlstList_1').val());
-//    });
+    //    let vDrugVal = '';
+    //        $('#slctListOfDrugsForVTEPrevention').on('change', function () {
+    //            let a = $(this),
+    //                vAdd = '. ',
+    //                t = '',
+    //                t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
+    //                t2 = ' Отменить выбранный препарат?';
+    //
+    //            function confirmIt() {
+    //                if (confirm(t1 + t + t2)) {
+    //                    a.find(':selected').hide();
+    //                    a.find('[value="9"]').attr("selected", "selected");
+    //                } else {
+    //                    vDrugVal = a.val();
+    //                }
+    //            }
+    //
+    //            if (a.val() == 0 && vWeekOfPregnancy > 0) {
+    //                t = 'пациентке установлен искусственный клапан сердца.';
+    //                confirmIt();
+    //            };
+    //            if (a.val() == 2) {
+    //                if ($('#chkIsOrNoSurg').is(':checked')) {
+    //                    t = 'выполнена операция на глазных яблоках' + vAdd;
+    //                    ($('.chkDiabetes_1').prop('checked', false)) ? confirmIt(): '';
+    //                };
+    //                if ($('.chkDiabetes_1').is(':checked')) {
+    //                    (t != '') ? (vAdd = ', ', t = t + vAdd + 'имеется диабетическая ретинопатия.') : t = 'имеется диабетическая ретинопатия.';
+    //                    confirmIt();
+    //                };
+    //            };
+    //            if (a.val() == 5) {
+    //                t = 'имеется врожденный дефицит лактазы.';
+    //                confirmIt();
+    //            };
+    //            if (a.val() == 8) {
+    //                t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.';
+    //                confirmIt();
+    //            };
+    //            if (a.val() == 1 || a.val() == 3 || a.val() == 1 || a.val() == 4 || a.val() == 6 || a.val() == 7) {
+    //                vDrugVal = a.val();
+    //            };
+    //
+    //        });
+    //    };
 
-//    let vDrugVal = '';
-//        $('#slctListOfDrugsForVTEPrevention').on('change', function () {
-//            let a = $(this),
-//                vAdd = '. ',
-//                t = '',
-//                t1 = 'Назначение препарата противопоказано (не рекомендуется), если ',
-//                t2 = ' Отменить выбранный препарат?';
-//
-//            function confirmIt() {
-//                if (confirm(t1 + t + t2)) {
-//                    a.find(':selected').hide();
-//                    a.find('[value="9"]').attr("selected", "selected");
-//                } else {
-//                    vDrugVal = a.val();
-//                }
-//            }
-//
-//            if (a.val() == 0 && vWeekOfPregnancy > 0) {
-//                t = 'пациентке установлен искусственный клапан сердца.';
-//                confirmIt();
-//            };
-//            if (a.val() == 2) {
-//                if ($('#chkIsOrNoSurg').is(':checked')) {
-//                    t = 'выполнена операция на глазных яблоках' + vAdd;
-//                    ($('.chkDiabetes_1').prop('checked', false)) ? confirmIt(): '';
-//                };
-//                if ($('.chkDiabetes_1').is(':checked')) {
-//                    (t != '') ? (vAdd = ', ', t = t + vAdd + 'имеется диабетическая ретинопатия.') : t = 'имеется диабетическая ретинопатия.';
-//                    confirmIt();
-//                };
-//            };
-//            if (a.val() == 5) {
-//                t = 'имеется врожденный дефицит лактазы.';
-//                confirmIt();
-//            };
-//            if (a.val() == 8) {
-//                t = 'пациент принимает метатрексат, или у пациента бронх астма, индуцированная приемом салицилатов.';
-//                confirmIt();
-//            };
-//            if (a.val() == 1 || a.val() == 3 || a.val() == 1 || a.val() == 4 || a.val() == 6 || a.val() == 7) {
-//                vDrugVal = a.val();
-//            };
-//
-//        });
-//    };
+//end was hidden old
 
 
     $('#chkUseLatinDrugName').on('click', function () {
         $(this).is(':checked') ? $('#drugLatinName, #inpText_2').show() : $('#drugLatinName, #inpText_2').hide();
     });
 
-    function chooseDrugGroup() {
+    function tryChooseDrugGroup() {
         console.log('func_1');
-        $('#invitToAct_1').text('Выберите препарат по коммерческому названию (либо введите другой):');
-        console.log($('#inpText_1 option').val());
+        $('#invitToAct_1').text('Выберите препарат по коммерческому названию:');
+        if (!vIsOrNoSurg && vSomeSurg && $('#inpText_1').val() === 'Гепарин натрия') {
+            let vDecision = confirm('Гепарин противопоказан при офтальмологических операциях. Отказаться от данного препарата?');
+            vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision) : '';
+        };
+        if ($('#inpText_1').val() === 'Гепарин натрия' && vDiabetes) {
+            vDecision = confirm('Гепарин противопоказан при наличии диабетической ретинопатии. Отказаться от данного препарата?');
+            vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision, $('#inpText_1').val('')) :$('#inpText_1').val('');
+        };
+        addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+$('#btnOne').show();
+        $('#inpText_1').unbind('input', tryChooseDrugGroup);
+    };
+    $('#inpText_1').bind('input', tryChooseDrugGroup);
+
+    function chooseDrugGroup() {
+console.log('func_2');
+    $('#inpText_1').val() === ''? alert('Введите название лекарственного препарата.'):'';
+
+        $('#btnOne, #lblLatinTitle').show();
+        $('#inpText_2').val('');
+
         vChoosedDrug.vChoosedDrugGroup = $('#inpText_1').val();
-        $.each(vCopyObj, function (index, value) {
+        console.log(vChoosedDrug.vChoosedDrugGroup);
+
+        $.each(vObjDrugPairs, function (index, value) {
             value === vChoosedDrug.vChoosedDrugGroup ? vChoosedDrug.vChoosedDrugGroupLat = index : '';
-console.log(vChoosedDrug.vChoosedDrugGroupLat);
+            console.log(vChoosedDrug.vChoosedDrugGroupLat);
         });
         vArrPairs = Object.keys(vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs).map(function (name) {
             return [vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs[name].nameCyr, vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs[name].nameLat];
@@ -563,29 +601,76 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
             vObjDrugPairs[entry[1]] = entry[0];
         });
         console.log(vObjDrugPairs);
-                addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
-
+        addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
         $('#inpText_1').val('');
-        $('#inpText_1').unbind('input', chooseDrugGroup);
+        $('#btnOne').unbind('click', chooseDrugGroup);
+        $('#btnOne').hide();
+    $('#inpText_1').bind('input', chooseDrug);
+
     };
-    $('#inpText_1').bind('input', chooseDrugGroup);
+    $('#btnOne').bind('click', chooseDrugGroup);
+
+
+
+    //    $('#btnOne').bind('click', addDrugTitles);
+
+// was hidden 1
+//    $('#inpText_1').bind('input', chooseDrugGroup);
+
+
+
+
+
+
+
+
+    //        vChoosedDrug.vChoosedDrugGroup = $('#inpText_1').val();
+    //
+    //        $.each(vObjDrugPairs, function (index, value) {
+    //            value === vChoosedDrug.vChoosedDrugGroup ? vChoosedDrug.vChoosedDrugGroupLat = index : '';
+    //console.log(vChoosedDrug.vChoosedDrugGroupLat);
+    //        });
+    //        vArrPairs = Object.keys(vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs).map(function (name) {
+    //            return [vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs[name].nameCyr, vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs[name].nameLat];
+    //
+    //        });
+    //        vObjDrugPairs = {};
+    //        vArrPairs.forEach(entry => {
+    //            let key = entry[0];
+    //            let value = entry[1];
+    //            vObjDrugPairs[entry[1]] = entry[0];
+    //        });
+    //        console.log(vObjDrugPairs);
+    //                addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
+
+    //        $('#inpText_1').val('');
+    //        $('#inpText_1').unbind('input', tryChooseDrugGroup);
+    //    };
+
+    //    $('#inpText_1').bind('input', tryChooseDrugGroup);
+//end was hidden 1
 
     function chooseDrug() {
-        console.log('func_2');
+        console.log('func_3');
 
-        $('#btnOne, #lblLatinTitle').show();
         $.each(vObjDrugPairs, function (index, value) {
             value === $('#inpText_1').val() ? $('#inpText_2').val(index) : '';
         });
+//        vChoosedDrug.titleCyr = $('#inpText_1').val();
+//        vChoosedDrug.titleLat = $('#inpText_2').val();
+
         $('#inpText_1').val() === '' ? $('#inpText_2').val('') : '';
+$('#btnOne').show();
+    $('#btnOne').bind('click', addDrugTitles);
+
     }
-    $('#inpText_1').bind('input', chooseDrug);
 
     function addDrugTitles() {
-        console.log('func_3');
-        $('#inpText_1').unbind('input', chooseDrug);
+        console.log('func_4');
+    $('#inpText_1').unbind('input', chooseDrug);
         vChoosedDrug.titleCyr = $('#inpText_1').val();
         vChoosedDrug.titleLat = $('#inpText_2').val();
+
         $('#inpText_1').val('');
         $('#invitToAct_1').text('Выберите аптечную дозу препарата:');
         $('#lblLatinTitle, #inpText_2').hide();
@@ -607,13 +692,16 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
         };
 
         let vTPath_2 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs;
-        addOptionsToDatalist(vTPath_2[vChoosedDrug.titleLat].officDose, $('#dlstList_1'));
+  addOptionsToDatalist(vTPath_2[vChoosedDrug.titleLat].officDose, $('#dlstList_1'));
 
-        $('#btnOne').unbind('click', addDrugTitles);
+    $('#inpText_1').unbind('input', chooseDrug);
+ console.log(vChoosedDrug.titleLat);     $('#inpText_1').bind('input', attachFunc_makeNoteOfDrug);
+
+    $('#btnOne').unbind('click', addDrugTitles);
+
     };
-    $('#btnOne').bind('click', addDrugTitles);
 
-    $('#inpText_2').on('input', function () {
+        $('#inpText_2').on('input', function () {
         if (+($(this).val()) === 300) {
             $('<br>').appendTo('#drugChooser');
             $('<div/>').attr({
@@ -638,8 +726,14 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
             addOptionsToDatalist(vDailyDosesList, $('#dlstList_3'));
         }
     })
+function attachFunc_makeNoteOfDrug(){
+console.log('func_5');
+$('#btnOne').bind('click', makeNoteOfDrug);
+$('#inpText_1').unbind('input', attachFunc_makeNoteOfDrug);
+};
 
-    $('#Two').on('click', function () {
+    function makeNoteOfDrug() {
+console.log('func_6');
         let vT_1 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat],
             vT_2 = vChoosedDrug.officDose,
             vOfficDose_Gen = parseFloat($('#inpText_1').val()),
@@ -706,7 +800,6 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
                 vT_2.Mg = vT_2.Ml * 5;
                 vT_5 = (vT_1.singleProphDose) + ' ml, ';
                 vT_1.singleProphDose *= 5;
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose * 5} mg, ${vT_1.singleProphDose} ml,`);
                 break;
 
             case 'Acetylsalicylic acid':
@@ -716,7 +809,6 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
                 vChoosedDrug.tempCont = (`${(vT_1.singleProphDose/vOfficDose_Gen).toFixed(1)} ${vT_1.container},`);
                 $('#btnTry').trigger('click').remove();
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vT_2.Mg).toFixed(1);
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} mg,`);
                 break;
 
             case 'Dabigatran etexilate':
@@ -728,7 +820,6 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
                     vI += vI;
                     vChoosedDrug.numberOfOfficDose++;
                 }
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} mg,`);
                 break;
 
             case 'Rivaroxaban':
@@ -736,21 +827,18 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
                 (vPatient.vCC > 30 || vPatient.vCC < 51) ? vT_1.singleProphDose = 15: '';
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} mg,`);
                 break;
 
             case 'Apixaban':
                 console.log('Apixaban');
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} mg,`);
                 break;
 
             case 'Warfarin':
                 console.log('Warfarin');
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
-                //                vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose} mg,`);
                 break;
         };
         vChoosedDrug.singleProphDose = (`${vT_1.singleProphDose}${vT_4}${vT_5}`);
@@ -772,7 +860,8 @@ console.log(vChoosedDrug.vChoosedDrugGroupLat);
             vText_2 = (`${vChoosedDrug.tempCont} ${vChoosedDrug.singleProphDose}`);
 
         console.log(`Выбран препарат: ${vChoosedDrug.titleCyr} (${vChoosedDrug.titleLat}${vText_1}, ${vT_1.container} 1) ${vT_1.delivery}, ${vText_2}${vT_1.timesADay} ${vTimE_S}/${vChoosedDrug.frequencyOfDrugTaking}`);
-    });
+$('#btnOne').unbind('click', makeNoteOfDrug);
+    };
 
     $('#btnTry').on('click', function () {
         //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
