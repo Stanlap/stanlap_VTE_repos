@@ -485,42 +485,37 @@ let vCounterPaduaScore = 0,
     vCounterObstBleedingRF = 0,
     vGFR = 125;
 
-
-
-
-
-
-
 //  Функция countStratRF стратифицирует риск ВТЭО:
 function countStratRF(vCounterRF, x) {
     let vStratRF = '';
     switch (x) {
         case 'Padua':
-            (vCounterRF > 3) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF > 3 ? vStratRF = 'высокий' : vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'IMPROVE':
-            (vCounterRF > 7) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF > 7 ? vStratRF = 'высокий' : vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'HAS_BLED':
-            (vCounterRF > 2) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF > 2 ? vStratRF = 'высокий': vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'CHA2DS2_VASсOrRusSurgOrTraumRF':
-            (vCounterRF == 0) ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
+            vCounterRF == 0 ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
             return vStratRF;
             break;
+
         case 'Caprini':
-            (vCounterRF == 0) ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
+            vCounterRF == 0 ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
             return vStratRF;
             break;
         case 'SurgOrTraumBleedingRF':
-            (vCounterRF >= 1) ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF >= 1 ? vStratRF = 'высокий': vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'GreenTop37aRus':
-            (vCounterRF > 2) ? vStratRF = 'высокий': vStratRF = 'умеренный';
+            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'умеренный';
             return vStratRF;
     }
 }
@@ -533,6 +528,7 @@ function calculateGFRAndСС() {
     // 2. Указание авторства Бикбова Б.Т. на странице с использованием данного програмного кода
     // 3. Указание активной ссылки на сайт http://boris.bikbov.ru/ на странице с использованием данного програмного кода
     //Комментарий автора кода.
+
 
     let gfr_cg = '',
         bsa = '',
@@ -881,8 +877,6 @@ function countRF() {
     vGeneralListOfOper = getStringOfRF($('#divChooseKindOfOper option:selected'));
     console.log(vGeneralListOfOper);
 
-
-
     console.log('Padua: ' + vCounterPaduaScore, ' IMPROVE: ' + vCounterIMPROVE, ' CHA2DS2-VASс: ' + vCounterCHA2DS2_VASс, ' HAS-BLED: ' + vCounterHAS_BLED, ' Российская шкала риска ВТЭО: ' + vCounterRusSurgRF, ' Caprini: ' + vCounterCapriniRF, ' Major Bleeding Score: ' + vCounterMajorBleedingScoreRF, ' Шкала риска кровотечений при больших травматологических вмешательствах: ' + vCounterTraumBleedingRF, ' Шкала риска ВТЭО в травматологии: ' + vCounterRusTraumRF, ' vCounterGreenTopGuideline37a: ' + vCounterGreenTop37a, ' Contraindications to LMWH use: ' + vCounterObstBleedingRF, ' vCounterGreenTopGuideline37aRus: ' + vCounterObstRuRF);
 
 
@@ -1057,6 +1051,7 @@ $('#btnTwo').on('click', function () {
 })
 
 $('#btnThree').on('click', function () {
+
 console.log('Gender ' + objPatient.pkGender);
 console.log('Age ' + objPatient.pkAge);
 console.log('Height ' + objPatient.pkHeight);
@@ -1064,9 +1059,39 @@ console.log('Weight ' + objPatient.pkWeight);
 console.log('Med Profile ' + objPatient.pkMedProfile);
 console.log('RiskVTE ' + objPatient.pkRiscVTE);
 console.log('CC ' + objPatient.pkCC);
-    });
 
-//$('#btnThree').on('click', function () {
+let arrStratRF = [0, 0, 0, [0, 0], 0];
+function getMainMedProfile() {
+
+    vCounterPaduaScore > 3 ? arrStratRF[1] = 2 : '';
+ if (valuesMedPfofile.is('[value = 2]')) {
+    vCounterCHA2DS2_VASс > 0 ? arrStratRF[2] = 2 : '';
+ };
+    if($('#chkIsOrNoSurg').is(':checked')){
+    vCounterRusSurgRF >= 1 && vCounterRusSurgRF <= 2 ? arrStratRF[3][0] = 1: vCounterRusSurgRF >= 3 ? arrStratRF[3][0] = 2 : '';
+    vCounterCapriniRF >= 1 && vCounterCapriniRF <= 2 ? arrStratRF[3][1] = 1: vCounterCapriniRF >= 3 ? arrStratRF[3][1] = 2 : '';
+    };
+ if (valuesMedPfofile.is('[value = 4]')) {
+    vCounterRusTraumRF >= 1 && vCounterRusTraumRF <= 2 ? arrStratRF[4] = 1: vCounterRusTraumRF >= 2 ? arrStratRF[4] = 2 : '';
+ };
+    vCounterObstRuRF > 2 ? arrStratRF[5] = 2 : arrStratRF[5] = 1;
+
+    arrStratRF[3] = Math.max.apply(null, arrStratRF[3]);
+
+    arrStratRF[1] === 2 ? objPatient.pkMedProfile = 1 : ''; arrStratRF[2] === 1 || arrStratRF[2] === 2  ? objPatient.pkMedProfile = 2 : '';
+    if(arrStratRF[1] === 0  && arrStratRF[2] === 0){
+    arrStratRF[3] >= 1 ? objPatient.pkMedProfile = 3 : '';
+    arrStratRF[4] >= 1 ? objPatient.pkMedProfile = 4 : '';
+//    arrStratRF[3] === 2 ? objPatient.pkMedProfile = 3 : '';       arrStratRF[4] === 2 ? objPatient.pkMedProfile = 4 : '';
+    };
+
+    return objPatient.pkMedProfile;
+}
+console.log(getMainMedProfile());
+console.log(arrStratRF);
+
+    });
+ //$('#btnThree').on('click', function () {
 //    createAlgorithmOfThromboembolismProphylaxis();
 //});
 //
