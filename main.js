@@ -1,7 +1,6 @@
 'use strict';
 
     let vWeekOfPregnancy = 0,
-        //        vDateOfChildbirth = '2019-08-26',
         vDateOfChildbirth = '',
         vSevereHepaticFailure = false,
         vHeartInsuff3_4 = false,
@@ -33,6 +32,10 @@ $('.divFemaleLvl').show();
 let vBirthDateOfPatient = '',
     vGeneralListOfRF = '',
     vGeneralListOfOper = '';
+
+$('#dateOfBirth').on('input', function () {
+    vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
+});
 
 $('#chkMale').on('click', function () {
     ($(this).is(':checked')) ? $('#slctMedicalProfileOfPatient [value="10"]').hide(): $('#slctMedicalProfileOfPatient [value="10"]').show();
@@ -66,7 +69,8 @@ $('#slctMedicalProfileOfPatient').on('change', function () {
     $('#divObstOrGynProfile').show(): '';
 });
 $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
-    if ($(this).val() === 0) {
+
+    if ($(this).val() == 0) {
         $('#divPregnancyOrChildbirth').show();
     } else {
         $('#divPregnancyOrChildbirth').hide();
@@ -114,13 +118,6 @@ $('input[name=rdoSmallOrLargeOper]:radio').on('click', function () {
     ($(this).val() == 1) ? ($('.lblTimeOfSurg').hide(), $('#chkTimeOfSurg').prop('checked', false)) : $('.lblTimeOfSurg').show();
 });
 
-function getCurrentAge(date) {
-    return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
-}
-
-$('#dateOfBirth').on('input', function () {
-    vBirthDateOfPatient = new Date($('#dateOfBirth').prop('value'));
-});
 function showBtnGoToRF() {
 
     if (getCurrentAge(vBirthDateOfPatient) !== 0 && ($('#weight').val().length > 0) && ($('#height').val().length > 0) && (valuesMedPfofile.length > 0)) {
@@ -172,16 +169,35 @@ function formatDate() {
     vDateNow = [year, month, day].join('-');
     return vDateNow;
 }
+function getCurrentAge(date) {
+    return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
+}
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
 
-$('#btnChildbirthToday').click(function () {
-    vDateOfChildbirth = formatDate();
-    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+$('#btnChildbirthYesterday').on('click', function(){
+    console.log('OK');
+let vYesterday = addDays(new Date(), 1);
+$('#inpDateOfChildbirth').hide();
+vDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
+console.log(vDateOfChildbirth);
+(vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+$('#btnChildbirthToday').on('click', function(){
+$('#inpDateOfChildbirth').hide();
+vDateOfChildbirth = formatDate();
+(vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+$('#btnChildbirthSomeDate').on('click', function(){
+$('#inpDateOfChildbirth').show().val('');
 });
 
 $('#inpDateOfChildbirth').on('input', function () {
     vDateOfChildbirth = $(this).val();
     (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
-
 });
 
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
@@ -515,7 +531,9 @@ function countStratRF(vCounterRF, x) {
             return vStratRF;
             break;
         case 'GreenTop37aRus':
-            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'умеренный';
+            (vCounterRF > 0 && vCounterRF <= 2)  ? vStratRF = 'умеренный' : (vCounterRF > 2 && vCounterRF != 0) ? vStratRF = 'высокий' : '';
+//
+//            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'умеренный';
             return vStratRF;
     }
 }
@@ -894,6 +912,11 @@ function countRF() {
 
     console.log(vGFR, objPatient.pkCC);
 
+    console.log(typeof(vCounterGreenTop37a));
+    console.log(vCounterGreenTop37a);
+    console.log(typeof(vCounterObstRuRF));
+    console.log(vCounterObstRuRF);
+
 }
 
 
@@ -1005,11 +1028,11 @@ $('#btnTwo').on('click', function () {
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
 
-    (vCounterGreenTop37a < 3 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
+    (vCounterGreenTop37a > 0 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
         text: ('GreenTopGuideline37a: ' + bindBalls(vCounterGreenTop37a) + '. Риск ' + countStratRF(vCounterGreenTop37a, 'GreenTop37aRus') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
-    (vCounterObstRuRF < 3 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
+    (vCounterObstRuRF > 0 && $('#chkMale').prop('checked', false) && valuesMedPfofile.is('[value = 10]')) ? $('<p>', {
         text: ('Российская риска ВТЭО в акушерстве-гинекологии: ' + bindBalls(vCounterObstRuRF) + '. Риск ' + countStratRF(vCounterObstRuRF, 'GreenTop37aRus') + '.'),
         class: 'pTextContainer'
     }).appendTo($('#pTextCollector_2')): '';
@@ -1084,13 +1107,13 @@ function getMainMedProfile() {
     arrStratRF[4] >= 1 ? objPatient.pkMedProfile = 4 : '';
 //    arrStratRF[3] === 2 ? objPatient.pkMedProfile = 3 : '';       arrStratRF[4] === 2 ? objPatient.pkMedProfile = 4 : '';
     };
-
+    objPatient.pkRiscVTE = arrStratRF[objPatient.pkMedProfile];
     return objPatient.pkMedProfile;
 }
 console.log(getMainMedProfile());
-console.log(arrStratRF);
+console.log(objPatient.pkRiscVTE);
 
-    });
+});
  //$('#btnThree').on('click', function () {
 //    createAlgorithmOfThromboembolismProphylaxis();
 //});

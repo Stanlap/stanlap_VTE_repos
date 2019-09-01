@@ -42,8 +42,10 @@
                 <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoChildbirthPeriod' value='1'> роды и ранний послеродовый период<br></label>
 <div id='divDateOfChildbirth' hidden>
 Дата родов:
+<button id='btnChildbirthYesterday'>Вчера</button>
 <button id='btnChildbirthToday'>Сегодня</button>
-Ранее: <input type='date' id='inpDateOfChildbirth'>
+<button id='btnChildbirthSomeDate'>Другая дата:</button>
+<input type='date' id='inpDateOfChildbirth' hidden>
 </div>
         </div><br>
         <label for='chkIsOrNoSurg' class='lblIsOrNoSurg' hidden><input type='checkbox' id='chkIsOrNoSurg'> Оперативное лечение:<br></label>
@@ -911,7 +913,7 @@
 
     <button id='btnTwo'>OK</button>
     <button id='btnThree'>OK</button>
-
+<!--
 <div id='divContraindicationsToDrugsUse' hidden>
 <p id='pDrugsShooseComment'>Подбор препарата для профилактики ВТЭО:</p>
 <div id='divBreastFeeding' hidden>
@@ -934,6 +936,7 @@
 </select><br>
 </div>
 
+-->
     <script src='//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script src='main.js' defer></script>
 </body>
