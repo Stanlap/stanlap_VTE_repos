@@ -1,28 +1,28 @@
 'use strict';
 
-    let vWeekOfPregnancy = 0,
-        vDateOfChildbirth = '',
-        vSevereHepaticFailure = false,
-        vHeartInsuff3_4 = false,
-        vIsOrNoSurg = false,
-        vSomeSurg = false,
-        vDiabetes = true,
-        vActiveUlcerOfStomachOrDuodenum = false,
-        vChronicDialysis = false,
-        vArtificialHeartValve = false,
-        vUncontrolledSystemicHypertension = false;
+let vWeekOfPregnancy = 0,
+    vDateOfChildbirth = '',
+    vSevereHepaticFailure = false,
+    vHeartInsuff3_4 = false,
+    vIsOrNoSurg = false,
+    vDiabetes = false,
+    vActiveUlcerOfStomachOrDuodenum = false,
+    vChronicDialysis = false,
+    vArtificialHeartValve = false,
+    vSomeSurg = false,
+    vUncontrolledSystemicHypertension = false;
 
 
 
 let objPatient = {
-            pkGender: 0,
-            pkAge: 0,
-            pkHeight: 0,
-            pkWeight: 0,
-            pkMedProfile: 0,
-            pkRiscVTE: 0,
-            pkCC: 125
-        };
+    pkGender: 0,
+    pkAge: 0,
+    pkHeight: 0,
+    pkWeight: 0,
+    pkMedProfile: 0,
+    pkRiscVTE: 0,
+    pkCC: 125
+};
 
 
 
@@ -151,7 +151,7 @@ $('input[name=rdoPregnancyOrChildbirth]').click(function () {
     ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()) : (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
-vWeekOfPregnancy = 0;
+//vWeekOfPregnancy = 0;
 $('#inpWeekOfPregnancy').on('input', function () {
     vWeekOfPregnancy = Number($(this).val());
     (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
@@ -169,30 +169,32 @@ function formatDate() {
     vDateNow = [year, month, day].join('-');
     return vDateNow;
 }
+
 function getCurrentAge(date) {
     return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
 }
+
 function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
 }
 
-$('#btnChildbirthYesterday').on('click', function(){
+$('#btnChildbirthYesterday').on('click', function () {
     console.log('OK');
-let vYesterday = addDays(new Date(), 1);
-$('#inpDateOfChildbirth').hide();
-vDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
-console.log(vDateOfChildbirth);
-(vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    let vYesterday = addDays(new Date(), 1);
+    $('#inpDateOfChildbirth').hide();
+    vDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
+    console.log(vDateOfChildbirth);
+    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
-$('#btnChildbirthToday').on('click', function(){
-$('#inpDateOfChildbirth').hide();
-vDateOfChildbirth = formatDate();
-(vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+$('#btnChildbirthToday').on('click', function () {
+    $('#inpDateOfChildbirth').hide();
+    vDateOfChildbirth = formatDate();
+    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
-$('#btnChildbirthSomeDate').on('click', function(){
-$('#inpDateOfChildbirth').show().val('');
+$('#btnChildbirthSomeDate').on('click', function () {
+    $('#inpDateOfChildbirth').show().val('');
 });
 
 $('#inpDateOfChildbirth').on('input', function () {
@@ -338,6 +340,8 @@ function goToRF() {
     ($('#chkMale').is(':checked')) ? objPatient.pkGender = 1: '';
     objPatient.pkWeight = Number($('#weight').val());
     objPatient.pkHeight = Number($('#height').val());
+
+    $('#chkIsOrNoSurg').is(':checked') ? vIsOrNoSurg = true : '';
 
     $('#btnOne').unbind('click', goToRF);
     $('#btnOne').bind('click', countRF).html('Перейти к подсчету риск-факторов ВТЭО');
@@ -514,26 +518,26 @@ function countStratRF(vCounterRF, x) {
             return vStratRF;
             break;
         case 'HAS_BLED':
-            vCounterRF > 2 ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'CHA2DS2_VASсOrRusSurgOrTraumRF':
-            vCounterRF == 0 ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
+            vCounterRF == 0 ? vStratRF = 'низкий' : (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : vStratRF = 'высокий';
             return vStratRF;
             break;
 
         case 'Caprini':
-            vCounterRF == 0 ? vStratRF = 'низкий': (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
+            vCounterRF == 0 ? vStratRF = 'низкий' : (vCounterRF >= 1 && vCounterRF <= 2) ? vStratRF = 'умеренный' : (vCounterRF >= 3 && vCounterRF <= 4) ? vStratRF = 'высокий' : vStratRF = 'очень высокий';
             return vStratRF;
             break;
         case 'SurgOrTraumBleedingRF':
-            vCounterRF >= 1 ? vStratRF = 'высокий': vStratRF = 'низкий';
+            vCounterRF >= 1 ? vStratRF = 'высокий' : vStratRF = 'низкий';
             return vStratRF;
             break;
         case 'GreenTop37aRus':
-            (vCounterRF > 0 && vCounterRF <= 2)  ? vStratRF = 'умеренный' : (vCounterRF > 2 && vCounterRF != 0) ? vStratRF = 'высокий' : '';
-//
-//            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'умеренный';
+            (vCounterRF > 0 && vCounterRF <= 2) ? vStratRF = 'умеренный': (vCounterRF > 2 && vCounterRF != 0) ? vStratRF = 'высокий' : '';
+            //
+            //            vCounterRF > 2 ? vStratRF = 'высокий' : vStratRF = 'умеренный';
             return vStratRF;
     }
 }
@@ -678,6 +682,9 @@ function countRF() {
     ($('#chkIsPulmonInsuff').is(':checked') || $('#chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
     ($('.chkSevereRenalInsuff_1').is(':checked')) ? $('#chkSevereRenalInsuff').prop('checked', true): '';
     //    ($('.chkSevereRenalInsuff_2').is(':checked')|| vCreatinineValue > 200 ) ? $('#chkSevereRenalInsuff_3').prop('checked', true): '';
+    $('#chkIsLiverFailure').is(':checked') ? vSevereHepaticFailure = true : '';
+    $('#chkHeartInsuff3_4').is(':checked') ? vHeartInsuff3_4 = true : '';
+    $('#chkIsDiabetes').is(':checked') ? vDiabetes = true : '';
     ($('#chkSevereRenalInsuff, #chkIsLiverFailure').is(':checked')) ? $('#chkSevereRenalOrLiverFailure').prop('checked', true): $('#chkSevereRenalOrLiverFailure').prop('checked', false);
 
 
@@ -912,9 +919,9 @@ function countRF() {
 
     console.log(vGFR, objPatient.pkCC);
 
-    console.log(typeof(vCounterGreenTop37a));
+    console.log(typeof (vCounterGreenTop37a));
     console.log(vCounterGreenTop37a);
-    console.log(typeof(vCounterObstRuRF));
+    console.log(typeof (vCounterObstRuRF));
     console.log(vCounterObstRuRF);
 
 }
@@ -1075,46 +1082,53 @@ $('#btnTwo').on('click', function () {
 
 $('#btnThree').on('click', function () {
 
-console.log('Gender ' + objPatient.pkGender);
-console.log('Age ' + objPatient.pkAge);
-console.log('Height ' + objPatient.pkHeight);
-console.log('Weight ' + objPatient.pkWeight);
-console.log('Med Profile ' + objPatient.pkMedProfile);
-console.log('RiskVTE ' + objPatient.pkRiscVTE);
-console.log('CC ' + objPatient.pkCC);
+    console.log('Gender ' + objPatient.pkGender);
+    console.log('Age ' + objPatient.pkAge);
+    console.log('Height ' + objPatient.pkHeight);
+    console.log('Weight ' + objPatient.pkWeight);
+    console.log('Med Profile ' + objPatient.pkMedProfile);
+    console.log('RiskVTE ' + objPatient.pkRiscVTE);
+    console.log('CC ' + objPatient.pkCC);
 
-let arrStratRF = [0, 0, 0, [0, 0], 0];
-function getMainMedProfile() {
+    let arrStratRF = [0, 0, 0, [0, 0], 0];
 
-    vCounterPaduaScore > 3 ? arrStratRF[1] = 2 : '';
- if (valuesMedPfofile.is('[value = 2]')) {
-    vCounterCHA2DS2_VASс > 0 ? arrStratRF[2] = 2 : '';
- };
-    if($('#chkIsOrNoSurg').is(':checked')){
-    vCounterRusSurgRF >= 1 && vCounterRusSurgRF <= 2 ? arrStratRF[3][0] = 1: vCounterRusSurgRF >= 3 ? arrStratRF[3][0] = 2 : '';
-    vCounterCapriniRF >= 1 && vCounterCapriniRF <= 2 ? arrStratRF[3][1] = 1: vCounterCapriniRF >= 3 ? arrStratRF[3][1] = 2 : '';
-    };
- if (valuesMedPfofile.is('[value = 4]')) {
-    vCounterRusTraumRF >= 1 && vCounterRusTraumRF <= 2 ? arrStratRF[4] = 1: vCounterRusTraumRF >= 2 ? arrStratRF[4] = 2 : '';
- };
-    vCounterObstRuRF > 2 ? arrStratRF[5] = 2 : arrStratRF[5] = 1;
+    function getMainMedProfile() {
 
-    arrStratRF[3] = Math.max.apply(null, arrStratRF[3]);
+        vCounterPaduaScore > 3 ? arrStratRF[1] = 2 : '';
+        if (valuesMedPfofile.is('[value = 2]')) {
+            vCounterCHA2DS2_VASс > 0 ? arrStratRF[2] = 2 : '';
+        };
+        if ($('#chkIsOrNoSurg').is(':checked')) {
+            vCounterRusSurgRF >= 1 && vCounterRusSurgRF <= 2 ? arrStratRF[3][0] = 1 : vCounterRusSurgRF >= 3 ? arrStratRF[3][0] = 2 : '';
+            vCounterCapriniRF >= 1 && vCounterCapriniRF <= 2 ? arrStratRF[3][1] = 1 : vCounterCapriniRF >= 3 ? arrStratRF[3][1] = 2 : '';
+        };
+        if (valuesMedPfofile.is('[value = 4]')) {
+            vCounterRusTraumRF >= 1 && vCounterRusTraumRF <= 2 ? arrStratRF[4] = 1 : vCounterRusTraumRF >= 2 ? arrStratRF[4] = 2 : '';
+        };
+        vCounterObstRuRF > 2 ? arrStratRF[5] = 2 : arrStratRF[5] = 1;
 
-    arrStratRF[1] === 2 ? objPatient.pkMedProfile = 1 : ''; arrStratRF[2] === 1 || arrStratRF[2] === 2  ? objPatient.pkMedProfile = 2 : '';
-    if(arrStratRF[1] === 0  && arrStratRF[2] === 0){
-    arrStratRF[3] >= 1 ? objPatient.pkMedProfile = 3 : '';
-    arrStratRF[4] >= 1 ? objPatient.pkMedProfile = 4 : '';
-//    arrStratRF[3] === 2 ? objPatient.pkMedProfile = 3 : '';       arrStratRF[4] === 2 ? objPatient.pkMedProfile = 4 : '';
-    };
-    objPatient.pkRiscVTE = arrStratRF[objPatient.pkMedProfile];
-    return objPatient.pkMedProfile;
-}
-console.log(getMainMedProfile());
-console.log(objPatient.pkRiscVTE);
+        arrStratRF[3] = Math.max.apply(null, arrStratRF[3]);
+
+        arrStratRF[1] === 2 ? objPatient.pkMedProfile = 1 : '';
+        arrStratRF[2] === 1 || arrStratRF[2] === 2 ? objPatient.pkMedProfile = 2 : '';
+        if (arrStratRF[1] === 0 && arrStratRF[2] === 0) {
+            arrStratRF[3] >= 1 ? objPatient.pkMedProfile = 3 : '';
+            arrStratRF[4] >= 1 ? objPatient.pkMedProfile = 4 : '';
+            //    arrStratRF[3] === 2 ? objPatient.pkMedProfile = 3 : '';       arrStratRF[4] === 2 ? objPatient.pkMedProfile = 4 : '';
+        };
+        objPatient.pkRiscVTE = arrStratRF[objPatient.pkMedProfile];
+        return objPatient.pkMedProfile;
+    }
+    console.log(getMainMedProfile());
+    console.log(objPatient.pkRiscVTE);
+    console.log(vSevereHepaticFailure);
+    console.log(vHeartInsuff3_4);
+    console.log(vIsOrNoSurg);
+    console.log(vIsOrNoSurg);
+    console.log('Diabetes: ' + vDiabetes);
 
 });
- //$('#btnThree').on('click', function () {
+//$('#btnThree').on('click', function () {
 //    createAlgorithmOfThromboembolismProphylaxis();
 //});
 //

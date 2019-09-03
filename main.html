@@ -10,7 +10,7 @@
 <body>
     <div id='divProfileOfPatient'>
         Антропометрические данные пациента:<br><br>
-<!--        Возраст <input type='number' id='age'><br>-->
+        <!--        Возраст <input type='number' id='age'><br>-->
         Дата рождения <input type='date' id='dateOfBirth'><br>
         Вес <input type='number' id='weight'><br>
         Рост <input type='number' id='height'><br>
@@ -40,13 +40,13 @@
             <input type='number' id='inpWeekOfPregnancy' placeholder='срок в неделях' hidden> <br>
             <label for='rdoChildbirthPeriod' class='lblPregnancyOrChildbirth'>
                 <input type='radio' name='rdoPregnancyOrChildbirth' id='rdoChildbirthPeriod' value='1'> роды и ранний послеродовый период<br></label>
-<div id='divDateOfChildbirth' hidden>
-Дата родов:
-<button id='btnChildbirthYesterday'>Вчера</button>
-<button id='btnChildbirthToday'>Сегодня</button>
-<button id='btnChildbirthSomeDate'>Другая дата:</button>
-<input type='date' id='inpDateOfChildbirth' hidden>
-</div>
+            <div id='divDateOfChildbirth' hidden>
+                Дата родов:
+                <button id='btnChildbirthYesterday'>Вчера</button>
+                <button id='btnChildbirthToday'>Сегодня</button>
+                <button id='btnChildbirthSomeDate'>Другая дата:</button>
+                <input type='date' id='inpDateOfChildbirth' hidden>
+            </div>
         </div><br>
         <label for='chkIsOrNoSurg' class='lblIsOrNoSurg' hidden><input type='checkbox' id='chkIsOrNoSurg'> Оперативное лечение:<br></label>
         <div id='divChooseKindOfOper' hidden>
@@ -631,17 +631,17 @@
             <div class='divMiddleLvlRF'>
 
                 <!--Скорость клубочковой фильтрации (клиренс креатинина): <input type='number' id='chkGFR'><br>               -->
-<!--
+                <!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'> Скорость клубочковой фильтрации (клиренс креатинина): <br>
                     <label for='chkGlomerularFiltrationRateMore80' id='lblGlomerularFiltrationRateMore80'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRateMore80' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> &gt; 80 мл/мин<br></label>
                 </div>
 -->
-<!--
+                <!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'>
                     <label for='chkGlomerularFiltrationRate61_80' id='lblGlomerularFiltrationRate61_80'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRate61_80' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> 61— 80 мл/мин<br></label>
                 </div>
 -->
-<!--
+                <!--
                 <div class='divSingleLvlRF clsNonsurgBleedingRF'>
                     <label for='chkGlomerularFiltrationRate51_60' id='lblGlomerularFiltrationRate51_60'><input type='checkbox' class='chkGlomerularFiltrationRate_1' id='chkGlomerularFiltrationRate51_60' value='1000000000000000' /><span hidden> скорость клубочковой фильтрации</span> 51— 60 мл/мин<br></label>
                 </div>
@@ -846,11 +846,11 @@
             <label for='chkAgeMore75'><input type='checkbox' id='chkAgeMore75' value='1000020030000000'> возраст 75 лет и старше</label>
             <label for='chkAgeMore85'><input type='checkbox' id='chkAgeMore85' value='103.500000000000'> возраст 85 лет и старше</label>
 
-<!--
+            <!--
             <label for='chkGlomerularFiltrationRate30_59' id='lblGlomerularFiltrationRate30_59'><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkRenalInsuff_1' id='chkGlomerularFiltrationRate30_59' value='101.000000000000' /> скорость клубочковой фильтрации 30—59 мл/мин</label>
             <label for='chkGlomerularFiltrationRateLess30'><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkSevereRenalInsuff_1 chkRenalInsuff_1' id='chkGlomerularFiltrationRateLess30' value='102.500000000000' /> скорость клубочковой фильтрации &lt; 30 мл/мин </label>
 -->
-             <input type='checkbox' id='chkWasSomeVeinThromb' value='130000013000000'>
+            <input type='checkbox' id='chkWasSomeVeinThromb' value='130000013000000'>
             <input type='checkbox' id='chkSeverePreeclampsiaOrStillbirth' value='1000000000000020'>
             <input type='checkbox' id='chkBurnsLess20Percent' value='1000000200000000'>
             <input type='checkbox' id='chkBurnsMore20Percent' value='1000000300000000'>
@@ -913,7 +913,7 @@
 
     <button id='btnTwo'>OK</button>
     <button id='btnThree'>OK</button>
-<!--
+    <!--
 <div id='divContraindicationsToDrugsUse' hidden>
 <p id='pDrugsShooseComment'>Подбор препарата для профилактики ВТЭО:</p>
 <div id='divBreastFeeding' hidden>
