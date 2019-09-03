@@ -1,18 +1,17 @@
 'use strict';
-
-let vWeekOfPregnancy = 0,
-    vDateOfChildbirth = '',
-    vSevereHepaticFailure = false,
-    vHeartInsuff3_4 = false,
-    vIsOrNoSurg = false,
-    vDiabetes = false,
-    vActiveUlcerOfStomachOrDuodenum = false,
-    vChronicDialysis = false,
-    vArtificialHeartValve = false,
-    vSomeSurg = false,
-    vUncontrolledSystemicHypertension = false;
-
-
+//TODO: Вписать все классы в чекбоксы, которые учавствуют в инициализации значения переменных ниже:
+//let objPatient.pkWeekOfPregnancy = 0,
+//    objPatient.pkDateOfChildbirth = '',
+//    objPatient.pkSevereHepaticFailure = false,
+//    objPatient.pkHeartInsuff3_4 = false,
+//    objPatient.pkIsOrNoSurg = false,
+//    objPatient.pkDiabetes = false,
+//    objPatient.pkActiveUlcerOfStomachOrDuodenum = false,
+//    objPatient.pkChronicDialysis = false,
+//    objPatient.pkArtificialHeartValve = false,
+//    objPatient.pkUncontrolledSystemicHypertension = false,
+//    objPatient.pkArtroplasty = false,
+//    objPatient.pkPullOfSurg = false;
 
 let objPatient = {
     pkGender: 0,
@@ -21,10 +20,20 @@ let objPatient = {
     pkWeight: 0,
     pkMedProfile: 0,
     pkRiscVTE: 0,
+    pkWeekOfPregnancy: 0,
+    pkDateOfChildbirth: '',
+    pkSevereHepaticFailure: false,
+    pkHeartInsuff3_4: false,
+    pkIsOrNoSurg: false,
+    pkDiabetes: false,
+    pkActiveUlcerOfStomachOrDuodenum: false,
+    pkChronicDialysis: false,
+    pkArtificialHeartValve: false,
+    pkUncontrolledSystemicHypertension: false,
+    pkArtroplasty: false,
+    pkPullOfSurg: false,
     pkCC: 125
 };
-
-
 
 $('#divAllRF div').hide();
 $('.divMiddleLvlRF').hide();
@@ -138,24 +147,24 @@ $('#slctMedicalProfileOfPatient option').click(function () {
 });
 
 $('input[name=rdoObstOrGynProfile]').click(function () {
-    ($(this).val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0) : ($('#btnOne').prop('disabled', true), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '');
+    ($(this).val() == 1) ? ($('#btnOne').prop('disabled', false), $('#inpWeekOfPregnancy').val(''), objPatient.pkWeekOfPregnancy = 0) : ($('#btnOne').prop('disabled', true), $('#diobjPatient.pkDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), objPatient.pkDateOfChildbirth = '');
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
-    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), vDateOfChildbirth = '') : ($('#inpWeekOfPregnancy').hide(), vWeekOfPregnancy = 0, $('#divDateOfChildbirth').show());
+    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#diobjPatient.pkDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), objPatient.pkDateOfChildbirth = '') : ($('#inpWeekOfPregnancy').hide(), objPatient.pkWeekOfPregnancy = 0, $('#diobjPatient.pkDateOfChildbirth').show());
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
 
-    ($(this).val() === 1) ? ($('#inpWeekOfPregnancy').val(''), vWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()) : (vDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
-    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()) : (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    ($(this).val() === 1) ? ($('#inpWeekOfPregnancy').val(''), objPatient.pkWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#diobjPatient.pkDateOfChildbirth').show()) : (objPatient.pkDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#diobjPatient.pkDateOfChildbirth').hide()) : (objPatient.pkWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
-//vWeekOfPregnancy = 0;
+//objPatient.pkWeekOfPregnancy = 0;
 $('#inpWeekOfPregnancy').on('input', function () {
-    vWeekOfPregnancy = Number($(this).val());
-    (vWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
-    console.log(vWeekOfPregnancy);
+    objPatient.pkWeekOfPregnancy = Number($(this).val());
+    (objPatient.pkWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    console.log(objPatient.pkWeekOfPregnancy);
 });
 
 function formatDate() {
@@ -184,26 +193,26 @@ $('#btnChildbirthYesterday').on('click', function () {
     console.log('OK');
     let vYesterday = addDays(new Date(), 1);
     $('#inpDateOfChildbirth').hide();
-    vDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
-    console.log(vDateOfChildbirth);
-    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    objPatient.pkDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
+    console.log(objPatient.pkDateOfChildbirth);
+    (objPatient.pkDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 $('#btnChildbirthToday').on('click', function () {
     $('#inpDateOfChildbirth').hide();
-    vDateOfChildbirth = formatDate();
-    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    objPatient.pkDateOfChildbirth = formatDate();
+    (objPatient.pkDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 $('#btnChildbirthSomeDate').on('click', function () {
     $('#inpDateOfChildbirth').show().val('');
 });
 
 $('#inpDateOfChildbirth').on('input', function () {
-    vDateOfChildbirth = $(this).val();
-    (vDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    objPatient.pkDateOfChildbirth = $(this).val();
+    (objPatient.pkDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
-//    (vWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
+//    (objPatient.pkWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 
 
 
@@ -341,7 +350,7 @@ function goToRF() {
     objPatient.pkWeight = Number($('#weight').val());
     objPatient.pkHeight = Number($('#height').val());
 
-    $('#chkIsOrNoSurg').is(':checked') ? vIsOrNoSurg = true : '';
+    $('#chkIsOrNoSurg').is(':checked') ? objPatient.pkIsOrNoSurg = true : '';
 
     $('#btnOne').unbind('click', goToRF);
     $('#btnOne').bind('click', countRF).html('Перейти к подсчету риск-факторов ВТЭО');
@@ -668,6 +677,10 @@ function countRF() {
     (vGFR > 29 && vGFR < 60) ? $('#chkGlomerularFiltrationRate30_59').prop('checked', true): '';
     (vGFR < 30) ? $('#chkGlomerularFiltrationRateLess30').prop('checked', true): '';
 
+        if ($('#chkIsOrNoSurg').is(':checked')) {
+            ($('.divGenSurgOper select').prop('selectedIndex') == 4 || $('.divTraumOrthOper select').prop('selectedIndex') == 8 || $('.divNeurosurgOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 0 || $('.divUrolOper select').prop('selectedIndex') == 1) ? objPatient.pkPullOfSurg = true : '';
+        }
+
     ($('.chkSumTherRF_1').is(':checked')) ? $('#chkAcuteIschemicStrokeOrMiocardInfarction').prop('checked', true): '';
     ($('.chkSumTherRF_2').is(':checked')) ? $('#chkRheumaticDiseasesOrInfection').prop('checked', true): '';
     ($('.chkThromboemb_1').is(':checked')) ? $('#chkVascularAnamnesis, #chkWasSomeVeinThromb').prop('checked', true): '';
@@ -682,9 +695,14 @@ function countRF() {
     ($('#chkIsPulmonInsuff').is(':checked') || $('#chkIsHeartInsuff').is(':checked')) ? $('#chkPulmonOrHeartInsuff').prop('checked', true): '';
     ($('.chkSevereRenalInsuff_1').is(':checked')) ? $('#chkSevereRenalInsuff').prop('checked', true): '';
     //    ($('.chkSevereRenalInsuff_2').is(':checked')|| vCreatinineValue > 200 ) ? $('#chkSevereRenalInsuff_3').prop('checked', true): '';
-    $('#chkIsLiverFailure').is(':checked') ? vSevereHepaticFailure = true : '';
-    $('#chkHeartInsuff3_4').is(':checked') ? vHeartInsuff3_4 = true : '';
-    $('#chkIsDiabetes').is(':checked') ? vDiabetes = true : '';
+    $('#chkIsLiverFailure').is(':checked') ? objPatient.pkSevereHepaticFailure = true : '';
+    $('#chkHeartInsuff3_4').is(':checked') ? objPatient.pkHeartInsuff3_4 = true : '';
+    $('#chkIsDiabetes').is(':checked') ? objPatient.pkDiabetes = true : '';
+    $('#chkActiveUlcerOfStomachOrDuodenum').is(':checked') ? objPatient.pkActiveUlcerOfStomachOrDuodenum = true : '';
+    $('#chkChronicDialysis').is(':checked') ? objPatient.pkChronicDialysis = true : '';
+    $('#chkArtificialHeartValve').is(':checked') ? objPatient.pkArtificialHeartValve = true : '';
+    $('#chkUncontrolledSystemicHypertension').is(':checked') ? objPatient.pkUncontrolledSystemicHypertension = true : '';
+
     ($('#chkSevereRenalInsuff, #chkIsLiverFailure').is(':checked')) ? $('#chkSevereRenalOrLiverFailure').prop('checked', true): $('#chkSevereRenalOrLiverFailure').prop('checked', false);
 
 
@@ -709,7 +727,7 @@ function countRF() {
 
     ($('.divTraumOrthOper select').prop('selectedIndex') == 2) ? $('#chkArthroscopicSurgery').prop('checked', true): '';
     ($('.divTraumOrthOper select').prop('selectedIndex') == 5) ? $('#chkShinFractureSurgery').prop('checked', true): '';
-    ($('.divTraumOrthOper select').prop('selectedIndex') == 6) ? $('#chkArtroplasty').prop('checked', true): '';
+    ($('.divTraumOrthOper select').prop('selectedIndex') == 6) ? ($('#chkArtroplasty').prop('checked', true), objPatient.pkArtroplasty = true): '';
     ($('.divTraumOrthOper select').prop('selectedIndex') == 7) ? $('#chkHipFractureSurgery').prop('checked', true): '';
 
     ($('.divGenSurgOper select').prop('selectedIndex') == 4) ? $('#chkLiverResection').prop('checked', true): '';
@@ -1121,12 +1139,22 @@ $('#btnThree').on('click', function () {
     }
     console.log(getMainMedProfile());
     console.log(objPatient.pkRiscVTE);
-    console.log(vSevereHepaticFailure);
-    console.log(vHeartInsuff3_4);
-    console.log(vIsOrNoSurg);
-    console.log(vIsOrNoSurg);
-    console.log('Diabetes: ' + vDiabetes);
+    console.log(objPatient.pkSevereHepaticFailure);
+    console.log(objPatient.pkHeartInsuff3_4);
+    console.log(objPatient.pkIsOrNoSurg);
+    console.log(objPatient.pkIsOrNoSurg);
+    console.log('Diabetes: ' + objPatient.pkDiabetes);
+    console.log('vActiveUlcer: ' + objPatient.pkActiveUlcerOfStomachOrDuodenum);
+    console.log('Chronic Dialysis: ' + objPatient.pkChronicDialysis);
+    console.log('Artificial Heart Valve: ' + objPatient.pkArtificialHeartValve);
+    console.log('Uncontrolled Systemic Hypertension: ' + objPatient.pkUncontrolledSystemicHypertension);
+    console.log('Some Surg: ' + objPatient.pkPullOfSurg);
+    console.log('Artroplasty: ' + objPatient.pkArtroplasty);
+//    console.log('vProbe: ' + vProbe);
 
+delete objPatient.pkHeight;
+let serialObj = JSON.stringify(objPatient);
+localStorage.setItem("Patient", serialObj);
 });
 //$('#btnThree').on('click', function () {
 //    createAlgorithmOfThromboembolismProphylaxis();
@@ -1154,11 +1182,11 @@ $('#btnThree').on('click', function () {
 //    checkDrugsContraindications();
 //
 //    function checkDrugsContraindications() {
-//        (objPatient.pkGender == 0 && objPatient.pkAge < 40 || vWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
+//        (objPatient.pkGender == 0 && objPatient.pkAge < 40 || objPatient.pkWeekOfPregnancy == 0) ? $('#divBreastFeeding').show(): $('#slctListOfDrugsForVTEPrevention').show();
 //
-//        (vWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
+//        (objPatient.pkWeekOfPregnancy > 0) ? ($('#divBreastFeeding').hide(),$('#slctListOfDrugsForVTEPrevention').show()):'';
 //
-//        (vDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
+//        (objPatient.pkDateOfChildbirth == formatDate()) ? $('#slctListOfDrugsForVTEPrevention [value="2"]').hide():'';
 //
 //        (objPatient.pkAge < 18) ? ($('#slctListOfDrugsForVTEPrevention [value="0"]').hide(),
 //            $('#slctListOfDrugsForVTEPrevention [value="1"]').hide(),
@@ -1191,12 +1219,12 @@ $('#btnThree').on('click', function () {
 //        (objPatient.pkCC < 15 || $('#chkChronicDialysis').is(':checked')) ? ($('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
 //            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : '';
 //
-//        (vWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
+//        (objPatient.pkWeekOfPregnancy > 0) ? ($('#slctListOfDrugsForVTEPrevention [value="2"]').hide(),
 //            $('#slctListOfDrugsForVTEPrevention [value="5"]').hide(),
 //            $('#slctListOfDrugsForVTEPrevention [value="6"]').hide()) : ($('#chkArtificialHeartValve').is(':checked')) ? $('#slctListOfDrugsForVTEPrevention [value="0"]').hide(): '';
 //
-//        (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():'';
-//        (vWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide() : '';
+//        (objPatient.pkWeekOfPregnancy < 13 || objPatient.pkWeekOfPregnancy > 28) ? $('#slctListOfDrugsForVTEPrevention [value="8"]').hide():'';
+//        (objPatient.pkWeekOfPregnancy > 36) ? $('#slctListOfDrugsForVTEPrevention [value="7"]').hide() : '';
 //
 //    }
 //let vDrugVal ='';
@@ -1216,7 +1244,7 @@ $('#btnThree').on('click', function () {
 //            }
 //        }
 //
-//        if (a.val() == 0 && vWeekOfPregnancy > 0) {
+//        if (a.val() == 0 && objPatient.pkWeekOfPregnancy > 0) {
 //            t = 'пациентке установлен искусственный клапан сердца.';
 //            confirmIt();
 //        };

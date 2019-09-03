@@ -1,6 +1,9 @@
 $(document).ready(function () {
+let objPatient = JSON.parse(localStorage.getItem('Patient'));
+localStorage.clear();
+        console.log(objPatient);
+
     let vWeekOfPregnancy = 0,
-        //        vDateOfChildbirth = '2019-08-26',
         vDateOfChildbirth = '',
         vSevereHepaticFailure = false,
         vHeartInsuff3_4 = false,
@@ -11,7 +14,7 @@ $(document).ready(function () {
         vChronicDialysis = false,
         vArtificialHeartValve = false,
         vUncontrolledSystemicHypertension = false;
-    vPatient = {
+    objPatient = {
             vGender: 0,
             vAge: 50,
             vWeight: 65,
@@ -363,7 +366,7 @@ $(document).ready(function () {
         return vDateNow;
     }
     vDateOfChildbirth === formatDate() ? delete vObjDrugPairs['Heparin sodium'] : '';
-    if (vPatient.vAge < 18) {
+    if (objPatient.vAge < 18) {
         with(vObjDrugPairs) {
             delete Apixaban;
             delete Rivaroxaban;
@@ -373,7 +376,7 @@ $(document).ready(function () {
         delete vObjDrugPairs['Dabigatran etexilate'];
         delete vObjDrugPairs['Acetylsalicylic acid'];
     };
-    (vPatient.vAge > 60) ? delete vObjDrugPairs.Warfarin: '';
+    (objPatient.vAge > 60) ? delete vObjDrugPairs.Warfarin: '';
     if (vSevereHepaticFailure) {
         with(vObjDrugPairs) {
             delete Rivaroxaban;
@@ -388,8 +391,8 @@ $(document).ready(function () {
     vUncontrolledSystemicHypertension ? delete vObjDrugPairs['Heparin sodium'] : '';
     (vIsOrNoSurg && vSomeSurg) ? delete vObjDrugPairs['Heparin sodium']: '';
 
-    (vPatient.vCC < 15 || vChronicDialysis) ? (delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
-    vPatient.vCC < 30 ? (delete vObjDrugPairs['Acetylsalicylic acid'], delete vObjDrugPairs['Dabigatran etexilate'], delete vObjDrugPairs['Fondaparinux sodium'], delete vObjDrugPairs.Warfarin) : '';
+    (objPatient.vCC < 15 || vChronicDialysis) ? (delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
+    objPatient.vCC < 30 ? (delete vObjDrugPairs['Acetylsalicylic acid'], delete vObjDrugPairs['Dabigatran etexilate'], delete vObjDrugPairs['Fondaparinux sodium'], delete vObjDrugPairs.Warfarin) : '';
 
     vWeekOfPregnancy > 0 ? (delete vObjDrugPairs['Heparin sodium'], delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
     (vWeekOfPregnancy > 0 && vArtificialHeartValve) ? delete vObjDrugPairs['Enoxaparin sodium']: '';
@@ -397,7 +400,7 @@ $(document).ready(function () {
     (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) && vWeekOfPregnancy !== 0 ? delete vObjDrugPairs['Acetylsalicylic acid'] : '';
     vWeekOfPregnancy > 36 ? delete vObjDrugPairs.Warfarin : '';
 
-    if (vPatient.vGender == 0 && vPatient.vAge < 45 && vWeekOfPregnancy == 0) {
+    if (objPatient.vGender == 0 && objPatient.vAge < 45 && vWeekOfPregnancy == 0) {
         let vAns = confirm('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?');
         if (vAns == false) {
             with(vObjDrugPairs) {
@@ -511,10 +514,10 @@ $(document).ready(function () {
             addOptionsToDatalist(vSingleDosesList, $('#dlstList_2'));
         };
         let vTPath_1 = vDrugsList['Dabigatran etexilate'];
-        (vPatient.vMedProfile === 2 && (vPatient.vAge > 75 || vPatient.vCC < 51)) ? (vTPath_1.singleProphDose = 110, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
-        if (vPatient.vMedProfile === 4) {
+        (objPatient.vMedProfile === 2 && (objPatient.vAge > 75 || objPatient.vCC < 51)) ? (vTPath_1.singleProphDose = 110, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
+        if (objPatient.vMedProfile === 4) {
             vTPath_1.timesADay = 1;
-            vPatient.vAge < 76 ? (vTPath_1.singleProphDose = 220, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
+            objPatient.vAge < 76 ? (vTPath_1.singleProphDose = 220, vTPath_1.drugs.Pradaxa.officDose = [110]) : '';
         };
 
         let vTPath_2 = vDrugsList[vChoosedDrug.vChoosedDrugGroupLat].drugs;
@@ -576,11 +579,11 @@ $(document).ready(function () {
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.Mg = vT_2.Ml * 100;
                 vT_2.aXa = vT_2.Ml * 10000;
-                if (vT_2.Mg === 30 && vPatient.vRiscVTE === 2) {
+                if (vT_2.Mg === 30 && objPatient.vRiscVTE === 2) {
                     vT_1.timesADay = 2;
                     vT_1.singleProphDose = 30;
                 }
-                (vPatient.vRiscVTE === 1 || vPatient.vCC < 30) ? (vT_1.singleProphDose = 20, vChoosedDrug.numberOfOfficDose = 1) : '';
+                (objPatient.vRiscVTE === 1 || objPatient.vCC < 30) ? (vT_1.singleProphDose = 20, vChoosedDrug.numberOfOfficDose = 1) : '';
                 vT_3 = vT_2.Mg;
                 while (vT_3 < vT_1.singleProphDose) {
                     vT_3 += vT_3;
@@ -594,12 +597,12 @@ $(document).ready(function () {
 
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.aXa = vT_2.Ml * 9500;
-                ((vPatient.vMedProfile === 1 || vPatient.vMedProfile === 2) && vPatient.vWeight > 70) ? vT_1.singleProphDose = 0.6: '';
-                (vPatient.vMedProfile === 3) ? vT_1.singleProphDose = 0.3: '';
-                if (vPatient.vMedProfile === 4) {
-                    vPatient.vWeight < 50 ? vT_1.singleProphDose = 0.2 : vPatient.vWeight > 70 ? vT_1.singleProphDose = 0.4 : vT_1.singleProphDose = 0.3;
+                ((objPatient.vMedProfile === 1 || objPatient.vMedProfile === 2) && objPatient.vWeight > 70) ? vT_1.singleProphDose = 0.6: '';
+                (objPatient.vMedProfile === 3) ? vT_1.singleProphDose = 0.3: '';
+                if (objPatient.vMedProfile === 4) {
+                    objPatient.vWeight < 50 ? vT_1.singleProphDose = 0.2 : objPatient.vWeight > 70 ? vT_1.singleProphDose = 0.4 : vT_1.singleProphDose = 0.3;
                 };
-                vPatient.vCC < 30 ? vT_1.singleProphDose = +(vT_1.singleProphDose *= 0.75).toFixed(2) : '';
+                objPatient.vCC < 30 ? vT_1.singleProphDose = +(vT_1.singleProphDose *= 0.75).toFixed(2) : '';
 
                 vI = vT_2.Ml;
                 while (vI < vT_1.singleProphDose) {
@@ -613,8 +616,8 @@ $(document).ready(function () {
 
             case 'Heparin sodium':
                 console.log('Heparin sodium');
-                vPatient.vWeight < 50 ? vT_1.timesADay = 2 : '';
-                vPatient.vWeight > 150 ? vT_1.singleProphDose = 6500 : '';
+                objPatient.vWeight < 50 ? vT_1.timesADay = 2 : '';
+                objPatient.vWeight > 150 ? vT_1.singleProphDose = 6500 : '';
                 vT_2.ME = vOfficDose_Gen;
                 vT_2.Ml = vT_2.ME / 1000;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / 25000).toFixed(1);
@@ -623,7 +626,7 @@ $(document).ready(function () {
 
             case 'Fondaparinux sodium':
                 console.log('Fondaparinux sodium');
-                vPatient.vCC < 50 ? vT_1.singleProphDose *= 0.6 : '';
+                objPatient.vCC < 50 ? vT_1.singleProphDose *= 0.6 : '';
                 vT_2.Ml = vOfficDose_Gen;
                 vT_2.Mg = vT_2.Ml * 5;
                 vT_5 = (vT_1.singleProphDose) + ' ml, ';
@@ -652,7 +655,7 @@ $(document).ready(function () {
 
             case 'Rivaroxaban':
                 console.log('Rivaroxaban');
-                (vPatient.vCC > 30 || vPatient.vCC < 51) ? vT_1.singleProphDose = 15: '';
+                (objPatient.vCC > 30 || objPatient.vCC < 51) ? vT_1.singleProphDose = 15: '';
                 vT_2.Mg = vOfficDose_Gen;
                 vChoosedDrug.numberOfOfficDose = (vT_1.singleProphDose / vOfficDose_Gen).toFixed(1);
                 break;
@@ -693,7 +696,7 @@ $(document).ready(function () {
 
     $('#btnTry').on('click', function () {
         //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (vPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
+        if (objPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
             $('#inpText_3').val() === 'через день' ?
                 vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
             console.log(vChoosedDrug.frequencyOfDrugTaking);
