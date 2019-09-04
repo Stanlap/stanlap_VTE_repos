@@ -143,7 +143,7 @@
         <label for='chkCalculateRiskOfBleeding'><input type='checkbox' id='chkCalculateRiskOfBleeding' checked /> Вычислять риск кровотечения при профилактике ВТЭО<br></label>
     </div>
     <div id='divAllRF'>
-        <div class='divGroupLvlRF clsAtrFibrRF clsFibrBleedingRF clsSurgBleedingRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
             <div class='divTogglerRF'>
                 <label>артериальная гипертензия <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' value='1000010000000000' hidden><br>
             </div>
@@ -154,7 +154,7 @@
                 <div class='divSingleLvlRF clsFibrBleedingRF'>
                     <label for='chkSystemicHypertension2Stage'><input type='checkbox' id='chkSystemicHypertension2Stage' data-hasMarked='0' value='1000001000000000' /><span hidden> артериальная гипертензия</span> 2 степени</label><span> &hellip;</span><span class='comments' hidden> систолическое АД &gt; 160 мм рт. ст.</span><br>
                 </div>
-                <div class='divSingleLvlRF clsSurgBleedingRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkUncontrolledSystemicHypertension'><input type='checkbox' id='chkUncontrolledSystemicHypertension' data-hasMarked='0' value='1000000001000100' /> неконтролируемая артериальная гипертензия</label><span> &hellip;</span><span class='comments' hidden> (артериальное давление> 200 мм рт.ст. систолическое или > 120 мм рт.ст. диастолическое)</span><br>
                 </div>
             </div>
@@ -215,14 +215,14 @@
                 <hr>
             </div>
         </div>
-        <div class='divGroupLvlRF clsAtrFibrRF clsObstRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
             <div class='divTogglerRF'>
                 <label>сахарный диабет <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsDiabetes' value='100001000000000' hidden><br>
             </div>
             <div class='divMiddleLvlRF'>
-                <div class='divSingleLvlRF clsAtrFibrRF clsObstRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkTypeOneDiabetes'><input type='checkbox' class='chkDiabetes_1 chkObstComorbidities' id='chkTypeOneDiabetes' value='1000000000000000'><span hidden> сахарный диабет</span> I типа</label><span> &hellip;</span><span class='comments' hidden> с нефропатией</span><br>
-                    <div class='divSingleLvlRF clsAtrFibrRF'>
+                    <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                         <label for='chkTypeTwoDiabetes'><input type='checkbox' class='chkDiabetes_1' id='chkTypeTwoDiabetes' value='100000000000000'><span hidden> сахарный диабет</span> II типа<br></label>
                     </div>
                 </div>
@@ -554,7 +554,7 @@
         <div class='divSingleLvlRF clsTherRF clsSurgRF'>
             <label for='chkAcuteMiocardInfarction'><input type='checkbox' class='chkBedRestMore3Days_1 chkSumTherRF_1' id='chkAcuteMiocardInfarction' value='1000000010000000'>острый инфаркт миокарда</label><span> &hellip;</span><span class='comments' hidden> - 12-14 дней от начала, подострый - до 2 месяцев.</span><br>
         </div>
-        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
             <div class='divTogglerRF'>
                 <label>хроническая сердечная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF chkObstComorbidities' id='chkIsHeartInsuff' value='100001000000000' hidden><br>
             </div>
@@ -565,13 +565,13 @@
                 <div class='divSingleLvlRF clsSurgRF'>
                     <label for='chkHeartInsuffLess1Month'><input type='checkbox' id='chkHeartInsuffLess1Month' value='1000000010000000'><span hidden> сердечная недостаточность любой стадии</span> &lt; 1 мес.<br></label>
                 </div>
-                <div class='divSingleLvlRF clsSurgRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkHeartInsuff3_4'><input type='checkbox' id='chkHeartInsuff3_4' value='10000002000000000'> хроническая сердечная недостаточность III—IV ФК по NYHA<br></label>
                 </div>
                 <div class='divSingleLvlRF clsSurgRF'>
                     <label for='chkCongestHeartFailOrSystLVDysfunctEFLess40Percent'><input type='checkbox' id='chkCongestHeartFailOrSystLVDysfunctEFLess40Percent' value='10000000000000001'> застойная сердечная недостаточность/дисфункция ЛЖ</label><span> &hellip;</span><span class='comments' hidden> (в частности, ФВ ≤ 40 %)</span><br>
                  </div>
-                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsObstRF'>
+                <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkArtificialHeartValve'><input type='checkbox' id='chkArtificialHeartValve' value='10000000000000000'> искусственный клапан сердца</label><br>
                 </div>
 
@@ -690,7 +690,7 @@
             <label for='chkGlomerularFiltrationRate30_59' id='lblGlomerularFiltrationRate30_59' hidden><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkRenalInsuff_1' id='chkGlomerularFiltrationRate30_59' value='101.000000000000' /> скорость клубочковой фильтрации 30—59 мл/мин</label>
             <label for='chkGlomerularFiltrationRateLess30' hidden><input type='checkbox' class='chkGlomerularFiltrationRate_1 chkSevereRenalInsuff_1 chkRenalInsuff_1' id='chkGlomerularFiltrationRateLess30' value='102.500000000000' /> скорость клубочковой фильтрации &lt; 30 мл/мин </label>
         </div>
-        <div class='divGroupLvlRF clsNonsurgBleedingRF clsFibrBleedingRF clsSurgBleedingRF'>
+        <div class='divGroupLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
             <div class='divTogglerRF'>
                 <label>печеночная недостаточность <button class='btnTogglerRF'>&gt;</button></label><input type='checkbox' class='chk2_LvlRF' id='chkIsLiverFailure' value='102.500000000100' hidden><br>
             </div>
@@ -698,7 +698,7 @@
                 <div class='divSingleLvlRF clsNonsurgBleedingRF  clsSurgBleedingRF'>
                     <label for='chkLiverFailure'><input type='checkbox' id='chkLiverFailure' value='1000000000000000' /> печеночная недостаточность (МНО &gt; 1,5)<br></label>
                 </div>
-                <div class='divSingleLvlRF clsFibrBleedingRF  clsSurgBleedingRF'>
+                <div class='divSingleLvlRFclsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
                     <label for='chkSevereHepaticFailure'><input type='checkbox' id='chkSevereHepaticFailure' value='1000001000000000' /> нарушение функции печени</label><span> &hellip;</span><span class='comments' hidden>. Хронические болезни печени (цирроз), либо значительные сдвиги в печеночных пробах (повышение билирубина &gt; чем в 2 раза от верхней границы нормы + повышение АЛТ/АСТ/щелочной фосфатазы &gt; чем в 3 раза от верхней границы нормы)</span><br>
                 </div>
                 <hr>
@@ -798,7 +798,7 @@
         <div class='divSingleLvlRF clsFibrBleedingRF'>
             <label for='chkJointTakingOfAnticoagulantsAndNonsteroidalAntiinflammatoryDrugs'><input type='checkbox' id='chkJointTakingOfAnticoagulantsAndNonsteroidalAntiinflammatoryDrugs' value='1000001000000000'> совместный прием антикоагулянтов и НПВП</label><span> &hellip;</span><span class='comments' hidden> (нестероидных противовоспалительных препаратов)</span><br>
         </div>
-        <div class='divSingleLvlRF clsNonsurgBleedingRF'>
+        <div class='divSingleLvlRF clsTherRF clsAtrFibrRF clsSurgRF clsTraumRF clsNeurosurgRF clsCombustRF clsOncoRF clsObstRF clsFibrBleedingRF  clsSurgBleedingRF clsTraumBleedingRF'>
             <label for='chkActiveUlcerOfStomachOrDuodenum'><input type='checkbox' id='chkActiveUlcerOfStomachOrDuodenum' value='104.500000000000' /> активная язва желудка или двенадцатиперстной кишки<br></label>
         </div>
         <div class='divSingleLvlRF clsNonsurgBleedingRF'>

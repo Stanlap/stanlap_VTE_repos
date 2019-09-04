@@ -1,17 +1,4 @@
 'use strict';
-//TODO: Вписать все классы в чекбоксы, которые учавствуют в инициализации значения переменных ниже:
-//let objPatient.pkWeekOfPregnancy = 0,
-//    objPatient.pkDateOfChildbirth = '',
-//    objPatient.pkSevereHepaticFailure = false,
-//    objPatient.pkHeartInsuff3_4 = false,
-//    objPatient.pkIsOrNoSurg = false,
-//    objPatient.pkDiabetes = false,
-//    objPatient.pkActiveUlcerOfStomachOrDuodenum = false,
-//    objPatient.pkChronicDialysis = false,
-//    objPatient.pkArtificialHeartValve = false,
-//    objPatient.pkUncontrolledSystemicHypertension = false,
-//    objPatient.pkArtroplasty = false,
-//    objPatient.pkPullOfSurg = false;
 
 let objPatient = {
     pkGender: 0,
@@ -19,7 +6,7 @@ let objPatient = {
     pkHeight: 0,
     pkWeight: 0,
     pkMedProfile: 0,
-    pkRiscVTE: 0,
+    pkRiskVTE: 0,
     pkWeekOfPregnancy: 0,
     pkDateOfChildbirth: '',
     pkSevereHepaticFailure: false,
@@ -151,13 +138,13 @@ $('input[name=rdoObstOrGynProfile]').click(function () {
 });
 
 $('input[name=rdoPregnancyOrChildbirth]').click(function () {
-    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#diobjPatient.pkDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), objPatient.pkDateOfChildbirth = '') : ($('#inpWeekOfPregnancy').hide(), objPatient.pkWeekOfPregnancy = 0, $('#diobjPatient.pkDateOfChildbirth').show());
-});
-
-$('input[name=rdoPregnancyOrChildbirth]').click(function () {
-
-    ($(this).val() === 1) ? ($('#inpWeekOfPregnancy').val(''), objPatient.pkWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#diobjPatient.pkDateOfChildbirth').show()) : (objPatient.pkDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
-    ($(this).val() === 0) ? ($('#inpWeekOfPregnancy').show(), $('#diobjPatient.pkDateOfChildbirth').hide()) : (objPatient.pkWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#diobjPatient.pkDateOfChildbirth').hide(), $('#inpDateOfChildbirth').val(''), objPatient.pkDateOfChildbirth = '') : ($('#inpWeekOfPregnancy').hide(), objPatient.pkWeekOfPregnancy = 0, $('#diobjPatient.pkDateOfChildbirth').show());
+//});
+//
+//$('input[name=rdoPregnancyOrChildbirth]').click(function () {
+//
+    ($(this).val() == 1) ? ($('#inpWeekOfPregnancy').val(''), objPatient.pkWeekOfPregnancy = 0, $('#inpWeekOfPregnancy').hide(), $('#btnOne').prop('disabled', false), $('#divDateOfChildbirth').show()) : (objPatient.pkDateOfChildbirth != '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+    ($(this).val() == 0) ? ($('#inpWeekOfPregnancy').show(), $('#divDateOfChildbirth').hide()) : (objPatient.pkWeekOfPregnancy !== 0) ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
 //objPatient.pkWeekOfPregnancy = 0;
@@ -1105,7 +1092,7 @@ $('#btnThree').on('click', function () {
     console.log('Height ' + objPatient.pkHeight);
     console.log('Weight ' + objPatient.pkWeight);
     console.log('Med Profile ' + objPatient.pkMedProfile);
-    console.log('RiskVTE ' + objPatient.pkRiscVTE);
+    console.log('RiskVTE ' + objPatient.pkRiskVTE);
     console.log('CC ' + objPatient.pkCC);
 
     let arrStratRF = [0, 0, 0, [0, 0], 0];
@@ -1123,22 +1110,26 @@ $('#btnThree').on('click', function () {
         if (valuesMedPfofile.is('[value = 4]')) {
             vCounterRusTraumRF >= 1 && vCounterRusTraumRF <= 2 ? arrStratRF[4] = 1 : vCounterRusTraumRF >= 2 ? arrStratRF[4] = 2 : '';
         };
-        vCounterObstRuRF > 2 ? arrStratRF[5] = 2 : arrStratRF[5] = 1;
+        vCounterObstRuRF == 2 ? arrStratRF[5] = 1 : vCounterObstRuRF > 2 ? arrStratRF[5] = 2 : '';
 
         arrStratRF[3] = Math.max.apply(null, arrStratRF[3]);
 
-        arrStratRF[1] === 2 ? objPatient.pkMedProfile = 1 : '';
-        arrStratRF[2] === 1 || arrStratRF[2] === 2 ? objPatient.pkMedProfile = 2 : '';
+        arrStratRF[1] === 2 ? (objPatient.pkMedProfile = 1, objPatient.pkRiskVTE = arrStratRF[1]) : '';
+        arrStratRF[2] === 1 || arrStratRF[2] === 2 ? (objPatient.pkMedProfile = 2, objPatient.pkRiskVTE = arrStratRF[2]) : '';
         if (arrStratRF[1] === 0 && arrStratRF[2] === 0) {
-            arrStratRF[3] >= 1 ? objPatient.pkMedProfile = 3 : '';
-            arrStratRF[4] >= 1 ? objPatient.pkMedProfile = 4 : '';
+            arrStratRF[3] >= 1 ? (objPatient.pkMedProfile = 3, objPatient.pkRiskVTE = arrStratRF[3]) : '';
+            arrStratRF[4] >= 1 ? (objPatient.pkMedProfile = 4, objPatient.pkRiskVTE = arrStratRF[4]) : '';
             //    arrStratRF[3] === 2 ? objPatient.pkMedProfile = 3 : '';       arrStratRF[4] === 2 ? objPatient.pkMedProfile = 4 : '';
         };
-        objPatient.pkRiscVTE = arrStratRF[objPatient.pkMedProfile];
-        return objPatient.pkMedProfile;
+        objPatient.pkDateOfChildbirth ?         (objPatient.pkMedProfile = 5, objPatient.pkRiskVTE =        arrStratRF[5]) :'';
+
+        objPatient.pkRiskVTE = arrStratRF[objPatient.pkMedProfile];
+//        return objPatient.pkMedProfile;
+//        return [objPatient.pkMedProfile, objPatient.pkRiskVTE];
     }
-    console.log(getMainMedProfile());
-    console.log(objPatient.pkRiscVTE);
+getMainMedProfile();
+    console.log(objPatient.pkMedProfile);
+    console.log(objPatient.pkRiskVTE);
     console.log(objPatient.pkSevereHepaticFailure);
     console.log(objPatient.pkHeartInsuff3_4);
     console.log(objPatient.pkIsOrNoSurg);

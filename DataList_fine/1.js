@@ -3,26 +3,27 @@ let objPatient = JSON.parse(localStorage.getItem('Patient'));
 localStorage.clear();
         console.log(objPatient);
 
-    let vWeekOfPregnancy = 0,
-        vDateOfChildbirth = '',
-        vSevereHepaticFailure = false,
-        vHeartInsuff3_4 = false,
-        vIsOrNoSurg = false,
-        vSomeSurg = false,
-        vDiabetes = true,
-        vActiveUlcerOfStomachOrDuodenum = false,
-        vChronicDialysis = false,
-        vArtificialHeartValve = false,
-        vUncontrolledSystemicHypertension = false;
-    objPatient = {
-            vGender: 0,
-            vAge: 50,
-            vWeight: 65,
-            vMedProfile: 1,
-            vRiscVTE: 0,
-            vCC: 80,
-        },
-
+//let objPatient = {
+//    pkGender: 0,
+//    pkAge: 0,
+//    pkHeight: 0,
+//    pkWeight: 0,
+//    pkMedProfile: 0,
+//    pkRiskVTE: 0,
+//    pkWeekOfPregnancy: 0,
+//    pkDateOfChildbirth: '',
+//    pkSevereHepaticFailure: false,
+//    pkHeartInsuff3_4: false,
+//    pkIsOrNoSurg: false,
+//    pkDiabetes: false,
+//    pkActiveUlcerOfStomachOrDuodenum: false,
+//    pkChronicDialysis: false,
+//    pkArtificialHeartValve: false,
+//    pkUncontrolledSystemicHypertension: false,
+//    pkArtroplasty: false,
+//    pkPullOfSurg: false,
+//    pkCC: 125
+//},
         vDrugsList = {
             'Enoxaparin sodium': {
                 pair: {
@@ -365,7 +366,7 @@ localStorage.clear();
         vDateNow = [year, month, day].join('-');
         return vDateNow;
     }
-    vDateOfChildbirth === formatDate() ? delete vObjDrugPairs['Heparin sodium'] : '';
+    objPatient.pkDateOfChildbirth === formatDate() ? delete vObjDrugPairs['Heparin sodium'] : '';
     if (objPatient.vAge < 18) {
         with(vObjDrugPairs) {
             delete Apixaban;
@@ -377,7 +378,7 @@ localStorage.clear();
         delete vObjDrugPairs['Acetylsalicylic acid'];
     };
     (objPatient.vAge > 60) ? delete vObjDrugPairs.Warfarin: '';
-    if (vSevereHepaticFailure) {
+    if (objPatient.pkSevereHepaticFailure) {
         with(vObjDrugPairs) {
             delete Rivaroxaban;
             delete Apixaban;
@@ -387,20 +388,20 @@ localStorage.clear();
         delete vObjDrugPairs['Dabigatran etexilate'];
         delete vObjDrugPairs['Acetylsalicylic acid'];
     };
-    (vHeartInsuff3_4 || vActiveUlcerOfStomachOrDuodenum) ? delete vObjDrugPairs['Acetylsalicylic acid']: '';
-    vUncontrolledSystemicHypertension ? delete vObjDrugPairs['Heparin sodium'] : '';
-    (vIsOrNoSurg && vSomeSurg) ? delete vObjDrugPairs['Heparin sodium']: '';
+    (objPatient.pkHeartInsuff3_4 || objPatient.pkActiveUlcerOfStomachOrDuodenum) ? delete vObjDrugPairs['Acetylsalicylic acid']: '';
+    objPatient.pkUncontrolledSystemicHypertension ? delete vObjDrugPairs['Heparin sodium'] : '';
+    (objPatient.pkIsOrNoSurg && objPatient.pkPullOfSurg) ? delete vObjDrugPairs['Heparin sodium']: '';
 
-    (objPatient.vCC < 15 || vChronicDialysis) ? (delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
+    (objPatient.vCC < 15 || objPatient.pkChronicDialysis) ? (delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
     objPatient.vCC < 30 ? (delete vObjDrugPairs['Acetylsalicylic acid'], delete vObjDrugPairs['Dabigatran etexilate'], delete vObjDrugPairs['Fondaparinux sodium'], delete vObjDrugPairs.Warfarin) : '';
 
-    vWeekOfPregnancy > 0 ? (delete vObjDrugPairs['Heparin sodium'], delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
-    (vWeekOfPregnancy > 0 && vArtificialHeartValve) ? delete vObjDrugPairs['Enoxaparin sodium']: '';
+    objPatient.pkWeekOfPregnancy > 0 ? (delete vObjDrugPairs['Heparin sodium'], delete vObjDrugPairs.Rivaroxaban, delete vObjDrugPairs.Apixaban) : '';
+    (objPatient.pkWeekOfPregnancy > 0 && objPatient.pkArtificialHeartValve) ? delete vObjDrugPairs['Enoxaparin sodium']: '';
 
-    (vWeekOfPregnancy < 13 || vWeekOfPregnancy > 28) && vWeekOfPregnancy !== 0 ? delete vObjDrugPairs['Acetylsalicylic acid'] : '';
-    vWeekOfPregnancy > 36 ? delete vObjDrugPairs.Warfarin : '';
+    (objPatient.pkWeekOfPregnancy < 13 || objPatient.pkWeekOfPregnancy > 28) && objPatient.pkWeekOfPregnancy !== 0 ? delete vObjDrugPairs['Acetylsalicylic acid'] : '';
+    objPatient.pkWeekOfPregnancy > 36 ? delete vObjDrugPairs.Warfarin : '';
 
-    if (objPatient.vGender == 0 && objPatient.vAge < 45 && vWeekOfPregnancy == 0) {
+    if (objPatient.vGender == 0 && objPatient.vAge < 45 && objPatient.pkWeekOfPregnancy == 0) {
         let vAns = confirm('Если пациентка кормит грудью, следует отменить грудное вскармливание. Ваше решение?');
         if (vAns == false) {
             with(vObjDrugPairs) {
@@ -433,11 +434,11 @@ localStorage.clear();
     function tryChooseDrugGroup() {
         console.log('func_1');
         $('#invitToAct_1').text('Выберите препарат по коммерческому названию:');
-        if (!vIsOrNoSurg && vSomeSurg && $('#inpText_1').val() === 'Гепарин натрия') {
+        if (!objPatient.pkIsOrNoSurg && objPatient.pkPullOfSurg && $('#inpText_1').val() === 'Гепарин натрия') {
             let vDecision = confirm('Гепарин противопоказан при офтальмологических операциях. Отказаться от данного препарата?');
             vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision) : '';
         };
-        if ($('#inpText_1').val() === 'Гепарин натрия' && vDiabetes) {
+        if ($('#inpText_1').val() === 'Гепарин натрия' && objPatient.pkDiabetes) {
             vDecision = confirm('Гепарин противопоказан при наличии диабетической ретинопатии. Отказаться от данного препарата?');
             vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision, $('#inpText_1').val('')) : $('#inpText_1').val('');
         };
