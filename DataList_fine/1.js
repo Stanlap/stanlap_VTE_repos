@@ -1,29 +1,29 @@
 $(document).ready(function () {
-let objPatient = JSON.parse(localStorage.getItem('Patient'));
-localStorage.clear();
-        console.log(objPatient);
+    //let objPatient = JSON.parse(localStorage.getItem('Patient'));
+    //localStorage.clear();
+    //        console.log(objPatient);
 
-//let objPatient = {
-//    pkGender: 0,
-//    pkAge: 0,
-//    pkHeight: 0,
-//    pkWeight: 0,
-//    pkMedProfile: 0,
-//    pkRiskVTE: 0,
-//    pkWeekOfPregnancy: 0,
-//    pkDateOfChildbirth: '',
-//    pkSevereHepaticFailure: false,
-//    pkHeartInsuff3_4: false,
-//    pkIsOrNoSurg: false,
-//    pkDiabetes: false,
-//    pkActiveUlcerOfStomachOrDuodenum: false,
-//    pkChronicDialysis: false,
-//    pkArtificialHeartValve: false,
-//    pkUncontrolledSystemicHypertension: false,
-//    pkArtroplasty: false,
-//    pkPullOfSurg: false,
-//    pkCC: 125
-//},
+    let objPatient = {
+            pkGender: 0,
+            pkAge: 0,
+            pkHeight: 0,
+            pkWeight: 0,
+            pkMedProfile: 4,
+            pkRiskVTE: 0,
+            pkWeekOfPregnancy: 0,
+            pkDateOfChildbirth: '',
+            pkSevereHepaticFailure: false,
+            pkHeartInsuff3_4: false,
+            pkIsOrNoSurg: false,
+            pkDiabetes: false,
+            pkActiveUlcerOfStomachOrDuodenum: false,
+            pkChronicDialysis: false,
+            pkArtificialHeartValve: false,
+            pkUncontrolledSystemicHypertension: false,
+            pkArtroplasty: false,
+            pkPullOfSurg: false,
+            pkCC: 125
+        },
         vDrugsList = {
             'Enoxaparin sodium': {
                 pair: {
@@ -442,6 +442,14 @@ localStorage.clear();
             vDecision = confirm('Гепарин противопоказан при наличии диабетической ретинопатии. Отказаться от данного препарата?');
             vDecision ? (delete vObjDrugPairs['Heparin sodium'], !vDecision, $('#inpText_1').val('')) : $('#inpText_1').val('');
         };
+        if ($('#inpText_1').val() === 'Ацетилсалициловая кислота') {
+            vDecision = confirm('Ацетилсалициловая кислота противопоказана при приеме с метотрексатом в дозе 15 мг в неделю и более, бронх. астме, индуцированной приемом салицилатов. Отказаться от данного препарата?');
+            vDecision ? (delete vObjDrugPairs['Acetylsalicylic acid'], !vDecision, $('#inpText_1').val('')) : $('#inpText_1').val('');
+        };
+        if ($('#inpText_1').val() === 'Ривароксабан') {
+            vDecision = confirm('Ривароксабан противопоказан при врожденном дефиците лактозы. Отказаться от данного препарата?');
+            vDecision ? (delete vObjDrugPairs['Rivaroxaban'], !vDecision, $('#inpText_1').val('')) : $('#inpText_1').val('');
+        };
         addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
         $('#btnOne').show();
         $('#inpText_1').unbind('input', tryChooseDrugGroup);
@@ -480,6 +488,7 @@ localStorage.clear();
 
     };
     $('#btnOne').bind('click', chooseDrugGroup);
+
     function chooseDrug() {
         console.log('func_3');
 
@@ -533,7 +542,7 @@ localStorage.clear();
     };
 
     $('#inpText_2').on('input', function () {
-        if (+($(this).val()) === 300) {
+        if (+($(this).val()) === 300 && objPatient.pkMedProfile === 4) {
             $('<br>').appendTo('#drugChooser');
             $('<div/>').attr({
                     id: 'invitToAct_3'
@@ -636,7 +645,9 @@ localStorage.clear();
 
             case 'Acetylsalicylic acid':
                 console.log('Acetylsalicylic acid');
-                vT_2.Mg = vOfficDose_Gen;
+                $('#inpText_3').val() === 'через день' ?
+                    vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
+                 vT_2.Mg = vOfficDose_Gen;
                 vT_1.singleProphDose = $('#inpText_2').val();
                 vChoosedDrug.tempCont = (`${(vT_1.singleProphDose/vOfficDose_Gen).toFixed(1)} ${vT_1.container},`);
                 $('#btnTry').trigger('click').remove();
@@ -696,11 +707,11 @@ localStorage.clear();
     };
 
     $('#btnTry').on('click', function () {
-        //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (objPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
-            $('#inpText_3').val() === 'через день' ?
-                vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
-            console.log(vChoosedDrug.frequencyOfDrugTaking);
-        };
+//        //Код не удалять, кнопка - делегат для события!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        if (objPatient.vMedProfile === 4 && +$('#inpText_2').val() === 300) {
+//            $('#inpText_3').val() === 'через день' ?
+//                vChoosedDrug.frequencyOfDrugTaking = '2 сут.' : '';
+//            console.log(vChoosedDrug.frequencyOfDrugTaking);
+//        };
     });
 });
