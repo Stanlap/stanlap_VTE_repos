@@ -362,12 +362,12 @@ $(document).ready(function () {
         vDecision = confirm('Если пациенту уже проводится медикаментозная профилактика ВТЭО, нажмите "ОК".');
     if (vDecision) {
         $('#invitToAct_1').html('Выберите лек. группу препарата, который принимает пациент:');
-        !vDecision;
         $('#inpText_1').bind('input', doFirstChoice);
+        !vDecision;
 
     } else {
         doFirstChoice();
-//        $('#btnOne').hide();
+        $('#btnOne').hide();
     };
 
     function getKeyByValue(object, value) {
@@ -378,10 +378,12 @@ $(document).ready(function () {
         console.log('func_0');
         vPrevUsedDrugGroup = getKeyByValue(vObjDrugPairs, $('#inpText_1').val());
         console.log(vPrevUsedDrugGroup);
-        $('#btnOne').show().bind('click', tryChooseDrugGroup);
+        $('#btnOne').show();
         checkConditions();
         tryChooseDrugGroup();
         $('#inpText_1').val('');
+        $('#inpText_1').unbind('input', doFirstChoice);
+
     };
 
     function formatDate() {
@@ -447,7 +449,6 @@ $(document).ready(function () {
         };
     };
 
-
     function addOptionsToDatalist(vDrug, vDL) {
         vDL.find('option').remove();
         $.each(vDrug, function (key, value) {
@@ -486,12 +487,19 @@ $(document).ready(function () {
         };
         !vObjDrugPairs.hasOwnProperty(vPrevUsedDrugGroup) && vPrevUsedDrugGroup ? alert(`Препараты группы ${vPrevUsedDrugGroup} противопоказаны данному пациенту, выберите другой.`) : '';
         addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
-        $('#btnOne').show();
+        $('#btnOne').hide();
         $('#inpText_1').unbind('input', doFirstChoice);
+        $('#inpText_1').bind('input', passManagementToButtonOne);
+    };
+
+    function passManagementToButtonOne() {
+        $('#btnOne').show().bind('click', chooseDrugGroup);
     };
 
     function chooseDrugGroup() {
         console.log('func_2');
+        $('#inpText_1').unbind('input', passManagementToButtonOne);
+
         $('#inpText_1').val() === '' ? alert('Введите название лекарственного препарата.') : '';
 
         $('#btnOne, #lblLatinTitle').show();
@@ -516,12 +524,12 @@ $(document).ready(function () {
         console.log(vObjDrugPairs);
         addOptionsToDatalist(vObjDrugPairs, $('#dlstList_1'));
         $('#inpText_1').val('');
-        $('#btnOne').unbind('click', chooseDrugGroup);
         $('#btnOne').hide();
         $('#inpText_1').bind('input', chooseDrug);
+        $('#btnOne').unbind('click', chooseDrugGroup);
 
     };
-    $('#btnOne').bind('click', chooseDrugGroup);
+//    $('#btnOne').bind('click', chooseDrugGroup);
 
     function chooseDrug() {
         console.log('func_3');
@@ -738,6 +746,6 @@ $(document).ready(function () {
         $('#btnOne').unbind('click', makeNoteOfDrug);
     };
 
-//    $('#btnTry').on('click', function () {
-//    });
+    //    $('#btnTry').on('click', function () {
+    //    });
 });
