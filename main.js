@@ -12,6 +12,7 @@ let objPatient = {
     pkSevereHepaticFailure: false,
     pkHeartInsuff3_4: false,
     pkIsOrNoSurg: false,
+    pkDateOfOper: '',
     pkDiabetes: false,
     pkActiveUlcerOfStomachOrDuodenum: false,
     pkChronicDialysis: false,
@@ -76,7 +77,8 @@ $('input[name=rdoObstOrGynProfile]:radio').on('click', function () {
 });
 $('#chkIsOrNoSurg').on('click', function () {
     if ($(this).is(':checked')) {
-        $('#divChooseKindOfOper, #divCreateKindOfOper').show();
+        $('#divChooseKindOfOper, #divCreateKindOfOper, #divDateOfOper').show();
+        $('#btnOne').prop('disabled', true);
         (valuesMedPfofile.is('[value = 3]')) ? $('.btnGenSurgOper').show(): '';
         (valuesMedPfofile.is('[value = 4]')) ? $('.btnTraumOrthOper').show(): '';
         (valuesMedPfofile.is('[value = 5]')) ? $('.btnNeurosurgOper').show(): '';
@@ -87,7 +89,9 @@ $('#chkIsOrNoSurg').on('click', function () {
         (valuesMedPfofile.is('[value = 10]')) ?
         $('.btnObsGynOper').show(): '';
     } else {
-        $('#divChooseKindOfOper, #divCreateKindOfOper, #divSmallOrLargeOper').hide();
+        $('#divChooseKindOfOper, #divCreateKindOfOper, #divSmallOrLargeOper, #divDateOfOper').hide();
+        $('#btnOne').prop('disabled', false);
+
         $('.btnAccordChooseOper').prop('value', 1).next().hide();
         $('#divChooseKindOfOper option:selected').prop('selected', false);
         $('#chkCreateKindOfOper').prop('checked', false);
@@ -112,6 +116,58 @@ $('#chkCreateKindOfOper').on('click', function () {
 });
 $('input[name=rdoSmallOrLargeOper]:radio').on('click', function () {
     ($(this).val() == 1) ? ($('.lblTimeOfSurg').hide(), $('#chkTimeOfSurg').prop('checked', false)) : $('.lblTimeOfSurg').show();
+});
+
+function formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        vDateNow = '';
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    vDateNow = [year, month, day].join('-');
+    return vDateNow;
+}
+
+function getCurrentAge(date) {
+    return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
+}
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+$('#btnOperYesterday').on('click', function () {
+    let vYesterday = addDays(new Date(), -1);
+    $('#inpDateOfOper').hide();
+    objPatient.pkDateOfOper = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
+    console.log(objPatient.pkDateOfOper);
+    (objPatient.pkDateOfOper !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+$('#btnOperToday').on('click', function () {
+    $('#inpDateOfOper').hide();
+    objPatient.pkDateOfOper = formatDate();
+   console.log(objPatient.pkDateOfOper);
+    (objPatient.pkDateOfOper !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+$('#btnOperTomorrow').on('click', function () {
+    let vTomorrow = addDays(new Date(), 1);
+    $('#inpDateOfOper').hide();
+    objPatient.pkDateOfOper = (`${vTomorrow.getFullYear()}-${('0' + (vTomorrow.getMonth() + 1)).slice(-2)}-${('0' + vTomorrow.getDate()).slice(-2)}`);
+    console.log(objPatient.pkDateOfOper);
+    (objPatient.pkDateOfOper !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
+});
+$('#btnOperSomeDate').on('click', function () {
+    $('#inpDateOfOper').show().val('');
+});
+
+$('#inpDateOfOper').on('change', function () {
+    objPatient.pkDateOfOper = $(this).val();
+    console.log(objPatient.pkDateOfOper);
+    (objPatient.pkDateOfOper !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 
 function showBtnGoToRF() {
@@ -154,31 +210,10 @@ $('#inpWeekOfPregnancy').on('input', function () {
     console.log(objPatient.pkWeekOfPregnancy);
 });
 
-function formatDate() {
-    var d = new Date(),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear(),
-        vDateNow = '';
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    vDateNow = [year, month, day].join('-');
-    return vDateNow;
-}
-
-function getCurrentAge(date) {
-    return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
-}
-
-function addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-}
 
 $('#btnChildbirthYesterday').on('click', function () {
-    console.log('OK');
-    let vYesterday = addDays(new Date(), 1);
+//    console.log('OK');
+    let vYesterday = addDays(new Date(), -1);
     $('#inpDateOfChildbirth').hide();
     objPatient.pkDateOfChildbirth = (`${vYesterday.getFullYear()}-${('0' + (vYesterday.getMonth() + 1)).slice(-2)}-${('0' + vYesterday.getDate()).slice(-2)}`);
     console.log(objPatient.pkDateOfChildbirth);
@@ -187,16 +222,19 @@ $('#btnChildbirthYesterday').on('click', function () {
 $('#btnChildbirthToday').on('click', function () {
     $('#inpDateOfChildbirth').hide();
     objPatient.pkDateOfChildbirth = formatDate();
+    console.log(objPatient.pkDateOfChildbirth);
     (objPatient.pkDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
 $('#btnChildbirthSomeDate').on('click', function () {
     $('#inpDateOfChildbirth').show().val('');
 });
 
-$('#inpDateOfChildbirth').on('input', function () {
+$('#inpDateOfChildbirth').on('change', function () {
     objPatient.pkDateOfChildbirth = $(this).val();
+   console.log(objPatient.pkDateOfChildbirth);
     (objPatient.pkDateOfChildbirth !== '') ? $('#btnOne').prop('disabled', false): $('#btnOne').prop('disabled', true);
 });
+
 
 //    ($('input[name=rdoObstOrGynProfile]:checked').val() == 0 && $('input[name=rdoPregnancyOrChildbirth]:checked').val() != undefined) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
 //    (objPatient.pkWeekOfPregnancy != 0) ? $('#btnOne').prop('disabled', false) : $('#btnOne').prop('disabled', true);
